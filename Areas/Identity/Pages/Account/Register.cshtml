@@ -14,6 +14,11 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
+                <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="потребителско име" />
+                <label asp-for="Input.UserName">Потребителско име</label>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
                 <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="име" />
                 <label asp-for="Input.FirstName">Име</label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
