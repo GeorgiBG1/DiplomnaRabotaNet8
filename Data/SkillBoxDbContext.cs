@@ -10,7 +10,6 @@ namespace DiplomnaRabotaNet8.Data
         public SkillBoxDbContext(DbContextOptions<SkillBoxDbContext> options)
             : base(options)
         {
-            Database.Migrate();
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<LaborService> LaborServices { get; set; }

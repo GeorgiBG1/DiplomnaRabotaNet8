@@ -18,7 +18,7 @@ namespace DiplomnaRabotaNet8.Controllers
         {
             return View();
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();

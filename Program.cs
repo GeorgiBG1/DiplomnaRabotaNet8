@@ -2,8 +2,8 @@ using DiplomnaRabotaNet8.Data;
 using DiplomnaRabotaNet8.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-
+using SkillBox.App.Data.Seeding;
+using SkillBox.App.Extensions;
 namespace DiplomnaRabotaNet8
 {
     public class Program
@@ -16,6 +16,11 @@ namespace DiplomnaRabotaNet8
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SkillBoxDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            builder.Services.AddScoped<SkillBoxUserRoleSeeder>();
+            builder.Services.AddScoped<SkillBoxAdminUserSeeder>();
+
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<SkillBoxUser>(options =>
             {
@@ -29,12 +34,25 @@ namespace DiplomnaRabotaNet8
                 options.Password.RequiredUniqueChars = 0;
 
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<SkillBoxDbContext>();
+            })
+              .AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<SkillBoxDbContext>()
+              .AddDefaultUI()
+              .AddDefaultTokenProviders();
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
+
             var app = builder.Build();
 
-
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<SkillBoxDbContext>();
+                context.Database.Migrate();
+                // requires using Microsoft.Extensions.Configuration;
+                // Set password with the Secret Manager tool.
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -48,13 +66,15 @@ namespace DiplomnaRabotaNet8
                 app.UseHsts();
             }
 
+            app.UseDatabaseSeeding();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAuthentication(); //?!
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
