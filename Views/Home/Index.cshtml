@@ -5,7 +5,7 @@
 <div class="text-center">
     @if (User.IsInRole("Admin"))
     {
-        <h1>Добре дошъл, @User.Identity.Name!</h1>
+        <h1>Добре дошъл, @User.Identity!.Name!</h1>
     }
     else
     {
