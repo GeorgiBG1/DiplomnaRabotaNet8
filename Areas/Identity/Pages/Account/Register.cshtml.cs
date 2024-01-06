@@ -149,7 +149,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 {
                     await _userManager.AddToRoleAsync(user, "User");
                 }
-
+                //
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
