@@ -128,17 +128,16 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new SkillBoxUser
-                {
-                   UserName = Input.UserName,
-                   FirstName = Input.FirstName,
-                   LastName = Input.LastName,
-                   PhoneNumber = Input.PhoneNumber,
-                   Email = Input.Email
-                };//CreateUser();
-                //var user = CreateUser();
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                var user = CreateUser();
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                user.UserName = Input.UserName;
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.Email = Input.Email;
+                //CreateUser();
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (_userManager.Users.Count() == 1)

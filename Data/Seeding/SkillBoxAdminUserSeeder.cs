@@ -24,6 +24,7 @@ namespace SkillBox.App.Data.Seeding
             };
 
             var result = await userManager.CreateAsync(user, "root");
+            //await userManager.AddToRoleAsync(user, "Admin");
         }
     }
 }
