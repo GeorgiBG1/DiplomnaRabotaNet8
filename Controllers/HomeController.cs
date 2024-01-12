@@ -1,22 +1,39 @@
+using DiplomnaRabotaNet8.Data;
 using DiplomnaRabotaNet8.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SkillBox.App.Models;
 using System.Diagnostics;
+using System.Net.WebSockets;
 
 namespace DiplomnaRabotaNet8.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SkillBoxDbContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SkillBoxDbContext db)
         {
             _logger = logger;
+            this.db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = db.LaborServices.Select(s=> new LaborServiceViewModel
+            {
+                Name = s.Name,
+                AuthorName = s.AuthorName,
+                Description = s.Description,
+                CategoryName = s.Category.Name,
+                MainImage = s.MainImage,
+                Images = s.Images,
+                Price = s.Price,
+                Discount = s.Discount
+            }).ToList();
+            return View(model);
         }
         [Authorize(Roles = "Admin")]
         public IActionResult Privacy()

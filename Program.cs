@@ -19,6 +19,8 @@ namespace DiplomnaRabotaNet8
 
             builder.Services.AddScoped<SkillBoxUserRoleSeeder>();
             builder.Services.AddScoped<SkillBoxAdminUserSeeder>();
+            builder.Services.AddScoped<SkillBoxCategorySeeder>();
+            builder.Services.AddScoped<SkillBoxLaborServiceSeeder>();
 
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();

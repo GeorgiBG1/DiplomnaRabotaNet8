@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SkillBox.App.Models
+@model IEnumerable<LaborServiceViewModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -10,5 +12,24 @@
     else
     {
         <h1 class="display-4">Добре дошъл!</h1>
+        <div class="row">
+            @foreach (var laborService in Model)
+            {
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card" style="width: 18rem;">
+                        <img src="@laborService.MainImage" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@laborService.Name</h5>
+                            <p class="card-text">Описание: @laborService.Description</p>
+                            <p class="card-text">Категория: @laborService.CategoryName</p>
+                            <p class="card-text">Цена: @laborService.Price лв</p>
+                            <p class="card-text">Намаление: @laborService.Discount лв</p>
+                            <p class="card-text">Потребител: @laborService.AuthorName</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     }
 </div>
