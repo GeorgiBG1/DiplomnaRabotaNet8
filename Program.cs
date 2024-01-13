@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SkillBox.App.Data.Seeding;
 using SkillBox.App.Extensions;
+using System.Security.Claims;
 namespace DiplomnaRabotaNet8
 {
     public class Program
@@ -11,6 +12,7 @@ namespace DiplomnaRabotaNet8
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var config = builder.Configuration;
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -44,6 +46,22 @@ namespace DiplomnaRabotaNet8
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+
+            builder.Services.AddAuthentication()
+            .AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                config.GetSection("Authentication:Google");
+                options.ClientId = googleAuthNSection["ClientId"];
+                options.ClientSecret = googleAuthNSection["ClientSecret"];
+            })
+            .AddFacebook(options =>
+            {
+                IConfigurationSection FBAuthNSection =
+                config.GetSection("Authentication:Facebook");
+                options.AppId = FBAuthNSection["AppId"];
+                options.AppSecret = FBAuthNSection["AppSecret"];
+            });
 
             var app = builder.Build();
 
