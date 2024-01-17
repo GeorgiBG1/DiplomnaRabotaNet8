@@ -1,7 +1,8 @@
 ﻿using ServiceStack.DataAnnotations;
+using SkillBox.App.Data.Models;
 namespace DiplomnaRabotaNet8.Data.Models
 {
-    public class LaborService
+    public class LaborService : BaseEntity<int>
     {
         public int Id { get; set; }
         [Unique]
