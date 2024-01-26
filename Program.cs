@@ -47,14 +47,14 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            //builder.Services.AddAuthentication()
-            //.AddGoogle(options =>
-            //{
-            //    IConfigurationSection googleAuthNSection =
-            //    config.GetSection("Authentication:Google");
-            //    options.ClientId = googleAuthNSection["ClientId"];
-            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
-            //})
+            builder.Services.AddAuthentication()
+            .AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                config.GetSection("Authentication:Google");
+                options.ClientId = googleAuthNSection["ClientId"];
+                options.ClientSecret = googleAuthNSection["ClientSecret"];
+            });
             //.AddFacebook(options =>
             //{
             //    IConfigurationSection FBAuthNSection =
