@@ -69,7 +69,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             //TODO Rename this property
-            public string Email { get; set; }
+            public string EmailOrUsername { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -114,7 +114,12 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var userFd = userManager.Users.FirstOrDefault(x => x.Email == Input.Email || x.UserName == Input.Email);
+                var userFd = userManager.Users.SingleOrDefault(x => x.Email == Input.EmailOrUsername || x.UserName == Input.EmailOrUsername);
+                if (userFd == null)
+                {
+                    ModelState.AddModelError (string.Empty, "Въвели сте грешни данни за вход!");
+                    return Page();
+                }
                 var result = await _signInManager.PasswordSignInAsync(userFd, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -132,7 +137,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Въвели сте грешни данни за вход!");
                     return Page();
                 }
             }
