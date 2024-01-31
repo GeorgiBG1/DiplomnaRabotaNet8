@@ -2,7 +2,7 @@
 using SkillBox.App.Data.Models;
 namespace DiplomnaRabotaNet8.Data.Models
 {
-    public class LaborService : BaseEntity<int>
+    public class SkillBoxService : BaseEntity<int>
     {
         public int Id { get; set; }
         [Unique]
@@ -18,5 +18,6 @@ namespace DiplomnaRabotaNet8.Data.Models
         public virtual string? PhoneNumber { get; set; }
         public virtual string? WebsiteURL { get; set; }
         public virtual string? WebsiteName { get; set; }
+        public IC
     }
 }

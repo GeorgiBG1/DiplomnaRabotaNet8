@@ -12,7 +12,7 @@ namespace DiplomnaRabotaNet8.Data
         {
         }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<LaborService> LaborServices { get; set; }
+        public DbSet<SkillBoxService> LaborServices { get; set; }
         public DbSet<SkillBoxUser> SkillBoxUsers { get; set; }
         public DbSet<UserService> UserServices { get; set; }
     }

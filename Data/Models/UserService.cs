@@ -6,6 +6,6 @@
         public string UserId { get; set; }
         public virtual SkillBoxUser User { get; set; }
         public int LaborServiceId { get; set; }
-        public virtual LaborService LaborService { get; set; }
+        public virtual SkillBoxService LaborService { get; set; }
     }
 }

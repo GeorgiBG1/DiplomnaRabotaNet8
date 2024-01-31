@@ -16,7 +16,7 @@ namespace SkillBox.App.Data.Seeding
         {
             if (!context.LaborServices.Any())
             {
-                context.LaborServices.Add(new LaborService
+                context.LaborServices.Add(new SkillBoxService
                 {
                     Name = "Pochistvam bani",
                     AuthorName = "Unknown",
@@ -28,7 +28,7 @@ namespace SkillBox.App.Data.Seeding
                     Discount = 0
                 });
 
-                context.LaborServices.Add(new LaborService
+                context.LaborServices.Add(new SkillBoxService
                 {
                     Name = "Podstrigvam hubavo",
                     AuthorName = "Emi",
@@ -40,7 +40,7 @@ namespace SkillBox.App.Data.Seeding
                     Discount = 0.45m
                 });
 
-                context.LaborServices.Add(new LaborService
+                context.LaborServices.Add(new SkillBoxService
                 {
                     Name = "Az sum vashiq ikonom",
                     AuthorName = "Nqkoy si",

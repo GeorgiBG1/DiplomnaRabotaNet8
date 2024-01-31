@@ -7,6 +7,6 @@
         public int? ParentCategoryId { get; set; }
         public virtual Category? ParentCategory { get; set; }
         public virtual ICollection<Category>? Kids { get; set; }
-        public virtual ICollection<LaborService>? Services { get; set; }
+        public virtual ICollection<SkillBoxService>? Services { get; set; }
     }
 }
