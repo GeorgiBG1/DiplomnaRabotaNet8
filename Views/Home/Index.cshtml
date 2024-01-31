@@ -4,42 +4,55 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container my-5 w-75 px-9">
+<ul class="container my-5 w-75 px-9 ">
     <h2 class="mb-5">Намерете професионалист за всички ваши работи в и около къщата</h2>
     <h4 class="mb-2">Какво работиш?</h4>
     <div>
-        <input type="text" id="q" />
-        <input type="button" id="b" value="Нaмери това което" />
+        <input type="text" id="q" value="Например рисуванe" />
+        <input type="button" id="b" value="Нaмерете професионалист" />
     </div>
-</div>
+   
+      <ul class="list-group-flush w-100 p-2">
 
-<div class="text-center">
-    @if (User.IsInRole("Admin"))
-    {
-        <h1>Добре дошъл, @User.Identity!.Name!</h1>
-        <h1>Вие сте Админ!</h1>
-    }
-    else
-    {
-        <h1 class="display-4">Добре дошъл!</h1>
-        <div class="row">
-            @foreach (var laborService in Model)
-            {
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                    <div class="card" style="width: 18rem;">
-                        <img src="@laborService.MainImage" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@laborService.Name</h5>
-                            <p class="card-text">Описание: @laborService.Description</p>
-                            <p class="card-text">Категория: @laborService.CategoryName</p>
-                            <p class="card-text">Цена: @laborService.Price лв</p>
-                            <p class="card-text">Намаление: @laborService.Discount лв</p>
-                            <p class="card-text">Потребител: @laborService.AuthorName</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+        <li>
+            <i class="fa-solid fa-user "></i><a id="registerBtn" class="nav-link text-dark fw-bold" asp-area="Identity" asp-page="/Account/Register">Регистрирайте се като потребител</a>
+        </li>
+
+      </ul>
+</ul>    
+
+<ul class="container my-5 w-76 px-9 ">
+    <h3 class="mb-5">Как работи SkillBox?</h3>
+
+</ul>
+
+    <div class="text-center">
+        @if (User.IsInRole("Admin"))
+        {
+            <h1>Добре дошъл, @User.Identity!.Name!</h1>
+            <h1>Вие сте Админ!</h1>
+        }
+        else
+        {
+            <h1 class="display-4">Добре дошъл!</h1>
+            <div class="row">
+                @foreach (var laborService in Model)
+                {
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <div class="card" style="width: 18rem;">
+                            <img src="@laborService.MainImage" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@laborService.Name</h5>
+                                <p class="card-text">Описание: @laborService.Description</p>
+                                <p class="card-text">Категория: @laborService.CategoryName</p>
+                                <p class="card-text">Цена: @laborService.Price лв</p>
+                                <p class="card-text">Намаление: @laborService.Discount лв</p>
+                                <p class="card-text">Потребител: @laborService.AuthorName</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
-</div>
+                }
+            </div>
+        }
+    </div>

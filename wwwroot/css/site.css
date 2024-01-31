@@ -20,7 +20,7 @@ hr.hr-2 {
 }
 
 #registerBtn {
-/*TODO: BorderRadius*/
+  
 }
 .px-9 {
     margin: 8%;
@@ -30,26 +30,28 @@ hr.hr-2 {
 }
 
 #q {
-    padding 5px;
+    padding: 5px;
     font-size: 2em;
-    padding-left: 50px;
-    line-height: 30px
-
+    width: 58%;
+    line-height: 30px;
+    padding-left: 20px;
+    border-radius: 30px;
+    font-size: 1em;
+    
 }
 
 #b {
-    /* image replacement */
-
-
     height: 30px;
     display: block;
     position: absolute;
-    top: 9px;
-    left: 40%;
+    bottom: 3px;
+    left: 35%;
     background: gray url(button.png) 0 0 no-repeat;
-    /* placing next to input using float or absolute positioning omitted ... */
+    border-radius: 30px;
+    height: 38px;
 }
 
 div {
     position: relative;
 }
+
