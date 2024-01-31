@@ -13,3 +13,43 @@ hr.hr-2 {
 .w-45 {
     width: 45%;
 }
+
+.mx-20 {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#registerBtn {
+/*TODO: BorderRadius*/
+}
+.px-9 {
+    margin: 8%;
+}
+#q, #b {
+    margin: 0
+}
+
+#q {
+    padding 5px;
+    font-size: 2em;
+    padding-left: 50px;
+    line-height: 30px
+
+}
+
+#b {
+    /* image replacement */
+
+
+    height: 30px;
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: 40%;
+    background: gray url(button.png) 0 0 no-repeat;
+    /* placing next to input using float or absolute positioning omitted ... */
+}
+
+div {
+    position: relative;
+}

@@ -12,30 +12,18 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-skillBox border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DiplomnaRabotaNet8</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    @if (this.User.Identity!.IsAuthenticated)
-                    {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Demo">Demo</a>
-                            </li>
-                        </ul>
-                    }
-                    <partial name="_LoginPartial" />
-                </div>
+            <div class="container-fluid d-flex mx-20">
+                <a class="navbar-brand  p-2 " asp-area="" asp-controller="Home" asp-action="Index"><h4 class="my-0">SkillBox</h4></a>
+                <ul class="navbar-nav d-flex m-1">
 
+                    <li class="nav-item p-2 ms-2 my-0">
+                        <a class="nav-link text-dark btn fw-bold " asp-area="" asp-controller="" asp-action="">Публикувайте работа</a>
+                    </li>
+                    <li class="nav-item p-2 ms-2">
+                        <a class="nav-link text-dark btn fw-bold" asp-area="" asp-controller="" asp-action="">Как работи?</a>
+                    </li>
+                    <partial name="_LoginPartial" />
+                </ul>
             </div>
         </nav>
     </header>

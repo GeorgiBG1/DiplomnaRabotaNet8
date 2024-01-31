@@ -4,6 +4,15 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="container my-5 w-75 px-9">
+    <h2 class="mb-5">Намерете професионалист за всички ваши работи в и около къщата</h2>
+    <h4 class="mb-2">Какво работиш?</h4>
+    <div>
+        <input type="text" id="q" />
+        <input type="button" id="b" value="Нaмери това което" />
+    </div>
+</div>
+
 <div class="text-center">
     @if (User.IsInRole("Admin"))
     {
