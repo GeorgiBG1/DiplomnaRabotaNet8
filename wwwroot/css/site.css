@@ -15,7 +15,7 @@ hr.hr-2 {
 }
 
 .mx-20 {
-    margin-left: 20%;
+    margin-left: 21%;
     margin-right: 20%;
 }
 
@@ -54,4 +54,15 @@ hr.hr-2 {
 div {
     position: relative;
 }
-
+.container2 {
+    background-color: #f9f8f6;
+}
+.card-text {
+ padding: 1rem; 
+ margin: 3px;
+}
+.d-flex {
+}
+h5 {
+    
+}
