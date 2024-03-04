@@ -5,7 +5,7 @@
 }
 
 <h1 class="text-center mt-3">@ViewData["Title"]</h1>
-<hr class="mt-3 bg-skillBox hr-2"/>
+<hr class="mt-3 bg-skillBox hr-2" />
 
 <div class="row">
     <div class="col-md-4">
@@ -60,8 +60,10 @@
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
                         </p>
                     </div>
                 }
@@ -83,6 +85,60 @@
         </section>
     </div>
 </div>
+
+
+
+<div class="container-fluid appointment py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.4s">
+                <div class="appointment-form rounded p-5">
+                    <p class="fs-4 text-uppercase text-primary">Get In Touch</p>
+                    <h1 class="display-5 mb-4">Създай нов акаунт</h1>
+                    <form>
+                        <div class="row gy-3 gx-4">
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="First Name">
+                            </div>
+                            <div class="col-xl-6">
+                                <input type="email" class="form-control py-3 border-primary bg-transparent text-white" placeholder="Email">
+                            </div>
+                            <div class="col-xl-6">
+                                <input type="phone" class="form-control py-3 border-primary bg-transparent" placeholder="Phone">
+                            </div>
+                            <div class="col-xl-6">
+                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
+                                    <option selected>Your Gender</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">FeMale</option>
+                                    <option value="3">Others</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-6">
+                                <input type="date" class="form-control py-3 border-primary bg-transparent">
+                            </div>
+                            <div class="col-xl-6">
+                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
+                                    <option selected>Department</option>
+                                    <option value="1">Physiotherapy</option>
+                                    <option value="2">Physical Helth</option>
+                                    <option value="2">Treatments</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control border-primary bg-transparent text-white" name="text" id="area-text" cols="30" rows="5" placeholder="Write Comments"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="button" class="btn btn-primary text-white w-100 py-3 px-5">SUBMIT NOW</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

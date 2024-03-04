@@ -20,9 +20,9 @@ namespace DiplomnaRabotaNet8
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<SkillBoxUserRoleSeeder>();
-            builder.Services.AddScoped<SkillBoxAdminUserSeeder>();
-            builder.Services.AddScoped<SkillBoxCategorySeeder>();
-            builder.Services.AddScoped<SkillBoxLaborServiceSeeder>();
+            //builder.Services.AddScoped<SkillBoxAdminUserSeeder>();
+            //builder.Services.AddScoped<SkillBoxCategorySeeder>();
+            //builder.Services.AddScoped<SkillBoxLaborServiceSeeder>();
 
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -99,6 +99,41 @@ namespace DiplomnaRabotaNet8
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            using(var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var userManager = services.GetRequiredService<UserManager<SkillBoxUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+                string[] roleNames = { "Admin", "User" };
+                foreach (var roleName in roleNames)
+                {
+                    if (!roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                    {
+                        roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                    }
+                }
+
+                // Create an admin user if it doesn't exist
+                var adminEmail = "admin@admin.com";
+                var adminUser = userManager.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
+                if (adminUser == null)
+                {
+                    adminUser = new SkillBoxUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        City = SkillBox.App.Data.Enums.City.Sofia,
+                        DateOfBirth = new DateOnly(2000, 4, 0) 
+                    };
+                    userManager.CreateAsync(adminUser, "Admin@123").GetAwaiter().GetResult(); // Set the password as desired
+                    userManager.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
+                }
+            }
+
+
 
             app.Run();
         }
