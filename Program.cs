@@ -2,9 +2,6 @@ using DiplomnaRabotaNet8.Data;
 using DiplomnaRabotaNet8.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SkillBox.App.Data.Seeding;
-using SkillBox.App.Extensions;
-using System.Security.Claims;
 namespace DiplomnaRabotaNet8
 {
     public class Program
@@ -18,12 +15,6 @@ namespace DiplomnaRabotaNet8
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SkillBoxDbContext>(options =>
                 options.UseSqlServer(connectionString));
-
-            builder.Services.AddScoped<SkillBoxUserRoleSeeder>();
-            //builder.Services.AddScoped<SkillBoxAdminUserSeeder>();
-            //builder.Services.AddScoped<SkillBoxCategorySeeder>();
-            //builder.Services.AddScoped<SkillBoxLaborServiceSeeder>();
-
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<SkillBoxUser>(options =>
@@ -47,14 +38,14 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            builder.Services.AddAuthentication()
-            .AddGoogle(options =>
-            {
-                IConfigurationSection googleAuthNSection =
-                config.GetSection("Authentication:Google");
-                options.ClientId = googleAuthNSection["ClientId"];
-                options.ClientSecret = googleAuthNSection["ClientSecret"];
-            });
+            //builder.Services.AddAuthentication()
+            //.AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //    config.GetSection("Authentication:Google");
+            //    options.ClientId = googleAuthNSection["ClientId"];
+            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //});
             //.AddFacebook(options =>
             //{
             //    IConfigurationSection FBAuthNSection =
@@ -86,8 +77,6 @@ namespace DiplomnaRabotaNet8
                 app.UseHsts();
             }
 
-            app.UseDatabaseSeeding();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -99,41 +88,6 @@ namespace DiplomnaRabotaNet8
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
-
-            using(var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-
-                var userManager = services.GetRequiredService<UserManager<SkillBoxUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                string[] roleNames = { "Admin", "User" };
-                foreach (var roleName in roleNames)
-                {
-                    if (!roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
-                    {
-                        roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
-                    }
-                }
-
-                // Create an admin user if it doesn't exist
-                var adminEmail = "admin@admin.com";
-                var adminUser = userManager.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
-                if (adminUser == null)
-                {
-                    adminUser = new SkillBoxUser
-                    {
-                        UserName = adminEmail,
-                        Email = adminEmail,
-                        City = SkillBox.App.Data.Enums.City.Sofia,
-                        DateOfBirth = new DateOnly(2000, 4, 0) 
-                    };
-                    userManager.CreateAsync(adminUser, "Admin@123").GetAwaiter().GetResult(); // Set the password as desired
-                    userManager.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
-                }
-            }
-
-
 
             app.Run();
         }

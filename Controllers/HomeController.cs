@@ -22,20 +22,8 @@ namespace DiplomnaRabotaNet8.Controllers
 
         public IActionResult Index()
         {
-            var model = db.LaborServices.Select(s=> new LaborServiceViewModel
-            {
-                Name = s.Name,
-                AuthorName = s.AuthorName,
-                Description = s.Description,
-                CategoryName = s.Category.Name,
-                MainImage = s.MainImage,
-                Images = s.Images,
-                Price = s.Price,
-                Discount = s.Discount
-            }).ToList();
-            return View(model);
+            return View();
         }
-        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();
