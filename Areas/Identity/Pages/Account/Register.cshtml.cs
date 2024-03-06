@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SkillBox.App.Data.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
 {
@@ -95,6 +97,13 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            public int CityId { get; set; }
+            public SelectListItem Cities { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            public DateOnly DateOfBirth { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -137,17 +146,13 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Email = Input.Email;
+                //TODO
+                user.DateOfBirth = Input.DateOfBirth;
+                user.City = City.Varna;
+                user.EmailConfirmed = true;
                 //CreateUser();
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (_userManager.Users.Count() == 1)
-                {
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, "User");
-                }
                 //
                 if (result.Succeeded)
                 {

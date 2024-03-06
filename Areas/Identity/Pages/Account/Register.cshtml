@@ -95,41 +95,57 @@
                 <div class="appointment-form rounded p-5">
                     <p class="fs-4 text-uppercase text-primary">Get In Touch</p>
                     <h1 class="display-5 mb-4">Създай нов акаунт</h1>
-                    <form>
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <div class="row gy-3 gx-4">
                             <div class="col-xl-6">
-                                <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="First Name">
+                                <input asp-for="Input.UserName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Потребителско име">
+                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
                             </div>
                             <div class="col-xl-6">
-                                <input type="email" class="form-control py-3 border-primary bg-transparent text-white" placeholder="Email">
+                                <input asp-for="Input.Email" type="email" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Имейл">
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="col-xl-6">
-                                <input type="phone" class="form-control py-3 border-primary bg-transparent" placeholder="Phone">
+                                <input asp-for="Input.FirstName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Име">
+                            </div> 
+                            <div class="col-xl-6">
+                                <input asp-for="Input.LastName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Фамилия">
                             </div>
                             <div class="col-xl-6">
-                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
-                                    <option selected>Your Gender</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">FeMale</option>
-                                    <option value="3">Others</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-6">
-                                <input type="date" class="form-control py-3 border-primary bg-transparent">
+                                <input asp-for="Input.PhoneNumber" type="tel" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Телефон">
                             </div>
                             <div class="col-xl-6">
                                 <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
-                                    <option selected>Department</option>
-                                    <option value="1">Physiotherapy</option>
-                                    <option value="2">Physical Helth</option>
-                                    <option value="2">Treatments</option>
+                                    <option selected>Пол</option>
+                                    <option value="1">Мъж</option>
+                                    <option value="2">Жена</option>
+                                    <option value="3">Друго</option>
                                 </select>
                             </div>
-                            <div class="col-12">
-                                <textarea class="form-control border-primary bg-transparent text-white" name="text" id="area-text" cols="30" rows="5" placeholder="Write Comments"></textarea>
+                            <div class="col-xl-6">
+                                <input asp-for="Input.DateOfBirth" type="date" class="form-control py-3 border-primary bg-transparent text-black-50">
+                            </div>
+                            <div class="col-xl-6">
+                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
+                                    <option selected>Избери град</option>
+                                    <option value="1">София</option>
+                                    <option value="2">Пловдив</option>
+                                    <option value="3">Варна</option>
+                                    <option value="4">Бургас</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-6">
+                                <input asp-for="Input.Password" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Парола">
+                            </div>
+                            <div class="col-xl-6">
+                                <input asp-for="Input.ConfirmPassword" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Потвърди парола">
                             </div>
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary text-white w-100 py-3 px-5">SUBMIT NOW</button>
+                                <textarea class="form-control border-primary bg-transparent text-black-50" name="text" id="area-text" cols="30" rows="5" placeholder="Write Comments"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button id="registerSubmit" type="submit" class="btn btn-primary text-white w-100 py-3 px-5">Регистриране</button>
                             </div>
                         </div>
                     </form>
