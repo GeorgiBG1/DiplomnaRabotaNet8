@@ -1,13 +1,15 @@
 ﻿using ServiceStack.DataAnnotations;
-using SkillBox.App.Data.Models;
-namespace DiplomnaRabotaNet8.Data.Models
+using Data.Enums;
+namespace Data.Models
 {
     public class SkillBoxService : BaseEntity<int>
     {
-        public int Id { get; set; }
+        public SkillBoxService()
+        {
+            Reviews = new HashSet<Review>();
+        }
         [Unique]
         public string Name { get; set; }
-        public string AuthorName { get; set; }
         public string? Description { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
@@ -18,5 +20,11 @@ namespace DiplomnaRabotaNet8.Data.Models
         public virtual string? PhoneNumber { get; set; }
         public virtual string? WebsiteURL { get; set; }
         public virtual string? WebsiteName { get; set; }
+        public virtual string? OwnerName { get; set; }
+        public string OwnerId { get; set; }
+        public SkillBoxUser Owner { get; set; }
+        public City? City { get; set; }
+        public ServiceStatus ServiceStatus { get; set; } = ServiceStatus.None;
+        public virtual ICollection<Review>? Reviews { get; set; }
     }
 }

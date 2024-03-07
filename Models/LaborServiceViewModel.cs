@@ -1,4 +1,4 @@
-﻿using DiplomnaRabotaNet8.Data.Models;
+﻿using Data.Models;
 
 namespace SkillBox.App.Models
 {

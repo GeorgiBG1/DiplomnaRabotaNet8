@@ -34,8 +34,8 @@ namespace SkillBox.App.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WebsiteURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
-                    City = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -73,6 +73,19 @@ namespace SkillBox.App.Migrations
                         column: x => x.ParentCategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chats",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chats", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +201,6 @@ namespace SkillBox.App.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     MainImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -198,12 +210,22 @@ namespace SkillBox.App.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    City = table.Column<int>(type: "int", nullable: true),
+                    ServiceStatus = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LaborServices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LaborServices_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LaborServices_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -213,26 +235,77 @@ namespace SkillBox.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserServices",
+                name: "UserMessages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ChatId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserMessages_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserMessages_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LaborServiceId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RatingStars = table.Column<int>(type: "int", nullable: true),
+                    SkillBoxServiceId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserServices", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserServices_AspNetUsers_UserId",
+                        name: "FK_Reviews_LaborServices_SkillBoxServiceId",
+                        column: x => x.SkillBoxServiceId,
+                        principalTable: "LaborServices",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserChat",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SkillBoxServiceId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SkillBoxServiceId1 = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserChat", x => new { x.UserId, x.SkillBoxServiceId });
+                    table.ForeignKey(
+                        name: "FK_UserChat_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserServices_LaborServices_LaborServiceId",
-                        column: x => x.LaborServiceId,
+                        name: "FK_UserChat_LaborServices_SkillBoxServiceId1",
+                        column: x => x.SkillBoxServiceId1,
                         principalTable: "LaborServices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -288,14 +361,29 @@ namespace SkillBox.App.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserServices_LaborServiceId",
-                table: "UserServices",
-                column: "LaborServiceId");
+                name: "IX_LaborServices_OwnerId",
+                table: "LaborServices",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserServices_UserId",
-                table: "UserServices",
-                column: "UserId");
+                name: "IX_Reviews_SkillBoxServiceId",
+                table: "Reviews",
+                column: "SkillBoxServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserChat_SkillBoxServiceId1",
+                table: "UserChat",
+                column: "SkillBoxServiceId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMessages_ChatId",
+                table: "UserMessages",
+                column: "ChatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMessages_OwnerId",
+                table: "UserMessages",
+                column: "OwnerId");
         }
 
         /// <inheritdoc />
@@ -317,16 +405,25 @@ namespace SkillBox.App.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UserServices");
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "UserChat");
+
+            migrationBuilder.DropTable(
+                name: "UserMessages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "LaborServices");
 
             migrationBuilder.DropTable(
-                name: "LaborServices");
+                name: "Chats");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categories");

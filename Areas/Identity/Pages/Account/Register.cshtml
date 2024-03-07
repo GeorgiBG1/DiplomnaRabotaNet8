@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Регистрация";
 }
-
 <h1 class="text-center mt-3">@ViewData["Title"]</h1>
 <hr class="mt-3 bg-skillBox hr-2" />
 
@@ -98,6 +97,10 @@
                     <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <div class="row gy-3 gx-4">
+                            <div class="col-xl-6 form-control py-3 border-primary bg-transparent">
+                                <input asp-for="Input.Skiller" type="checkbox">
+                                <label asp-for="Input.Skiller" class="form-check-label w-50">Регистриране като Skiller</label>
+                            </div>
                             <div class="col-xl-6">
                                 <input asp-for="Input.UserName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Потребителско име">
                                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
@@ -108,7 +111,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <input asp-for="Input.FirstName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Име">
-                            </div> 
+                            </div>
                             <div class="col-xl-6">
                                 <input asp-for="Input.LastName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Фамилия">
                             </div>
@@ -116,15 +119,12 @@
                                 <input asp-for="Input.PhoneNumber" type="tel" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Телефон">
                             </div>
                             <div class="col-xl-6">
-                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
-                                    <option selected>Пол</option>
-                                    <option value="1">Мъж</option>
-                                    <option value="2">Жена</option>
-                                    <option value="3">Друго</option>
+                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example" asp-for="Input.Genders">
+                                    <option selected>Пол</option> 
                                 </select>
                             </div>
                             <div class="col-xl-6">
-                                <input asp-for="Input.DateOfBirth" type="date" class="form-control py-3 border-primary bg-transparent text-black-50">
+                                <input asp-for="Input.Password" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Парола">
                             </div>
                             <div class="col-xl-6">
                                 <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
@@ -136,14 +136,19 @@
                                 </select>
                             </div>
                             <div class="col-xl-6">
-                                <input asp-for="Input.Password" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Парола">
-                            </div>
-                            <div class="col-xl-6">
                                 <input asp-for="Input.ConfirmPassword" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Потвърди парола">
                             </div>
-                            <div class="col-12">
-                                <textarea class="form-control border-primary bg-transparent text-black-50" name="text" id="area-text" cols="30" rows="5" placeholder="Write Comments"></textarea>
-                            </div>
+                            @if ((Model.ExternalLogins?.Count ?? 0) != 0)
+                            {
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                    <div class="col-xl-6 form-control py-0 w-50 bg-transparent border-0">
+                                        @foreach (var provider in Model.ExternalLogins!)
+                                        {
+                                            <button type="submit" class="btn col-xl-6 form-control py-3 border-primary bg-transparent text-black-50" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </div>
+                                </form>
+                            }
                             <div class="col-12">
                                 <button id="registerSubmit" type="submit" class="btn btn-primary text-white w-100 py-3 px-5">Регистриране</button>
                             </div>

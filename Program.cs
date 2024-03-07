@@ -1,5 +1,5 @@
-using DiplomnaRabotaNet8.Data;
-using DiplomnaRabotaNet8.Data.Models;
+using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 namespace DiplomnaRabotaNet8
@@ -38,14 +38,14 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            //builder.Services.AddAuthentication()
-            //.AddGoogle(options =>
-            //{
-            //    IConfigurationSection googleAuthNSection =
-            //    config.GetSection("Authentication:Google");
-            //    options.ClientId = googleAuthNSection["ClientId"];
-            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
-            //});
+            builder.Services.AddAuthentication()
+            .AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                config.GetSection("Authentication:Google");
+                options.ClientId = googleAuthNSection["ClientId"];
+                options.ClientSecret = googleAuthNSection["ClientSecret"];
+            });
             //.AddFacebook(options =>
             //{
             //    IConfigurationSection FBAuthNSection =
@@ -63,6 +63,18 @@ namespace DiplomnaRabotaNet8
                 context.Database.Migrate();
                 // requires using Microsoft.Extensions.Configuration;
                 // Set password with the Secret Manager tool.
+            }
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "Admin", "Skiller" };
+                foreach (var role in roles)
+                {
+                    if (!roleManager.RoleExistsAsync(role).GetAwaiter().GetResult())
+                    {
+                        roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
             }
 
             // Configure the HTTP request pipeline.

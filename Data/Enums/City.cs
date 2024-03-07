@@ -1,4 +1,4 @@
-﻿namespace SkillBox.App.Data.Enums
+﻿namespace Data.Enums
 {
     public enum City
     {

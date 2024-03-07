@@ -12,14 +12,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using DiplomnaRabotaNet8.Data.Models;
+using Data.Models;
+using Data.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using SkillBox.App.Data.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
@@ -98,12 +98,15 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            public int GenderId { get; set; }
+            public SelectListItem Genders { get; set; }
+
+            [Required]
             public int CityId { get; set; }
             public SelectListItem Cities { get; set; }
 
             [Required]
-            [DataType(DataType.Date)]
-            public DateOnly DateOfBirth { get; set; }
+            public bool Skiller { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -124,9 +127,10 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-
         public async Task OnGetAsync(string returnUrl = null)
         {
+            ViewData["Genders"] = Input.Genders;
+            ViewData["Cities"] = Input.Cities;
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -146,14 +150,16 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Email = Input.Email;
-                //TODO
-                user.DateOfBirth = Input.DateOfBirth;
-                user.City = City.Varna;
-                user.EmailConfirmed = true;
+                
+                user.EmailConfirmed = true; //TODO scaffolding
                 //CreateUser();
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                //
+                if (Input.Skiller)
+                {
+                    result = await _userManager.AddToRoleAsync(user, "Skiller");
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

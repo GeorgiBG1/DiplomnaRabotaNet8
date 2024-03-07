@@ -1,4 +1,4 @@
-﻿namespace DiplomnaRabotaNet8.Data.Models
+﻿namespace Data.Models
 {
     public class Category
     {

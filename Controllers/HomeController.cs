@@ -1,11 +1,7 @@
-using DiplomnaRabotaNet8.Data;
+using Data;
 using DiplomnaRabotaNet8.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SkillBox.App.Models;
 using System.Diagnostics;
-using System.Net.WebSockets;
 
 namespace DiplomnaRabotaNet8.Controllers
 {

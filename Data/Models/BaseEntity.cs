@@ -1,4 +1,4 @@
-﻿namespace SkillBox.App.Data.Models
+﻿namespace Data.Models
 {
     public class BaseEntity<T>
     {
