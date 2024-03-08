@@ -8,6 +8,7 @@ namespace Data.Models
         {
             Reviews = new HashSet<Review>();
             Chats = new HashSet<Chat>();
+            ServiceUsers = new HashSet<ServiceUser>();
         }
         [Unique]
         public string Name { get; set; }
@@ -28,5 +29,6 @@ namespace Data.Models
         public ServiceStatus ServiceStatus { get; set; } = ServiceStatus.None;
         public virtual ICollection<Review>? Reviews { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }
+        public virtual ICollection<ServiceUser> ServiceUsers { get; set; }
     }
 }

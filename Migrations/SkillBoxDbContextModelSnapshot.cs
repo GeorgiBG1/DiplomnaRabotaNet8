@@ -55,12 +55,12 @@ namespace SkillBox.App.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("SkillBoxServiceId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SkillBoxServiceId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Chats");
                 });
@@ -104,17 +104,32 @@ namespace SkillBox.App.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SkillBoxServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SkillBoxServiceId");
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("Data.Models.ServiceUser", b =>
+                {
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ServiceId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ServiceUsers");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxService", b =>
@@ -183,7 +198,7 @@ namespace SkillBox.App.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("LaborServices");
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxUser", b =>
@@ -450,9 +465,13 @@ namespace SkillBox.App.Migrations
 
             modelBuilder.Entity("Data.Models.Chat", b =>
                 {
-                    b.HasOne("Data.Models.SkillBoxService", null)
+                    b.HasOne("Data.Models.SkillBoxService", "Service")
                         .WithMany("Chats")
-                        .HasForeignKey("SkillBoxServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Data.Models.ChatUser", b =>
@@ -474,9 +493,40 @@ namespace SkillBox.App.Migrations
 
             modelBuilder.Entity("Data.Models.Review", b =>
                 {
-                    b.HasOne("Data.Models.SkillBoxService", null)
+                    b.HasOne("Data.Models.SkillBoxService", "Service")
                         .WithMany("Reviews")
-                        .HasForeignKey("SkillBoxServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.SkillBoxUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.ServiceUser", b =>
+                {
+                    b.HasOne("Data.Models.SkillBoxService", "Service")
+                        .WithMany("ServiceUsers")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.SkillBoxUser", "User")
+                        .WithMany("ServiceUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxService", b =>
@@ -583,11 +633,15 @@ namespace SkillBox.App.Migrations
                     b.Navigation("Chats");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("ServiceUsers");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxUser", b =>
                 {
                     b.Navigation("ChatUsers");
+
+                    b.Navigation("ServiceUsers");
                 });
 #pragma warning restore 612, 618
         }

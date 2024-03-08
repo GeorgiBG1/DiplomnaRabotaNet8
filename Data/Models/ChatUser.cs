@@ -1,5 +1,8 @@
-﻿namespace Data.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Data.Models
 {
+    [PrimaryKey(nameof(ChatId), nameof(UserId))]
     public class ChatUser
     {
         public string UserId { get; set; }

@@ -15,8 +15,8 @@ namespace Data
             this.Database.Migrate();
         }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<SkillBoxService> LaborServices { get; set; }
-        //public DbSet<UserServiceUsed> UserServicesUsed { get; set; } TODO
+        public DbSet<SkillBoxService> Services { get; set; }
+        public DbSet<ServiceUser> ServiceUsers { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
@@ -28,7 +28,7 @@ namespace Data
             //modelBuilder.Entity<UserServiceUsed>();
             //TODO fix foreign keys (User, Service -> UserService)
             //modelBuilder.Entity<UserChat>().HasKey(c => new { c.UserId, c.SkillBoxServiceId });
-            modelBuilder.Entity<ChatUser>().HasKey(x => new { x.ChatId, x.UserId });
+            //!!! latest !!! modelBuilder.Entity<ChatUser>().HasKey(x => new { x.ChatId, x.UserId });
             //modelBuilder.Entity<ChatUser>().ForeignKey(
             //    name: "FK_ChatSkillBoxUser_AspNetUsers_UsersId",
             //    column: x => x.UserId,

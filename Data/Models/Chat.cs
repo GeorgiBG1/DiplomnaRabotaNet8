@@ -9,6 +9,8 @@ namespace Data.Models
             Id = Guid.NewGuid().ToString();
             ChatUsers = new HashSet<ChatUser>();
         }
+        public int ServiceId { get; set; }
+        public virtual SkillBoxService Service { get; set; }
         public virtual ICollection<ChatUser> ChatUsers { get; set; }
         public virtual ICollection<UserMessage> Messages { get; set; }
     }
