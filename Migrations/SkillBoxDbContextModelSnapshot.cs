@@ -55,9 +55,29 @@ namespace SkillBox.App.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("SkillBoxServiceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("SkillBoxServiceId");
+
                     b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("Data.Models.ChatUser", b =>
+                {
+                    b.Property<string>("ChatId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChatId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatUsers");
                 });
 
             modelBuilder.Entity("Data.Models.Review", b =>
@@ -419,27 +439,6 @@ namespace SkillBox.App.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SkillBox.App.Data.Models.UserChat", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SkillBoxServiceId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SkillBoxServiceId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "SkillBoxServiceId");
-
-                    b.HasIndex("SkillBoxServiceId1");
-
-                    b.ToTable("UserChat");
-                });
-
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
                     b.HasOne("Data.Models.Category", "ParentCategory")
@@ -447,6 +446,30 @@ namespace SkillBox.App.Migrations
                         .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("Data.Models.Chat", b =>
+                {
+                    b.HasOne("Data.Models.SkillBoxService", null)
+                        .WithMany("Chats")
+                        .HasForeignKey("SkillBoxServiceId");
+                });
+
+            modelBuilder.Entity("Data.Models.ChatUser", b =>
+                {
+                    b.HasOne("Data.Models.Chat", null)
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.SkillBoxUser", "User")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Data.Models.Review", b =>
@@ -541,25 +564,6 @@ namespace SkillBox.App.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SkillBox.App.Data.Models.UserChat", b =>
-                {
-                    b.HasOne("Data.Models.SkillBoxService", "SkillBoxService")
-                        .WithMany()
-                        .HasForeignKey("SkillBoxServiceId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.SkillBoxUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SkillBoxService");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
                     b.Navigation("Kids");
@@ -569,12 +573,21 @@ namespace SkillBox.App.Migrations
 
             modelBuilder.Entity("Data.Models.Chat", b =>
                 {
+                    b.Navigation("ChatUsers");
+
                     b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxService", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("Data.Models.SkillBoxUser", b =>
+                {
+                    b.Navigation("ChatUsers");
                 });
 #pragma warning restore 612, 618
         }

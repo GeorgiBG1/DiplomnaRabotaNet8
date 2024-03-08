@@ -7,6 +7,7 @@ namespace Data.Models
         public SkillBoxService()
         {
             Reviews = new HashSet<Review>();
+            Chats = new HashSet<Chat>();
         }
         [Unique]
         public string Name { get; set; }
@@ -26,5 +27,6 @@ namespace Data.Models
         public City? City { get; set; }
         public ServiceStatus ServiceStatus { get; set; } = ServiceStatus.None;
         public virtual ICollection<Review>? Reviews { get; set; }
+        public virtual ICollection<Chat> Chats { get; set; }
     }
 }
