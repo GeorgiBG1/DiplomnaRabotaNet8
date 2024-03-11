@@ -1,6 +1,4 @@
-﻿using Data.Models;
-
-namespace SkillBox.App.Models
+﻿namespace DTOs.OUTPUT
 {
     public class LaborServiceViewModel
     {

@@ -25,7 +25,7 @@
                 }
             } 
         }
-        public DateTime CreatedOn { get; }
+        public DateTime CreatedOn { get; private set; }
         public DateTime? DeletedOn { get; private set; } = null;
     }
 }

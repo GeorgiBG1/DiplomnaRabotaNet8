@@ -24,7 +24,7 @@ namespace Data.Models
         public virtual string? WebsiteName { get; set; }
         public virtual string? OwnerName { get; set; }
         public string OwnerId { get; set; }
-        public SkillBoxUser Owner { get; set; }
+        public virtual SkillBoxUser Owner { get; set; }
         public City? City { get; set; }
         public ServiceStatus ServiceStatus { get; set; } = ServiceStatus.None;
         public virtual ICollection<Review>? Reviews { get; set; }

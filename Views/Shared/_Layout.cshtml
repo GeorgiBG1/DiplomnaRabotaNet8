@@ -86,17 +86,15 @@
         <div class="row gx-0 align-items-center" style="height: 45px;">
             <div class="col-lg-8 text-center text-lg-start mb-lg-0">
                 <div class="d-flex flex-wrap">
-                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
-                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
-                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                    <a href="#" class="text-light"><i class="fa-solid fa-hashtag"></i>Топ 5 най-търсени услуги</a>
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
                 <div class="d-flex align-items-center justify-content-end">
-                    <a href="#" class="btn btn-light btn-square border rounded-circle nav-fill me-3"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="btn btn-light btn-square border rounded-circle nav-fill me-3"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="btn btn-light btn-square border rounded-circle nav-fill me-3"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="btn btn-light btn-square border rounded-circle nav-fill me-0"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com/" class="btn btn-light btn-square border rounded-circle nav-fill me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.x.com/" class="btn btn-light btn-square border rounded-circle nav-fill me-3"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/" class="btn btn-light btn-square border rounded-circle nav-fill me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" class="btn btn-light btn-square border rounded-circle nav-fill me-0"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
@@ -116,7 +114,7 @@
                 <div class="navbar-nav ms-auto py-0">
                     <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Начало</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Услуги</a>
                         <div class="dropdown-menu m-0">
                             <a href="appointment.html" class="dropdown-item">Appointment</a>
                             <a href="feature.html" class="dropdown-item">Features</a>
@@ -143,7 +141,7 @@
                             <partial name="_LoginPartial" />
                         </div>
                         <div class="card card-body ms-1" style="width: 98%;">
-                            <a href="contact.html" class="nav-item nav-link">Свържи се с нас</a>
+                            <a asp-controller="Chats" asp-action="Index" class="nav-item nav-link">Моите чатове</a>
                         </div>
                     </div>
                 </div>

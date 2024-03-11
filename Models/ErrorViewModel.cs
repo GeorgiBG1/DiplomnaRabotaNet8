@@ -1,4 +1,4 @@
-namespace DiplomnaRabotaNet8.Models
+namespace Models
 {
     public class ErrorViewModel
     {

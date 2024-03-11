@@ -2,6 +2,10 @@ using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SkillBox.App.Services;
+using SkillBox.App.Hubs;
+using Contracts;
+using Services;
 namespace DiplomnaRabotaNet8
 {
     public class Program
@@ -15,6 +19,13 @@ namespace DiplomnaRabotaNet8
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SkillBoxDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            //Services
+            builder.Services.AddScoped<DatabaseSeedService>();
+            builder.Services.AddTransient<IChatService, ChatService>();
+
+            //AutoMapper
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<SkillBoxUser>(options =>
@@ -37,6 +48,7 @@ namespace DiplomnaRabotaNet8
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+            builder.Services.AddSignalR();
 
             //builder.Services.AddAuthentication()
             //.AddGoogle(options =>
@@ -72,7 +84,7 @@ namespace DiplomnaRabotaNet8
                 {
                     if (!roleManager.RoleExistsAsync(role).GetAwaiter().GetResult())
                     {
-                        roleManager.CreateAsync(new IdentityRole(role));
+                        roleManager.CreateAsync(new IdentityRole(role)).Wait();
                     }
                 }
             }
@@ -100,6 +112,7 @@ namespace DiplomnaRabotaNet8
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+            app.MapHub<ChatHub>("/chatHub");
 
             app.Run();
         }
