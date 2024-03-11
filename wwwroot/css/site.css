@@ -1,68 +1,18 @@
-.bg-skillBox {
-    background-color: #AFEEEE;
+html {
+    font-size: 14px;
 }
 
-.text-skillBox {
-    color: #AFEEEE;
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
 }
 
-hr.hr-2 {
-    height: 2px;
-}
-
-.w-45 {
-    width: 45%;
-}
-
-.mx-20 {
-    margin-left: 21%;
-    margin-right: 20%;
-}
-
-#registerBtn {
-  
-}
-.px-9 {
-    margin: 8%;
-}
-#q, #b {
-    margin: 0
-}
-
-#q {
-    padding: 5px;
-    font-size: 2em;
-    width: 58%;
-    line-height: 30px;
-    padding-left: 20px;
-    border-radius: 30px;
-    font-size: 1em;
-    
-}
-
-#b {
-    height: 30px;
-    display: block;
-    position: absolute;
-    bottom: 3px;
-    left: 35%;
-    background: gray url(button.png) 0 0 no-repeat;
-    border-radius: 30px;
-    height: 38px;
-}
-
-div {
+html {
     position: relative;
+    min-height: 100%;
 }
-.container2 {
-    background-color: #f9f8f6;
-}
-.card-text {
- padding: 1rem; 
- margin: 3px;
-}
-.d-flex {
-}
-h5 {
-    
+
+body {
+    margin-bottom: 60px;
 }

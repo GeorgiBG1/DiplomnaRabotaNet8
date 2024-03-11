@@ -129,8 +129,6 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ViewData["Genders"] = Input.Genders;
-            ViewData["Cities"] = Input.Cities;
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
