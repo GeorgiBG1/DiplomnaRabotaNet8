@@ -21,9 +21,12 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", user, message).catch(function (err) {
+    let url = window.location.href;
+    let urlParts = url.split('/');
+    let chatId = urlParts[urlParts.length - 1];
+
+    connection.invoke("SendMessage", chatId, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
