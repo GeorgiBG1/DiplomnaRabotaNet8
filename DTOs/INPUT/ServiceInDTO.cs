@@ -1,6 +1,6 @@
 ﻿namespace DTOs.INPUT
 {
-    public class Neshto
+    public class ServiceInDTO
     {
     }
 }

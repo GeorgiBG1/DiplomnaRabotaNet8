@@ -1,6 +1,6 @@
 ﻿namespace DTOs.OUTPUT
 {
-    public class LaborServiceViewModel
+    public class ServiceDTO
     {
         public string Name { get; set; }
         public string AuthorName { get; set; }
