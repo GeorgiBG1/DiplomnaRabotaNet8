@@ -10,7 +10,8 @@ namespace SkillBox.App.AutoMapperConfiguration
         {
             CreateMap<Chat, ChatMiniDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
-                .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name));
+                .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name))
+                .ForMember(d => d.ParticipantsCount, opt => opt.MapFrom(c => c.ChatUsers.Count()));
 
             CreateMap<Chat, ChatDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))

@@ -43,17 +43,21 @@ namespace Services
         }
         public async Task AddUserMessageToChat(string chatId, string message, SkillBoxUser user)
         {
-            var chat = await dbContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
+            var chat = await dbContext.Chats.Include(c => c.ChatUsers)
+                .FirstOrDefaultAsync(c => c.Id == chatId);
             if (chat != null && user != null)
             {
-                var userMessage = new UserMessage
+                if (chat.ChatUsers.Any(cu => cu.UserId == user.Id))
                 {
-                    Content = message,
-                    Chat = chat,
-                    Owner = user
-                };
-                await dbContext.UserMessages.AddAsync(userMessage);
-                await dbContext.SaveChangesAsync();
+                    var userMessage = new UserMessage
+                    {
+                        Content = message,
+                        Chat = chat,
+                        Owner = user
+                    };
+                    await dbContext.UserMessages.AddAsync(userMessage);
+                    await dbContext.SaveChangesAsync();
+                }
             }
         }
     }

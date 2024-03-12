@@ -88,13 +88,28 @@ namespace SkillBox.App.Services
                 };
                 await dbContext.ServiceUsers.AddAsync(serviceUser1);
 
+                #region Chats
                 //Chats
                 var chat1 = new Chat()
                 {
                     Name = $"{user1.FirstName}, {user2.FirstName}",
                     Service = service1
                 };
-                await dbContext.Chats.AddAsync(chat1);
+                await dbContext.Chats.AddAsync(chat1); 
+
+                var chat2 = new Chat()
+                {
+                    Name = $"{user1.FirstName}, {user2.FirstName}",
+                    Service = service1
+                };
+                await dbContext.Chats.AddAsync(chat2);  
+                
+                var chat3 = new Chat()
+                {
+                    Name = $"{user1.FirstName}, {user2.FirstName}",
+                    Service = service1
+                };
+                await dbContext.Chats.AddAsync(chat3);
 
                 //UserMessages
                 var userMessage1 = new UserMessage()
@@ -113,7 +128,39 @@ namespace SkillBox.App.Services
                 };
                 await dbContext.UserMessages.AddAsync(userMessage2);
 
-                //ChatUsers
+                var userMessage3 = new UserMessage()
+                {
+                    Owner = user1,
+                    Chat = chat2,
+                    Content = "Пиша в новосъздадения чат!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage3);
+
+                var userMessage4 = new UserMessage()
+                {
+                    Owner = user2,
+                    Chat = chat2,
+                    Content = "Аз ти отговарям!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage4);
+
+                var userMessage5 = new UserMessage()
+                {
+                    Owner = user1,
+                    Chat = chat3,
+                    Content = "Пиша в новосъздадения чат!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage5);
+
+                var userMessage6 = new UserMessage()
+                {
+                    Owner = user2,
+                    Chat = chat3,
+                    Content = "Аз ти отговарям!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage6);
+
+                //ChatUsers - [Chats - Participants]
                 var chatUser1 = new ChatUser
                 {
                     Chat = chat1,
@@ -127,6 +174,35 @@ namespace SkillBox.App.Services
                     User = user2, //Participant2
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser2);
+
+                var chatUser3 = new ChatUser
+                {
+                    Chat = chat2,
+                    User = user1, //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser3);
+
+                var chatUser4 = new ChatUser
+                {
+                    Chat = chat2,
+                    User = user2, //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser4);
+
+                var chatUser5 = new ChatUser
+                {
+                    Chat = chat3,
+                    User = user1, //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser5);
+
+                var chatUser6 = new ChatUser
+                {
+                    Chat = chat3,
+                    User = user2, //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser6);
+                #endregion
 
                 await dbContext.SaveChangesAsync();
             }

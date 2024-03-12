@@ -1,36 +1,75 @@
 ﻿@model ICollection<ChatMiniDTO>
-<p>
-    You’ve probably heard of Lorem Ipsum before – it’s the most-used dummy text excerpt out there. People use it because it has a fairly normal distribution of letters and words (making it look like normal English), but it’s also Latin, which means your average reader won’t get distracted by trying to read it. It’s perfect for showcasing design work as it should look when fleshed out with text, because it allows viewers to focus on the design work itself, instead of the text. It’s also a great way to showcase the functionality of programs like word processors, font types, and more.
-
-    We’ve taken Lorem Ipsum to the next level with our HTML-Ipsum tool. As you can see, this Lorem Ipsum is tailor-made for websites and other online projects that are based in HTML. Most web design projects use Lorem Ipsum excerpts to begin with, but you always have to spend an annoying extra minute or two formatting it properly for the web.
-
-    Maybe you have a custom-styled ordered list you want to show off, or maybe you just want a long chunk of Lorem Ipsum that’s already wrapped in paragraph tags. No matter the need, we’ve put together a number of Lorem Ipsum samples ready to go with HTML tags and formatting in place. All you have to do is click the heading of any section on this page, and that HTML-Ipsum block is copied to your clipboard and ready to be loaded into a website redesign template, brand new design mockup, or any other digital project you might need dummy text for.
-
-    No matter the project, please remember to replace your fancy HTML-Ipsum with real content before you go live - this is especially important if you're planning to implement a content-based marketing strategy for your new creation! Lorem Ipsum text is all well and good to demonstrate a design or project, but if you set a website loose on the Internet without replacing dummy text with relevant, high quality content, you’ll run into all sorts of potential Search Engine Optimization issues like thin content, duplicate content, and more.
-
-    HTML-Ipsum is maintained by WebFX. For more information about us, please visit WebFX Reviews. To learn more about the industries we drive Internet marketing performormance for and our revenue driving services: SEO, PPC, social media, web design, local SEO and online advertising services.
-</p>
 <div class="container my-5">
-    <h3 class="text-center">Чатове</h3>
-    <table class="table text-center">
-        <thead>
-            <tr>
-                <th class="border-1">&#8470</th>
-                <th class="border-1">Име на чата</th>
-                <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
-            </tr>
-        </thead>
-        @foreach (var chat in Model)
-        {
-            <tbody>
-                <tr>
-                    <td class="border-1">@chat.Id</td>
-                    <td class="border-1">@chat.Name</td>
-                    <td class="border-1">
-                        <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                    </td>
-                </tr>
-            </tbody>
-        }
-    </table>
+    <div class="d-flex rounded-2" style="min-height: 500px; background-color: dimgrey;">
+        <div class="d-flex flex-column w-100 m-2 p-2 rounded-2" style="background-color: lightslategray;">
+            <h3 class="text-center">Чатове</h3>
+            @if (!Model.Any(c => c.ParticipantsCount <= 2))
+            {
+                <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                    <span>Нямате чатове</span>
+                </div>
+            }
+            else
+            {
+                foreach (var chat in Model.Where(c => c.ParticipantsCount <= 2))
+                {
+                    <table class="table table-primary text-center">
+                        <thead>
+                            <tr>
+                                <th class="border-1">&#8470</th>
+                                <th class="border-1">Име на чата</th>
+                                <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-1">@chat.Id</td>
+                                <td class="border-1">@chat.Name</td>
+                                <td class="border-1">
+                                    <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                <button type="button" class="btn btn-primary w-25 mt-auto mx-auto">Търсене на чат</button>
+            }
+        </div>
+        <div id="separator" class="mh-100" style="width: 2px; background-color: white;">
+        </div>
+        <div class="d-flex flex-column w-100 m-2 p-2 rounded-2" style="background-color: lightslategray;">
+            <h3 class="text-center">Чат групи</h3>
+            @if (!Model.Any(c => c.ParticipantsCount > 2))
+            {
+                <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                    <span>Нямате чат групи</span>
+                </div>
+            }
+            else
+            {
+                foreach (var chat in Model.Where(c => c.ParticipantsCount > 2))
+                {
+                    <table class="table table-primary text-center">
+                        <thead>
+                            <tr>
+                                <th class="border-1">&#8470</th>
+                                <th class="border-1">Име на чат групата</th>
+                                <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-1">@chat.Id</td>
+                                <td class="border-1">@chat.Name</td>
+                                <td class="border-1">
+                                    <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                <button type="button" class="btn btn-primary w-25 mt-auto mx-auto">Търсене на чат група</button>
+            }
+        </div>
+    </div>
 </div>
