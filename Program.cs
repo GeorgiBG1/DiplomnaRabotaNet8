@@ -27,6 +27,9 @@ namespace DiplomnaRabotaNet8
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
+            //Cloudinary
+            builder.Services.AddSingleton<ICloudinaryService, CloudinaryService>();
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<SkillBoxUser>(options =>
             {
