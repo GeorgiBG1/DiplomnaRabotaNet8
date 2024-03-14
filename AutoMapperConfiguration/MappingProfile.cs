@@ -7,7 +7,7 @@ namespace SkillBox.App.AutoMapperConfiguration
 {
     public class MappingProfile : Profile
     {
-        public MappingProfile() 
+        public MappingProfile()
         {
             //IN
             CreateMap<ServiceInDTO, SkillBoxService>()
@@ -26,6 +26,15 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.ServiceName, opt => opt.MapFrom(c => c.Service.Name))
                 .ForMember(d => d.ChatUsers, opt => opt.MapFrom(c => c.ChatUsers))
                 .ForMember(d => d.Messages, opt => opt.MapFrom(c => c.Messages));
+
+            CreateMap<SkillBoxService, ServiceCardDTO>()
+                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
+                 .ForMember(d => d.AuthorName, opt => opt.MapFrom(s => s.OwnerName))
+                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
+                 .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
+                 .ForMember(d => d.MainImage, opt => opt.MapFrom(s => s.MainImage))
+                 .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
+                 .ForMember(d => d.Discount, opt => opt.MapFrom(s => s.Discount));
 
         }
     }

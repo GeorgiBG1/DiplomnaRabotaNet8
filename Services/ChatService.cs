@@ -38,7 +38,7 @@ namespace Services
             var chats = dbContext.ChatUsers.Where(cu => cu.UserId == id)
                 .Select(cu => cu.Chat).OrderBy(c => c.CreatedOn)
                 .ToList();
-            var model = chats.Select(chat => mapper.Map<ChatMiniDTO>(chat)).ToList();
+            var model = chats.Select(mapper.Map<ChatMiniDTO>).ToList();
             return model;
         }
         public async Task AddUserMessageToChat(string chatId, string message, SkillBoxUser user)
