@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Models;
+using DTOs.INPUT;
 using DTOs.OUTPUT;
 
 namespace SkillBox.App.AutoMapperConfiguration
@@ -8,6 +9,12 @@ namespace SkillBox.App.AutoMapperConfiguration
     {
         public MappingProfile() 
         {
+            //IN
+            CreateMap<ServiceInDTO, SkillBoxService>()
+                .ForMember(d => d.Images, opt => opt.MapFrom(s => s.Images));
+            //TODO add more members
+
+            //OUT
             CreateMap<Chat, ChatMiniDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name))
@@ -19,6 +26,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.ServiceName, opt => opt.MapFrom(c => c.Service.Name))
                 .ForMember(d => d.ChatUsers, opt => opt.MapFrom(c => c.ChatUsers))
                 .ForMember(d => d.Messages, opt => opt.MapFrom(c => c.Messages));
+
         }
     }
 }

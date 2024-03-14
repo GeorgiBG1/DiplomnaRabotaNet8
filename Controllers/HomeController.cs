@@ -9,15 +9,10 @@ namespace DiplomnaRabotaNet8.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly SkillBoxDbContext db;
         private readonly DatabaseSeedService dbSeedService;
 
-        public HomeController(ILogger<HomeController> logger, SkillBoxDbContext db,
-            DatabaseSeedService dbSeedService)
+        public HomeController(DatabaseSeedService dbSeedService)
         {
-            _logger = logger;
-            this.db = db;
             this.dbSeedService = dbSeedService;
         }
 

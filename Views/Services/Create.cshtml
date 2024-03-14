@@ -1,4 +1,7 @@
 ﻿@model ServiceInDTO
 <div class="containder">
-
+    <form method="post" asp-action="Create"enctype="multipart/form-data">
+        <input asp-for="ImageFiles"/>
+        <button type="submit">Submit</button>
+    </form>
 </div>

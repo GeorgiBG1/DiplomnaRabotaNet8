@@ -22,7 +22,9 @@ namespace DiplomnaRabotaNet8
 
             //Services
             builder.Services.AddScoped<DatabaseSeedService>();
+            builder.Services.AddTransient<IOfferingService, OfferingService>();
             builder.Services.AddTransient<IChatService, ChatService>();
+            builder.Services.AddTransient<IImageService, ImageService>();
 
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -53,21 +55,14 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddRazorPages();
             builder.Services.AddSignalR();
 
-            //builder.Services.AddAuthentication()
-            //.AddGoogle(options =>
-            //{
-            //    IConfigurationSection googleAuthNSection =
-            //    config.GetSection("Authentication:Google");
-            //    options.ClientId = googleAuthNSection["ClientId"];
-            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
-            //});
-            //.AddFacebook(options =>
-            //{
-            //    IConfigurationSection FBAuthNSection =
-            //    config.GetSection("Authentication:Facebook");
-            //    options.AppId = FBAuthNSection["AppId"];
-            //    options.AppSecret = FBAuthNSection["AppSecret"];
-            //});
+            builder.Services.AddAuthentication()
+            .AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                config.GetSection("Authentication:Google");
+                options.ClientId = googleAuthNSection["ClientId"];
+                options.ClientSecret = googleAuthNSection["ClientSecret"];
+            });
 
             var app = builder.Build();
 
