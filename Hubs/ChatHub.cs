@@ -14,7 +14,7 @@ namespace SkillBox.App.Hubs
         {
             var user = await userManager.GetUserAsync(httpContext.HttpContext!.User);
             var username = user!.UserName;
-            await chatService.AddUserMessageToChat(chatId, message, user);
+            await chatService.AddUserMessageToChatAsync(chatId, message, user);
             await Clients.All.SendAsync("ReceiveMessage", username, message);
         }
     }

@@ -25,7 +25,7 @@ namespace SkillBox.App.Controllers
         }
         public IActionResult Index()
         {
-            var services = offeringService.GetServiceCardDTOs(5);
+            var services = offeringService.GetServiceCardDTOs(8);
             return View(services);
         }
         public IActionResult Details()

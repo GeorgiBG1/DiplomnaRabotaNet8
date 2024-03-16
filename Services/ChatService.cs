@@ -41,7 +41,7 @@ namespace Services
             var model = chats.Select(mapper.Map<ChatMiniDTO>).ToList();
             return model;
         }
-        public async Task AddUserMessageToChat(string chatId, string message, SkillBoxUser user)
+        public async Task AddUserMessageToChatAsync(string chatId, string message, SkillBoxUser user)
         {
             var chat = await dbContext.Chats.Include(c => c.ChatUsers)
                 .FirstOrDefaultAsync(c => c.Id == chatId);

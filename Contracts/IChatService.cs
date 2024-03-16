@@ -7,6 +7,6 @@ namespace Contracts
     {
         public ChatDTO GetChatDTOById(string id);
         public ICollection<ChatMiniDTO> GetAllChatsMiniDTOsByUserId(string id);
-        public Task AddUserMessageToChat(string chatId, string message, SkillBoxUser user);
+        public Task AddUserMessageToChatAsync(string chatId, string message, SkillBoxUser user);
     }
 }
