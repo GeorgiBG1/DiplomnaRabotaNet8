@@ -25,18 +25,18 @@ namespace SkillBox.App.Services
                 string[] phoneNumbers = new string[50];
                 for (int i = 0; i < phoneNumbers.Count(); i++)
                 {
-                    string rndNums = rnd.Next(0, 9).ToString();
+                    string rndNums = rnd.Next(0, 10).ToString();
                     for (int j = 0; j < 7; j++)
                     {
-                        rndNums += rnd.Next(0, 9).ToString();
+                        rndNums += rnd.Next(0, 10).ToString();
                     }
-                    phoneNumbers[i] = "359" + rndNums;
+                    phoneNumbers[i] = "3598" + rndNums;
                 }
 
                 City[] cities = new City[50];
                 for (int i = 0; i < cities.Count(); i++)
                 {
-                    cities[i] = (City)rnd.Next(0, 227);
+                    cities[i] = (City)rnd.Next(0, 228);
                 }
 
                 #region Ordinary users
@@ -438,7 +438,7 @@ namespace SkillBox.App.Services
                         OwnerName = ownerNames[i], //Too many users as skillers
                         PhoneNumber = phoneNumbers[i],
                         City = cities[i],
-                        ServiceStatus = (ServiceStatus)rnd.Next(0, 3)
+                        ServiceStatus = (ServiceStatus)rnd.Next(0, 4)
                     };
                     services.Add(service);
                     await dbContext.Services.AddAsync(service);
