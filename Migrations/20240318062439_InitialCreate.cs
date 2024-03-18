@@ -276,30 +276,6 @@ namespace SkillBox.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceUsers",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceUsers", x => new { x.ServiceId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_ServiceUsers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_ServiceUsers_Services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "Services",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ChatUsers",
                 columns: table => new
                 {
@@ -427,11 +403,6 @@ namespace SkillBox.App.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceUsers_UserId",
-                table: "ServiceUsers",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserMessages_ChatId",
                 table: "UserMessages",
                 column: "ChatId");
@@ -465,9 +436,6 @@ namespace SkillBox.App.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reviews");
-
-            migrationBuilder.DropTable(
-                name: "ServiceUsers");
 
             migrationBuilder.DropTable(
                 name: "UserMessages");

@@ -8,7 +8,6 @@ namespace Data.Models
         {
             Reviews = new HashSet<Review>();
             Chats = new HashSet<Chat>();
-            ServiceUsers = new HashSet<ServiceUser>();
         }
         [Unique]
         public string Name { get; set; }
@@ -23,12 +22,12 @@ namespace Data.Models
         public virtual string? WebsiteURL { get; set; }
         public virtual string? WebsiteName { get; set; }
         public virtual string? OwnerName { get; set; }
+        [Unique]
         public string OwnerId { get; set; }
         public virtual SkillBoxUser Owner { get; set; }
         public City? City { get; set; }
         public ServiceStatus ServiceStatus { get; set; } = ServiceStatus.None;
         public virtual ICollection<Review>? Reviews { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }
-        public virtual ICollection<ServiceUser> ServiceUsers { get; set; }
     }
 }

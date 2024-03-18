@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SkillBox.App.Migrations
 {
     [DbContext(typeof(SkillBoxDbContext))]
-    [Migration("20240311002640_InitialCreate")]
+    [Migration("20240318062439_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -128,21 +128,6 @@ namespace SkillBox.App.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("Data.Models.ServiceUser", b =>
-                {
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ServiceId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ServiceUsers");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxService", b =>
@@ -532,25 +517,6 @@ namespace SkillBox.App.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Models.ServiceUser", b =>
-                {
-                    b.HasOne("Data.Models.SkillBoxService", "Service")
-                        .WithMany("ServiceUsers")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.SkillBoxUser", "User")
-                        .WithMany("ServiceUsers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Service");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Data.Models.SkillBoxService", b =>
                 {
                     b.HasOne("Data.Models.Category", "Category")
@@ -560,7 +526,7 @@ namespace SkillBox.App.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Models.SkillBoxUser", "Owner")
-                        .WithMany()
+                        .WithMany("Services")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -659,15 +625,13 @@ namespace SkillBox.App.Migrations
                     b.Navigation("Chats");
 
                     b.Navigation("Reviews");
-
-                    b.Navigation("ServiceUsers");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxUser", b =>
                 {
                     b.Navigation("ChatUsers");
 
-                    b.Navigation("ServiceUsers");
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }
