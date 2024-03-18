@@ -555,7 +555,7 @@ namespace SkillBox.App.Services
                 #endregion
 
                 #region Services
-                string[] names = new string[50]
+                string[] names = new string[52]
                 {
                     "Почистване на килими",
                     "Почистване на прозорци",
@@ -606,10 +606,12 @@ namespace SkillBox.App.Services
                     "Аниматори за детско събитие",
                     "Курс по самоотбрана",
                     "Изработка на торти по поръчка",
-                    "Боядисване"
+                    "Боядисване",
+                    "Вашият козметик",
+                    "Професионален готвач"
                 };
 
-                string[] descriptions = new string[50]
+                string[] descriptions = new string[52]
                 {
                     "Добре дошли в нашата услуга за почистване на килими! Ние се грижим за безупречната чистота и свежест на вашите килими с усмивка. С нашите професионални методи и оборудване, вашите килими ще бъдат безпогрешно чисти и красиви. Оставете нас да се погрижим за тях, като ви осигурим спокойствие и удовлетворение от резултата. Свържете се с нас днес и осигурете си чистота и уют в дома си!",
                     "Почистване на прозорци! Ние се грижим за ярката и чиста атмосфера във вашия дом или офис. С професионални методи и внимателно внимание към всеки детайл, ние осигуряваме кристална яснота и блестящо чисти прозорци. Оставете ни да направим светлината да проникне във вашия живот с яркост и свежест!",
@@ -660,10 +662,12 @@ namespace SkillBox.App.Services
                     "Нашите аниматори са опитни и креативни, готови да създадат вълшебна атмосфера и да развеселят децата с множество забавни игри, лица за боядисване, възможности за творчество и интерактивни представления. Със забавни и разнообразни активности, ние създаваме уникално и незабравимо изживяване за децата и техните родители.",
                     "Персонализиран курс по самоотбрана - като вашият инструктор по самозащита, аз предоставям индивидуални уроци и обучение за увереност и безопасност в различни ситуации. Със своя опит и експертиза в областта на бойните изкуства и самозащита, аз ви уча на техники и стратегии за предпазване на себе си и вашите близки в защитена среда, които може да използвате на улицата при нужда.",
                     "Моят подход е да бъда внимателен към вашите желания и изисквания, като същевременно внимавам да създам торта, която отразява вашата индивидуалност и стил. Защото вида не е всичко, аз използвам най-добрите продукти на пазара за изработката на тортите и ги пека в деня на събитието, за да гарантирам че са винаги пресни.",
-                    "Ако имате една или няколко стаи за боядисване и бихте искали всяка капка боя да попадне на правилното място на стената, моля свържете се."
+                    "Ако имате една или няколко стаи за боядисване и бихте искали всяка капка боя да попадне на правилното място на стената, моля свържете се.",
+                    "Страдате ли от кожни проблеми като упорито акне, зачервявания, брадавици и т.н. Спрете да изпробвате домашни методи и се доверете на експерт да разреши вашите проблеми. Няма кожно заболяване което няма решение, свържете се с мен чрез тази обява и си запазете час.",
+                    "Как са готварските ви умения? Ако не са много добри или имате нужда от помощ за приготвянето на важна вечеря удома, не се колебайте да се свържете с мен. За мен готвенето е не само работа, но и удоволствие."
                 };
 
-                int[] mainImgIds = new int[50]
+                int[] mainImgIds = new int[52]
                 {
                     6195122,
                     18266080,
@@ -714,10 +718,12 @@ namespace SkillBox.App.Services
                     7180617,
                     7045483,
                     461431,
-                    994164
+                    994164,
+                    3738349,
+                    1267320
                 };
 
-                int[] imgSet1 = new int[50]
+                int[] imgSet1 = new int[52]
                 {
                     3965509,
                     4239091,
@@ -769,9 +775,11 @@ namespace SkillBox.App.Services
                     6253310,
                     2531546,
                     3990359,
+                    3851790,
+                    175753
                 };
 
-                int[] imgSet2 = new int[50]
+                int[] imgSet2 = new int[52]
                 {
                     38325,
                     713297,
@@ -823,6 +831,8 @@ namespace SkillBox.App.Services
                     8612011,
                     1702373,
                     221027,
+                    3212164,
+                    1040685
                 };
 
                 var urlStart = "https://images.pexels.com/photos/";
@@ -831,7 +841,7 @@ namespace SkillBox.App.Services
                 var extension = ".jpeg";
 
                 var services = new List<SkillBoxService>();
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 52; i++)
                 {
                     var service = new SkillBoxService()
                     {
@@ -957,22 +967,14 @@ namespace SkillBox.App.Services
                     services[48], category9, skiller1, 29, 111.90m);
                 SetCustomEntityProperties(
                     services[49], category3, skiller9, 50);
+                //
+                SetCustomEntityProperties(
+                    services[50], category13, skiller10, 60, 10.50m);
+                SetCustomEntityProperties(
+                    services[51], category3, skiller1, 20);
 
                 services.ForEach(async s => await dbContext.Services.AddAsync(s));
 
-                #endregion
-
-                #region ServiceUsers
-                //ServiceUser[] serviceUsers = new ServiceUser[50];
-                //for (int i = 0; i < serviceUsers.Count(); i++)
-                //{
-                //    var serviceUser = new ServiceUser
-                //    {
-                //        Service = services[0],
-                //        User = user1,
-                //    };
-                //    await dbContext.ServiceUsers.AddAsync(serviceUser);
-                //}
                 #endregion
 
                 #region Chats
@@ -1187,6 +1189,108 @@ namespace SkillBox.App.Services
                     User = commenter5 //Participant2
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser20);
+                #endregion
+
+                #region Chat groups
+                var chatGroup1 = new Chat()
+                {
+                    Name = $"{skiller1.FirstName}, {commenter3.FirstName}",
+                    Service = services[48]
+                };
+                await dbContext.Chats.AddAsync(chatGroup1);
+                
+                var chatGroup2 = new Chat()
+                {
+                    Name = $"{skiller1.FirstName}, {commenter5.FirstName}",
+                    Service = services[16]
+                };
+                await dbContext.Chats.AddAsync(chatGroup2);
+                
+                var chatGroup3 = new Chat()
+                {
+                    Name = $"{skiller3.FirstName}, {skiller12.FirstName}",
+                    Service = services[34]
+                };
+                await dbContext.Chats.AddAsync(chatGroup3);
+                #endregion
+
+                #region ChatUsers - [Chats - Participants]
+                var chatUser21 = new ChatUser
+                {
+                    Chat = chatGroup1,
+                    User = skiller1 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser21);
+
+                var chatUser22 = new ChatUser
+                {
+                    Chat = chatGroup1,
+                    User = commenter3 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser22);
+
+                var chatUser23 = new ChatUser
+                {
+                    Chat = chatGroup1,
+                    User = commenter1 //Participant3
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser23);
+
+                var chatUser24 = new ChatUser
+                {
+                    Chat = chatGroup1,
+                    User = ordinaryUser2 //Participant4
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser24);
+
+                var chatUser25 = new ChatUser
+                {
+                    Chat = chatGroup1,
+                    User = skiller14 //Participant5
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser25);
+                //
+                var chatUser26 = new ChatUser
+                {
+                    Chat = chatGroup2,
+                    User = skiller1 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser26);
+
+                var chatUser27 = new ChatUser
+                {
+                    Chat = chatGroup2,
+                    User = commenter5 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser27);
+
+                var chatUser28 = new ChatUser
+                {
+                    Chat = chatGroup2,
+                    User = commenter4 //Participant3
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser28);
+                //
+                var chatUser29 = new ChatUser
+                {
+                    Chat = chatGroup3,
+                    User = skiller3 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser29);
+
+                var chatUser30 = new ChatUser
+                {
+                    Chat = chatGroup3,
+                    User = skiller12 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser30);
+
+                var chatUser31 = new ChatUser
+                {
+                    Chat = chatGroup3,
+                    User = skiller13 //Participant3
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser31);
                 #endregion
 
                 #region UserMessages
@@ -1509,10 +1613,153 @@ namespace SkillBox.App.Services
                     Content = "Разбирам, не се притеснявайте, ще поправим този лек говорен дефект. Защо направо не ми се обадите?"
                 };
                 await dbContext.UserMessages.AddAsync(userMessage40);
+                //
+                var userMessage41 = new UserMessage()
+                {
+                    Owner = commenter3,
+                    Chat = chatGroup1,
+                    Content = "Здравейте, свързваме се с вас по случай наближаващата ни сватба. В чата добавих младоженеца- Виктор Попов, нашия сватбен агент Елиза Иванова, и майка ми Радостина Димитрова."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage41);
+                
+                var userMessage42 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chatGroup1,
+                    Content = "Добър ден на всички ви, радвам се че се запознаваме поради такъв хубав случай. Бихте ли споделили идеите ви за торта и колко гости мислите да поканите, за да предвидим каква да бъде тортата и колко ще ви струва."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage42);
+                
+                var userMessage43 = new UserMessage()
+                {
+                    Owner = ordinaryUser2,
+                    Chat = chatGroup1,
+                    Content = "Това което младоженците вече споделиха, че харесват е тъмно синия цвят, мислят да го използват много в декорацията на сватбата. Харесват и бели рози, което също ще бъде част от декорацията, така че мисля че ако внесем малко цвят в тортата няма да е лошо."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage43);
+                
+                var userMessage44 = new UserMessage()
+                {
+                    Owner = skiller14,
+                    Chat = chatGroup1,
+                    Content = "Да, харесва ми идеята и на мен, но да не е прекалено шарено, може би 1-2 цвята най-много. Абе най-добре розово. А гостите ще бъдат 120 човека, така че 130 парчета торта."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage44);
+                
+                var userMessage45 = new UserMessage()
+                {
+                    Owner = commenter1,
+                    Chat = chatGroup1,
+                    Content = "А, само да не е всичко розово. По-добре по-неутрален цвят."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage45);
+                
+                var userMessage46 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chatGroup1,
+                    Content = "Мисля че разбирам какво имате наум, ще ви помоля за малко търпение в следващите 2 дни когато ще изработя 3 различни дизайна на тортата и ще ви ги изпратя. Когато си харесате дизейн, може да направим и избор на вкус и т.н До скоро и ако имате въпроси, моля обадете се."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage46);
+                //
+                var userMessage47 = new UserMessage()
+                {
+                    Owner = commenter5,
+                    Chat = chatGroup2,
+                    Content = "Добър ден г-н Иванов. Свързваме се с вас защото и двамата искаме да учим в чужбина след 12 клас, но англииският ни не е на много добро ниво."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage47);
+                
+                var userMessage48 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chatGroup2,
+                    Content = "Здравейте ученици, кой клас сте и за кое ниво трябва да се подготвите?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage48);
+                
+                var userMessage49 = new UserMessage()
+                {
+                    Owner = commenter4,
+                    Chat = chatGroup2,
+                    Content = "Сега сме 10ти клас и нивото ни е колко A2, но трябва да го повишим до C1, защото това е което се изисква от университетите."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage49);
+                
+                var userMessage50 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chatGroup2,
+                    Content = "Разбирам, в такиъв случай може ли да споделите адрес на някой от вас където мога да дойда и да проведем бърз тест, за да знаем със сигурност нивото? Вторник другата седмица в 11 добре ли е?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage50);
+                
+                var userMessage51 = new UserMessage()
+                {
+                    Owner = commenter5,
+                    Chat = chatGroup2,
+                    Content = "Да, можете да дойдете на този адрес. Вторник в 11 е удобно и за двама ни. Има ли нещо което трябва да подготвим за изпита?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage51);
+                
+                var userMessage52 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chatGroup2,
+                    Content = "Не, нищо не е необходимо засега. Ще се видим значи другата седмица във вторник в 11 часа."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage52);
+                //
+                var userMessage53 = new UserMessage()
+                {
+                    Owner = skiller12,
+                    Chat = chatGroup3,
+                    Content = "Здравейте г-н Василев! Свързваме се с вас по препоръка на наш познат, които вече работи с вас по бракоразводно дело. Нашия случай е същия, ние искаме да се разведем, но имаме много имоти заедно и фирма за подялба, което прави нещата малко по-сложни."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage53);
+                
+                var userMessage54 = new UserMessage()
+                {
+                    Owner = skiller3,
+                    Chat = chatGroup3,
+                    Content = "Приятно ми е да се запознаем, какво точно имате за подялба и какви са вашите предпочитания, имате ли план кой ще остане във фирмата например?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage54);
+                
+                var userMessage55 = new UserMessage()
+                {
+                    Owner = skiller13,
+                    Chat = chatGroup3,
+                    Content = "Тъй като аз създадох фирмата, мисля че е редно аз да продължа да я управлявам, което означама че мога да заплатя на Милена нейната част от фирмата и тя да напусне. Останалата част от имотите мисля че можем да продадем и да си разделим по равно, тъй като сме се сдобили с тях по време на брака."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage55);
+                
+                var userMessage56 = new UserMessage()
+                {
+                    Owner = skiller12,
+                    Chat = chatGroup3,
+                    Content = "Да, аз също съм съгласна с това, може да продадем всичко и да оставим по един апартамент на всеки от нас, който има същата стойност като другия. Мисля че така е честно."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage56);
+                
+                var userMessage57 = new UserMessage()
+                {
+                    Owner = skiller3,
+                    Chat = chatGroup3,
+                    Content = "В такъв случай мисля че можем да започнем процеса от утре. Хубаво е че вече сте обсъдили и решили всичко предварително. Аз ще се заема с подробностите и ще ви изпратя по-късно линк, чрез който да ми изпратите всичките си документи."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage57);
+                
+                var userMessage58 = new UserMessage()
+                {
+                    Owner = skiller13,
+                    Chat = chatGroup3,
+                    Content = "Добре, ще очакваме. Ако имате въпроси, не се колебайте да ни се обадите."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage58);
                 #endregion
 
-                //TODO Add Chat groups (Groups, ChatGroupUsers, UserGroupMessages)
-
+                //TODO Add Reviews
                 await dbContext.SaveChangesAsync();
             }
         }

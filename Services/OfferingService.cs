@@ -5,7 +5,6 @@ using Data.Models;
 using DTOs.INPUT;
 using DTOs.OUTPUT;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Services
 {
@@ -27,14 +26,18 @@ namespace Services
             if (skipCount != 0)
             {
                 services = dbContext.Services
+                    .OrderByDescending(s => s.Id)
                     .Include(s => s.Category)
                     .Skip(skipCount).Take(count).ToList();
+                services.ForEach(s => s.Description = s.Description![..50]);
                 model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
                 return model;
             }
             services = dbContext.Services
+                .OrderByDescending(s => s.Id)
                 .Include(s => s.Category)
                 .Take(count).ToList();
+            services.ForEach(s => s.Description = s.Description![..50]);
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }

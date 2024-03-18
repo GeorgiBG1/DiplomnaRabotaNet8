@@ -34,7 +34,8 @@ namespace SkillBox.App.Controllers
         }
         public IActionResult MyServices()
         {
-            return View();
+            var services = offeringService.GetServiceCardDTOs(8, 8);
+            return View(services);
         }
         [HttpGet]
         public IActionResult Create()

@@ -35,9 +35,13 @@ namespace Services
         }
         public ICollection<ChatMiniDTO> GetAllChatsMiniDTOsByUserId(string id)
         {
-            var chats = dbContext.ChatUsers.Where(cu => cu.UserId == id)
-                .Select(cu => cu.Chat).OrderBy(c => c.CreatedOn)
+            var chats = dbContext.Chats
+                .Include(c => c.ChatUsers)
+                .Where(c => c.ChatUsers
+                .Select(cu => cu.UserId).Contains(id))
+                .OrderBy(c => c.CreatedOn)
                 .ToList();
+
             var model = chats.Select(mapper.Map<ChatMiniDTO>).ToList();
             return model;
         }
@@ -59,6 +63,14 @@ namespace Services
                     await dbContext.SaveChangesAsync();
                 }
             }
+        }
+        public async Task<List<ChatUser>> GetChatUsersByChatIdAsync(string id)
+        {
+            var chatUsers = await dbContext.ChatUsers
+                .Where(cu => cu.ChatId == id)
+                .Include(cu => cu.User)
+                .ToListAsync();
+            return chatUsers;
         }
     }
 }
