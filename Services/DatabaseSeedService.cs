@@ -3,6 +3,7 @@ using Data.Models;
 using Data.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.X86;
 
 namespace SkillBox.App.Services
 {
@@ -22,7 +23,9 @@ namespace SkillBox.App.Services
             if (!await dbContext.Categories.AnyAsync())
             {
                 Random rnd = new Random();
-                string[] phoneNumbers = new string[50];
+
+                #region Phone numbers
+                string[] phoneNumbers = new string[25];
                 for (int i = 0; i < phoneNumbers.Count(); i++)
                 {
                     string rndNums = rnd.Next(0, 10).ToString();
@@ -32,120 +35,526 @@ namespace SkillBox.App.Services
                     }
                     phoneNumbers[i] = "3598" + rndNums;
                 }
+                #endregion
 
-                City[] cities = new City[50];
+                #region Citites
+                City[] cities = new City[25];
                 for (int i = 0; i < cities.Count(); i++)
                 {
                     cities[i] = (City)rnd.Next(0, 228);
                 }
+                #endregion
 
                 #region Ordinary users
-                //Users
-                var user1 = new SkillBoxUser
+                var ordinaryUser1 = new SkillBoxUser
                 {
-                    UserName = "test123",
-                    NormalizedUserName = "TEST123",
-                    Email = "pesho@peshov.com",
-                    NormalizedEmail = "PESHO@PESHOV.COM",
+                    UserName = "georgivasilev82",
+                    NormalizedUserName = "GEORGIVASILEV82",
+                    Email = "georgivasilev82@gmail.com",
+                    NormalizedEmail = "GEORGIVASILEV82@GMAIL.COM",
                     EmailConfirmed = true,
-                    FirstName = "Димитър",
+                    FirstName = "Георги",
                     LastName = "Василев",
-                    PhoneNumber = "359871234567",
+                    PhoneNumber = phoneNumbers[0],
                     PhoneNumberConfirmed = true,
                     Gender = Gender.Male,
-                    City = City.Shumen,
+                    City = cities[0],
                 };
-                await userManager.CreateAsync(user1, "123456");
+                await userManager.CreateAsync(ordinaryUser1, "123456");
 
-                var user2 = new SkillBoxUser
+                var ordinaryUser2 = new SkillBoxUser
                 {
-                    UserName = "emi43",
-                    NormalizedUserName = "EMI43",
-                    Email = "emi43@petrova.com",
-                    NormalizedEmail = "EMI43@PETROVA.COM",
+                    UserName = "elizaivanova96",
+                    NormalizedUserName = "ELIZAIVANOVA96",
+                    Email = "elizaivanova96@gmail.com",
+                    NormalizedEmail = "ELIZAIVANOVA96@GMAIL.COM",
                     EmailConfirmed = true,
-                    FirstName = "Emi",
-                    LastName = "Petrova",
+                    FirstName = "Елиза",
+                    LastName = "Ивановa",
+                    PhoneNumber = phoneNumbers[1],
+                    PhoneNumberConfirmed = true,
                     Gender = Gender.Female,
-                    City = City.Varna,
+                    City = cities[1],
+                };
+                await userManager.CreateAsync(ordinaryUser2, "123456");
+                #endregion
+
+                #region Admins
+                var admin1 = new SkillBoxUser
+                {
+                    UserName = "pavelangelov94",
+                    NormalizedUserName = "PAVELANGELOV94",
+                    Email = "pavelangelov94@gmail.com",
+                    NormalizedEmail = "PAVELANGELOV94@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Павел",
+                    LastName = "Ангелов",
+                    PhoneNumber = phoneNumbers[2],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[2],
+                };
+                await userManager.CreateAsync(admin1, "123456");
+
+                var admin2 = new SkillBoxUser
+                {
+                    UserName = "ninapetrova97",
+                    NormalizedUserName = "NINAPETROVA97",
+                    Email = "ninapetrova97@gmail.com",
+                    NormalizedEmail = "NINAPETROVA97@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Нина",
+                    LastName = "Петрова",
+                    PhoneNumber = phoneNumbers[3],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[3],
+                };
+                await userManager.CreateAsync(admin2, "123456");
+                #endregion
+
+                #region Commenters
+                var commenter1 = new SkillBoxUser
+                {
+                    UserName = "popov88",
+                    NormalizedUserName = "POPOV88",
+                    Email = "popov88@gmail.com",
+                    NormalizedEmail = "POPOV88@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Виктор",
+                    LastName = "Попов",
+                    PhoneNumber = phoneNumbers[4],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[4],
+                };
+                await userManager.CreateAsync(commenter1, "123456");
+
+                var commenter2 = new SkillBoxUser
+                {
+                    UserName = "georgiev90",
+                    NormalizedUserName = "GEORGIEV90",
+                    Email = "georgiev90@gmail.com",
+                    NormalizedEmail = "GEORGIEV90@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Андрей",
+                    LastName = "Георгиев",
+                    PhoneNumber = phoneNumbers[5],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[5],
+                };
+                await userManager.CreateAsync(commenter2, "123456");
+
+                var commenter3 = new SkillBoxUser
+                {
+                    UserName = "dimitrova93",
+                    NormalizedUserName = "DIMITROVA93",
+                    Email = "dimitrova93@gmail.com",
+                    NormalizedEmail = "DIMITROVA93@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Йоана",
+                    LastName = "Димитрова",
+                    PhoneNumber = phoneNumbers[6],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[6],
+                };
+                await userManager.CreateAsync(commenter3, "123456");
+
+                var commenter4 = new SkillBoxUser
+                {
+                    UserName = "vulchev89",
+                    NormalizedUserName = "VULCHEV89",
+                    Email = "vulchev89@gmail.com",
+                    NormalizedEmail = "VULCHEV89@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Мартин",
+                    LastName = "Вълчев",
+                    PhoneNumber = phoneNumbers[7],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[7],
+                };
+                await userManager.CreateAsync(commenter4, "123456");
+
+                var commenter5 = new SkillBoxUser
+                {
+                    UserName = "ilieva92",
+                    NormalizedUserName = "ILIEVA92",
+                    Email = "ilieva92@gmail.com",
+                    NormalizedEmail = "ILIEVA92@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Симона",
+                    LastName = "Илиева",
+                    PhoneNumber = phoneNumbers[8],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[8],
+                };
+                await userManager.CreateAsync(commenter5, "123456");
+                #endregion
+
+                #region Skillers
+                var skiller1 = new SkillBoxUser
+                {
+                    UserName = "ivanivanov91",
+                    NormalizedUserName = "IVANIVANOV91",
+                    Email = "ivanivanov91@gmail.com",
+                    NormalizedEmail = "IVANIVANOV91@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Иван",
+                    LastName = "Иванов",
+                    PhoneNumber = phoneNumbers[9],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[9],
+                };
+                await userManager.CreateAsync(skiller1, "123456");
+
+                var skiller2 = new SkillBoxUser
+                {
+                    UserName = "mariapetrova88",
+                    NormalizedUserName = "MARIAPETROVA88",
+                    Email = "mariapetrova88@gmail.com",
+                    NormalizedEmail = "MARIAPETROVA88@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Мария",
+                    LastName = "Петрова",
+                    PhoneNumber = phoneNumbers[10],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[10],
+                };
+                await userManager.CreateAsync(skiller2, "123456");
+
+                var skiller3 = new SkillBoxUser
+                {
+                    UserName = "petervasilev87",
+                    NormalizedUserName = "PETERVASILEV87",
+                    Email = "petervasilev87@gmail.com",
+                    NormalizedEmail = "PETERVASILEV87@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Петър",
+                    LastName = "Василев",
+                    PhoneNumber = phoneNumbers[11],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[11],
+                };
+                await userManager.CreateAsync(skiller3, "123456");
+
+                var skiller4 = new SkillBoxUser
+                {
+                    UserName = "elenageorgieva86",
+                    NormalizedUserName = "ELENAGEORGIEVA86",
+                    Email = "elenageorgieva86@gmail.com",
+                    NormalizedEmail = "ELENAGEORGIEVA86@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Елена",
+                    LastName = "Георгиева",
+                    PhoneNumber = phoneNumbers[12],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[12],
+                };
+                await userManager.CreateAsync(skiller4, "123456");
+
+                var skiller5 = new SkillBoxUser
+                {
+                    UserName = "georgigeorgiev83",
+                    NormalizedUserName = "GEORGIGEORGIEV83",
+                    Email = "georgigeorgiev83@gmail.com",
+                    NormalizedEmail = "GEORGIGEORGIEV83@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Георги",
+                    LastName = "Георгиев",
+                    PhoneNumber = phoneNumbers[13],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[13],
+                };
+                await userManager.CreateAsync(skiller5, "123456");
+
+                var skiller6 = new SkillBoxUser
+                {
+                    UserName = "nadezhdaivanova89",
+                    NormalizedUserName = "NADEZHDAIVANOVA89",
+                    Email = "nadezhdaivanova89@gmail.com",
+                    NormalizedEmail = "NADEZHDAIVANOVA89@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Надежда",
+                    LastName = "Иванова",
+                    PhoneNumber = phoneNumbers[14],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[14],
+                };
+                await userManager.CreateAsync(skiller6, "123456");
+
+                var skiller7 = new SkillBoxUser
+                {
+                    UserName = "dimitardimitrov85",
+                    NormalizedUserName = "DIMITARDIMITROV85",
+                    Email = "dimitardimitrov85@gmail.com",
+                    NormalizedEmail = "DIMITARDIMITROV85@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Димитър",
+                    LastName = "Димитров",
+                    PhoneNumber = phoneNumbers[15],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[15],
                     WebsiteName = "NewHorizons"
                 };
-                await userManager.CreateAsync(user2, "123456");
+                await userManager.CreateAsync(skiller7, "123456");
+
+                var skiller8 = new SkillBoxUser
+                {
+                    UserName = "victoriaangelova90",
+                    NormalizedUserName = "VICTORIAANGELOVA90",
+                    Email = "victoriaangelova90@gmail.com",
+                    NormalizedEmail = "VICTORIAANGELOVA90@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Виктория",
+                    LastName = "Ангелова",
+                    PhoneNumber = phoneNumbers[16],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[16],
+                };
+                await userManager.CreateAsync(skiller8, "123456");
+
+                var skiller9 = new SkillBoxUser
+                {
+                    UserName = "stefanstefanov84",
+                    NormalizedUserName = "STEFANSTEFANOV84",
+                    Email = "stefanstefanov84@gmail.com",
+                    NormalizedEmail = "STEFANSTEFANOV84@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Стефан",
+                    LastName = "Стефанов",
+                    PhoneNumber = phoneNumbers[17],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[17],
+                };
+                await userManager.CreateAsync(skiller9, "123456");
+
+                var skiller10 = new SkillBoxUser
+                {
+                    UserName = "annavasileva92",
+                    NormalizedUserName = "ANNAVASILEVA92",
+                    Email = "annavasileva92@gmail.com",
+                    NormalizedEmail = "ANNAVASILEVA92@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Анна",
+                    LastName = "Василева",
+                    PhoneNumber = phoneNumbers[18],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[18],
+                };
+                await userManager.CreateAsync(skiller10, "123456");
+
+                var skiller11 = new SkillBoxUser
+                {
+                    UserName = "kirilpetrov93",
+                    NormalizedUserName = "KIRILPETROV93",
+                    Email = "kirilpetrov93@gmail.com",
+                    NormalizedEmail = "KIRILPETROV93@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Кирил",
+                    LastName = "Петров",
+                    PhoneNumber = phoneNumbers[19],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[19],
+                };
+                await userManager.CreateAsync(skiller11, "123456");
+
+                var skiller12 = new SkillBoxUser
+                {
+                    UserName = "milenanikolova94",
+                    NormalizedUserName = "MILENANIKOLOVA94",
+                    Email = "milenanikolova94@gmail.com",
+                    NormalizedEmail = "MILENANIKOLOVA94@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Милена",
+                    LastName = "Николова",
+                    PhoneNumber = phoneNumbers[20],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[20],
+                };
+                await userManager.CreateAsync(skiller12, "123456");
+
+                var skiller13 = new SkillBoxUser
+                {
+                    UserName = "nikolaynikolov95",
+                    NormalizedUserName = "NIKOLAYNIKOLOV95",
+                    Email = "nikolaynikolov95@gmail.com",
+                    NormalizedEmail = "NIKOLAYNIKOLOV95@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Николай",
+                    LastName = "Николов",
+                    PhoneNumber = phoneNumbers[21],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[21],
+                };
+                await userManager.CreateAsync(skiller13, "123456");
+
+                var skiller14 = new SkillBoxUser
+                {
+                    UserName = "radostinadimitrova96",
+                    NormalizedUserName = "RADOSTINADIMITROVA96",
+                    Email = "radostinadimitrova96@gmail.com",
+                    NormalizedEmail = "RADOSTINADIMITROVA96@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Радостина",
+                    LastName = "Димитрова",
+                    PhoneNumber = phoneNumbers[22],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[22],
+                };
+                await userManager.CreateAsync(skiller14, "123456");
+
+                var skiller15 = new SkillBoxUser
+                {
+                    UserName = "vladimirvladimirov97",
+                    NormalizedUserName = "VLADIMIRVLADIMIROV97",
+                    Email = "vladimirvladimirov97@gmail.com",
+                    NormalizedEmail = "VLADIMIRVLADIMIROV97@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Владимир",
+                    LastName = "Владимиров",
+                    PhoneNumber = phoneNumbers[23],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Male,
+                    City = cities[23],
+                };
+                await userManager.CreateAsync(skiller15, "123456");
+
+                var skiller16 = new SkillBoxUser
+                {
+                    UserName = "stanimirageorgieva98",
+                    NormalizedUserName = "STANIMIRAGEORGIEVA98",
+                    Email = "stanimirageorgieva98@gmail.com",
+                    NormalizedEmail = "STANIMIRAGEORGIEVA98@GMAIL.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Станимира",
+                    LastName = "Георгиева",
+                    PhoneNumber = phoneNumbers[24],
+                    PhoneNumberConfirmed = true,
+                    Gender = Gender.Female,
+                    City = cities[24],
+                };
+                await userManager.CreateAsync(skiller16, "123456");
                 #endregion
 
                 #region Categories
-                //Categories
                 var category1 = new Category()
                 {
-                    Name = "Храна"
+                    Name = "Домашни услуги"
                 };
                 await dbContext.Categories.AddAsync(category1);
 
-                var categories2 = new Category()
+                var category2 = new Category()
                 {
-                    Name = "Топла и домашна",
+                    Name = "Почистване",
                     ParentCategory = category1,
                 };
-                await dbContext.Categories.AddAsync(categories2);
+                await dbContext.Categories.AddAsync(category2);
+
+                var category3 = new Category()
+                {
+                    Name = "Други",
+                    ParentCategory = category1,
+                };
+                await dbContext.Categories.AddAsync(category3);
+
+                var category4 = new Category()
+                {
+                    Name = "Градинарство и домашни любимци",
+                };
+                await dbContext.Categories.AddAsync(category4);
+
+                var category5 = new Category()
+                {
+                    Name = "Професионални услуги",
+                };
+                await dbContext.Categories.AddAsync(category5);
+
+                var category6 = new Category()
+                {
+                    Name = "Лични услуги",
+                    ParentCategory = category5
+                };
+                await dbContext.Categories.AddAsync(category6);
+
+                var category7 = new Category()
+                {
+                    Name = "Консултантски услуги",
+                    ParentCategory = category5
+                };
+                await dbContext.Categories.AddAsync(category7);
+
+                var category8 = new Category()
+                {
+                    Name = "Събития и Развлечения",
+                };
+                await dbContext.Categories.AddAsync(category8);
+
+                var category9 = new Category()
+                {
+                    Name = "Събития",
+                    ParentCategory = category8
+                };
+                await dbContext.Categories.AddAsync(category9);
+
+                var category10 = new Category()
+                {
+                    Name = "Развлечения",
+                    ParentCategory = category8
+                };
+                await dbContext.Categories.AddAsync(category10);
+
+                var category11 = new Category()
+                {
+                    Name = "Технически услуги",
+                };
+                await dbContext.Categories.AddAsync(category11);
+
+                var category12 = new Category()
+                {
+                    Name = "Здраве и Красота",
+                };
+                await dbContext.Categories.AddAsync(category12);
+
+                var category13 = new Category()
+                {
+                    Name = "Здраве",
+                    ParentCategory = category12
+                };
+                await dbContext.Categories.AddAsync(category13);
+
+                var category14 = new Category()
+                {
+                    Name = "Красота",
+                    ParentCategory = category12
+                };
+                await dbContext.Categories.AddAsync(category14);
+
+                var category15 = new Category()
+                {
+                    Name = "Образование",
+                };
+                await dbContext.Categories.AddAsync(category15);
                 #endregion
 
                 #region Services
-
-                //Services
-                string[] ownerNames = new string[50]
-                {
-                    "Димитър Василев",
-                    "Кирил Иванов",
-                    "Иван Иванов",
-                    "Петър Петров",
-                    "Георги Георгиев",
-                    "Николай Николов",
-                    "Васил Василев",
-                    "Стефан Стефанов",
-                    "Кирил Николов",
-                    "Росен Василев",
-                    "Виктор Стефанов",
-                    "Владимир Николов",
-                    "Станимир Василев",
-                    "Христо Стефанов",
-                    "Любомир Николов",
-                    "Иван Василев",
-                    "Радостин Георгиев",
-                    "Искрен Николов",
-                    "Мирослав Василев",
-                    "Димитър Николов",
-                    "Павлин Иванов",
-                    "Марин Петров",
-                    "Симеон Георгиев",
-                    "Станимир Иванов",
-                    "Веселин Петров",
-                    "Яна Василева",
-                    "Йордан Иванов",
-                    "Костадин Петров",
-                    "Петко Георгиев",
-                    "Ангел Иванов",
-                    "Добромир Петров",
-                    "Кирил Василев",
-                    "Емил Георгиев",
-                    "Деян Иванов",
-                    "Илия Петров",
-                    "Светослав Василев",
-                    "Георги Димитров",
-                    "Спас Георгиев",
-                    "Александър Петров",
-                    "Борислав Иванов",
-                    "Веселин Петров",
-                    "Мариан Георгиев",
-                    "Емануил Василев",
-                    "Валентин Петров",
-                    "Ивайло Иванов",
-                    "Петър Стефанов",
-                    "Георги Василев",
-                    "Атанас Иванов",
-                    "Веселин Георгиев",
-                    "Петко Димитров"
-                };
-
                 string[] names = new string[50]
                 {
                     "Почистване на килими",
@@ -250,7 +659,7 @@ namespace SkillBox.App.Services
                     "Моят професионален подход включва не само предоставяне на качествена музика, но и умело възпроизвеждане на настроението на вашето събитие. Позволете ми да направя вашата вечер незабравима и пълна с музикални емоции и танци. Успешно боравя с всички жанрове музика и умея да ги миксирам според настроението на гостите. В повечето случаи смяната ми продължава 5 часа, но можем да се уговорим и за повече ако партито трябва да продължи по-дълго.",
                     "Нашите аниматори са опитни и креативни, готови да създадат вълшебна атмосфера и да развеселят децата с множество забавни игри, лица за боядисване, възможности за творчество и интерактивни представления. Със забавни и разнообразни активности, ние създаваме уникално и незабравимо изживяване за децата и техните родители.",
                     "Персонализиран курс по самоотбрана - като вашият инструктор по самозащита, аз предоставям индивидуални уроци и обучение за увереност и безопасност в различни ситуации. Със своя опит и експертиза в областта на бойните изкуства и самозащита, аз ви уча на техники и стратегии за предпазване на себе си и вашите близки в защитена среда, които може да използвате на улицата при нужда.",
-                    "Моят подход е да бъда внимателна към вашите желания и изисквания, като същевременно внимавам да създам торта, която отразява вашата индивидуалност и стил. Защото вида не е всичко, аз използвам най-добрите продукти на пазара за изработката на тортите и ги пека в деня на събитието, за да гарантирам че са винаги пресни.",
+                    "Моят подход е да бъда внимателен към вашите желания и изисквания, като същевременно внимавам да създам торта, която отразява вашата индивидуалност и стил. Защото вида не е всичко, аз използвам най-добрите продукти на пазара за изработката на тортите и ги пека в деня на събитието, за да гарантирам че са винаги пресни.",
                     "Ако имате една или няколко стаи за боядисване и бихте искали всяка капка боя да попадне на правилното място на стената, моля свържете се."
                 };
 
@@ -428,44 +837,132 @@ namespace SkillBox.App.Services
                     {
                         Name = names[i],
                         Description = descriptions[i],
-                        Category = categories2, //TODO more categories
                         MainImage = $"{urlStart}{mainImgIds[i]}{urlBetween}{mainImgIds[i]}{extension}{urlEnd}",
                         Images = $"{urlStart}{imgSet1[i]}{urlBetween}{imgSet1[i]}{extension}{urlEnd}|" +
                         $"{urlStart}{imgSet2[i]}{urlBetween}{imgSet2[i]}{extension}{urlEnd}|",
-                        Price = 0m, //TODO column PriceInfo
-                        Discount = 0m,
-                        Owner = user1,
-                        OwnerName = ownerNames[i], //Too many users as skillers
-                        PhoneNumber = phoneNumbers[i],
-                        City = cities[i],
                         ServiceStatus = (ServiceStatus)rnd.Next(0, 4)
                     };
                     services.Add(service);
-                    await dbContext.Services.AddAsync(service);
                 }
 
-                //var imgId = "6195122";
-                //var service1 = new SkillBoxService()
-                //{
-                //    Name = "Почистване на килими",
-                //    Description = "Добре дошли в нашата услуга за почистване на килими! Ние се грижим за безупречната чистота и свежест на вашите килими с усмивка. С нашите професионални методи и оборудване, вашите килими ще бъдат безпогрешно чисти и красиви. Оставете нас да се погрижим за тях, като ви осигурим спокойствие и удовлетворение от резултата. Свържете се с нас днес и осигурете си чистота и уют в дома си!",
-                //    Category = categories2,
-                //    MainImage = $"{urlStart}{imgId}{urlBetween}{imgId}{extension}{urlEnd}",
-                //    Images = $"{urlStart}3965509{urlBetween}3965509{extension}{urlEnd}|{urlStart}38325/vacuum-cleaner-carpet-cleaner-housework-housekeeping-38325.jpeg{urlEnd}",
-                //    Price = 20.50m,
-                //    Discount = 0m,
-                //    Owner = user1,
-                //    OwnerName = $"{user1.FirstName} {user1.LastName}",
-                //    PhoneNumber = "359871234567",
-                //    City = City.Shumen,
-                //    ServiceStatus = ServiceStatus.Active
-                //};
-                //await dbContext.Services.AddAsync(service1);
+                //Relationships and prices (discount)
+                SetCustomEntityProperties(
+                    services[0], category2, skiller1, 20);
+                SetCustomEntityProperties(
+                    services[1], category2, skiller9, 10);
+                SetCustomEntityProperties(
+                    services[2], category2, skiller3, 30);
+                SetCustomEntityProperties(
+                    services[3], category2, skiller2, 30, 5);
+                SetCustomEntityProperties(
+                    services[4], category4, skiller6, 5);
+                //
+                SetCustomEntityProperties(
+                    services[5], category6, skiller15, 20);
+                SetCustomEntityProperties(
+                    services[6], category4, skiller7, 8);
+                services[6].WebsiteName = "NewHorizons";
+                SetCustomEntityProperties(
+                    services[7], category11, skiller12, 35, 3);
+                SetCustomEntityProperties(
+                    services[8], category11, skiller5, 25000, 3000);
+                SetCustomEntityProperties(
+                    services[9], category11, skiller14, 500, 350);
+                //
+                SetCustomEntityProperties(
+                    services[10], category11, skiller11, 30, 27);
+                SetCustomEntityProperties(
+                    services[11], category9, skiller16, 50, 15);
+                services[11].WebsiteName = "Buketi.bg";
+                SetCustomEntityProperties(
+                    services[12], category9, skiller4, 30, 4);
+                SetCustomEntityProperties(
+                    services[13], category11, skiller13, 35);
+                SetCustomEntityProperties(
+                    services[14], category10, skiller10, 50);
+                //
+                SetCustomEntityProperties(
+                    services[15], category3, skiller8, 30);
+                SetCustomEntityProperties(
+                    services[16], category15, skiller1, 27, 2);
+                SetCustomEntityProperties(
+                    services[17], category11, skiller9, 50);
+                SetCustomEntityProperties(
+                    services[18], category14, skiller3, 25);
+                SetCustomEntityProperties(
+                    services[19], category14, skiller2, 20);
+                //
+                SetCustomEntityProperties(
+                    services[20], category13, skiller6, 40, 7);
+                SetCustomEntityProperties(
+                    services[21], category13, skiller15, 38);
+                SetCustomEntityProperties(
+                    services[22], category13, skiller7, 29, 1);
+                SetCustomEntityProperties(
+                    services[23], category7, skiller12, 232);
+                SetCustomEntityProperties(
+                    services[24], category7, skiller5, 178);
+                //
+                SetCustomEntityProperties(
+                    services[25], category6, skiller14, 15);
+                SetCustomEntityProperties(
+                    services[26], category13, skiller11, 19, 3);
+                SetCustomEntityProperties(
+                    services[27], category14, skiller16, 30);
+                SetCustomEntityProperties(
+                    services[28], category7, skiller4, 150, 34);
+                SetCustomEntityProperties(
+                    services[29], category3, skiller13, 26);
+                //
+                SetCustomEntityProperties(
+                    services[30], category14, skiller10, 30, 1.50m);
+                SetCustomEntityProperties(
+                    services[31], category15, skiller8, 24);
+                SetCustomEntityProperties(
+                    services[32], category9, skiller1, 40, 8);
+                SetCustomEntityProperties(
+                    services[33], category6, skiller9, 20);
+                SetCustomEntityProperties(
+                    services[34], category7, skiller3, 300);
+                //
+                SetCustomEntityProperties(
+                    services[35], category6, skiller2, 30);
+                SetCustomEntityProperties(
+                    services[36], category14, skiller6, 50, 2.43m);
+                SetCustomEntityProperties(
+                    services[37], category7, skiller15, 100, 15);
+                SetCustomEntityProperties(
+                    services[38], category15, skiller7, 4, 1);
+                SetCustomEntityProperties(
+                    services[39], category15, skiller12, 15, 1);
+                //
+                SetCustomEntityProperties(
+                    services[40], category6, skiller5, 50);
+                SetCustomEntityProperties(
+                    services[41], category11, skiller14, 40);
+                SetCustomEntityProperties(
+                    services[42], category7, skiller11, 60);
+                SetCustomEntityProperties(
+                    services[43], category9, skiller16, 40, 0.50m);
+                SetCustomEntityProperties(
+                    services[44], category15, skiller4, 30);
+                //
+                SetCustomEntityProperties(
+                    services[45], category10, skiller13, 200);
+                SetCustomEntityProperties(
+                    services[46], category10, skiller10, 100);
+                SetCustomEntityProperties(
+                    services[47], category15, skiller8, 30, 4.23m);
+                SetCustomEntityProperties(
+                    services[48], category9, skiller1, 29, 111.90m);
+                SetCustomEntityProperties(
+                    services[49], category3, skiller9, 50);
+
+                services.ForEach(async s => await dbContext.Services.AddAsync(s));
+
                 #endregion
 
                 #region ServiceUsers
-                
-                ////ServiceUsers
                 //ServiceUser[] serviceUsers = new ServiceUser[50];
                 //for (int i = 0; i < serviceUsers.Count(); i++)
                 //{
@@ -479,123 +976,560 @@ namespace SkillBox.App.Services
                 #endregion
 
                 #region Chats
-                //Chats
                 var chat1 = new Chat()
                 {
-                    Name = $"{user1.FirstName}, {user2.FirstName}",
+                    Name = $"{skiller1.FirstName}, {skiller7.FirstName}",
                     Service = services[0]
                 };
                 await dbContext.Chats.AddAsync(chat1);
 
                 var chat2 = new Chat()
                 {
-                    Name = $"{user1.FirstName}, {user2.FirstName}",
-                    Service = services[0]
+                    Name = $"{skiller8.FirstName}, {ordinaryUser1.FirstName}",
+                    Service = services[15]
                 };
                 await dbContext.Chats.AddAsync(chat2);
 
                 var chat3 = new Chat()
                 {
-                    Name = $"{user1.FirstName}, {user2.FirstName}",
-                    Service = services[0]
+                    Name = $"{skiller1.FirstName}, {commenter5.FirstName}",
+                    Service = services[16]
                 };
                 await dbContext.Chats.AddAsync(chat3);
 
-                //UserMessages
-                var userMessage1 = new UserMessage()
+                var chat4 = new Chat()
                 {
-                    Owner = user1,
-                    Chat = chat1,
-                    Content = "Пиша в новосъздадения чат!"
+                    Name = $"{skiller3.FirstName}, {ordinaryUser2.FirstName}",
+                    Service = services[18]
                 };
-                await dbContext.UserMessages.AddAsync(userMessage1);
+                await dbContext.Chats.AddAsync(chat4);
 
-                var userMessage2 = new UserMessage()
+                var chat5 = new Chat()
                 {
-                    Owner = user2,
-                    Chat = chat1,
-                    Content = "Аз ти отговарям!"
+                    Name = $"{skiller6.FirstName}, {commenter3.FirstName}",
+                    Service = services[36]
                 };
-                await dbContext.UserMessages.AddAsync(userMessage2);
+                await dbContext.Chats.AddAsync(chat5);
 
-                var userMessage3 = new UserMessage()
+                var chat6 = new Chat()
                 {
-                    Owner = user1,
-                    Chat = chat2,
-                    Content = "Пиша в новосъздадения чат!"
+                    Name = $"{skiller15.FirstName}, {commenter4.FirstName}",
+                    Service = services[37]
                 };
-                await dbContext.UserMessages.AddAsync(userMessage3);
+                await dbContext.Chats.AddAsync(chat6);
 
-                var userMessage4 = new UserMessage()
+                var chat7 = new Chat()
                 {
-                    Owner = user2,
-                    Chat = chat2,
-                    Content = "Аз ти отговарям!"
+                    Name = $"{skiller3.FirstName}, {ordinaryUser1.FirstName}",
+                    Service = services[34]
                 };
-                await dbContext.UserMessages.AddAsync(userMessage4);
+                await dbContext.Chats.AddAsync(chat7);
 
-                var userMessage5 = new UserMessage()
+                var chat8 = new Chat()
                 {
-                    Owner = user1,
-                    Chat = chat3,
-                    Content = "Пиша в новосъздадения чат!"
+                    Name = $"{skiller7.FirstName}, {commenter1.FirstName}",
+                    Service = services[6]
                 };
-                await dbContext.UserMessages.AddAsync(userMessage5);
+                await dbContext.Chats.AddAsync(chat8);
 
-                var userMessage6 = new UserMessage()
+                var chat9 = new Chat()
                 {
-                    Owner = user2,
-                    Chat = chat3,
-                    Content = "Аз ти отговарям!"
+                    Name = $"{skiller5.FirstName}, {commenter2.FirstName}",
+                    Service = services[24]
                 };
-                await dbContext.UserMessages.AddAsync(userMessage6);
+                await dbContext.Chats.AddAsync(chat9);
 
-                //ChatUsers - [Chats - Participants]
+                var chat10 = new Chat()
+                {
+                    Name = $"{skiller4.FirstName}, {commenter5.FirstName}",
+                    Service = services[44]
+                };
+                await dbContext.Chats.AddAsync(chat10);
+                #endregion
+
+                #region ChatUsers - [Chats - Participants]
                 var chatUser1 = new ChatUser
                 {
                     Chat = chat1,
-                    User = user1, //Participant
+                    User = skiller1 //Participant
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser1);
 
                 var chatUser2 = new ChatUser
                 {
                     Chat = chat1,
-                    User = user2, //Participant2
+                    User = skiller7 //Participant2
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser2);
 
                 var chatUser3 = new ChatUser
                 {
                     Chat = chat2,
-                    User = user1, //Participant
+                    User = skiller8 //Participant
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser3);
 
                 var chatUser4 = new ChatUser
                 {
                     Chat = chat2,
-                    User = user2, //Participant2
+                    User = ordinaryUser1 //Participant2
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser4);
 
                 var chatUser5 = new ChatUser
                 {
                     Chat = chat3,
-                    User = user1, //Participant
+                    User = skiller1 //Participant
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser5);
 
                 var chatUser6 = new ChatUser
                 {
                     Chat = chat3,
-                    User = user2, //Participant2
+                    User = commenter5 //Participant2
                 };
                 await dbContext.ChatUsers.AddAsync(chatUser6);
+
+                var chatUser7 = new ChatUser
+                {
+                    Chat = chat4,
+                    User = skiller3 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser7);
+
+                var chatUser8 = new ChatUser
+                {
+                    Chat = chat4,
+                    User = ordinaryUser2 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser8);
+
+                var chatUser9 = new ChatUser
+                {
+                    Chat = chat5,
+                    User = skiller6, //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser9);
+
+                var chatUser10 = new ChatUser
+                {
+                    Chat = chat5,
+                    User = commenter3, //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser10);
+
+                var chatUser11 = new ChatUser
+                {
+                    Chat = chat6,
+                    User = skiller15 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser11);
+
+                var chatUser12 = new ChatUser
+                {
+                    Chat = chat6,
+                    User = commenter4 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser12);
+
+                var chatUser13 = new ChatUser
+                {
+                    Chat = chat7,
+                    User = skiller3 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser13);
+
+                var chatUser14 = new ChatUser
+                {
+                    Chat = chat7,
+                    User = ordinaryUser1 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser14);
+
+                var chatUser15 = new ChatUser
+                {
+                    Chat = chat8,
+                    User = skiller7, //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser15);
+
+                var chatUser16 = new ChatUser
+                {
+                    Chat = chat8,
+                    User = commenter1, //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser16);
+
+                var chatUser17 = new ChatUser
+                {
+                    Chat = chat9,
+                    User = skiller5 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser17);
+
+                var chatUser18 = new ChatUser
+                {
+                    Chat = chat9,
+                    User = commenter2 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser18);
+
+                var chatUser19 = new ChatUser
+                {
+                    Chat = chat10,
+                    User = skiller4 //Participant
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser19);
+
+                var chatUser20 = new ChatUser
+                {
+                    Chat = chat10,
+                    User = commenter5 //Participant2
+                };
+                await dbContext.ChatUsers.AddAsync(chatUser20);
                 #endregion
+
+                #region UserMessages
+                var userMessage1 = new UserMessage()
+                {
+                    Owner = skiller7,
+                    Chat = chat1,
+                    Content = "Здравей искам да ми почистиш килима?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage1);
+
+                var userMessage2 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chat1,
+                    Content = "Мога да дойда на място и да го взема. Кога?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage2);
+
+                var userMessage3 = new UserMessage()
+                {
+                    Owner = skiller7,
+                    Chat = chat1,
+                    Content = "Утре в 9 и половина става ли?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage3);
+
+                var userMessage4 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chat1,
+                    Content = "Да, даже по-добре, за да имам време да го изпера днес."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage4);
+                
+                var userMessage5 = new UserMessage()
+                {
+                    Owner = ordinaryUser1,
+                    Chat = chat2,
+                    Content = "Здравейте, трябва да се преместя в новата ми къща на 1 Април. Може ли да ми помогнете за 2-3 часа с някои от големите ми мебели?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage5);
+
+                var userMessage6 = new UserMessage()
+                {
+                    Owner = skiller8,
+                    Chat = chat2,
+                    Content = "Да, разбира се, целя ми 1 Април е свободен засега, така че мога да остана допълнително ако се налага."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage6);
+
+                var userMessage7 = new UserMessage()
+                {
+                    Owner = ordinaryUser1,
+                    Chat = chat2,
+                    Content = "Супер, разбрахме се, елате към 10 часа сутрнита, за да имаме достатъчно време. Ще ви споделя локация."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage7);
+
+                var userMessage8 = new UserMessage()
+                {
+                    Owner = skiller8,
+                    Chat = chat2,
+                    Content = "Идеално, ще бъда там! До скоро."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage8);
+
+                var userMessage9 = new UserMessage()
+                {
+                    Owner = commenter5,
+                    Chat = chat3,
+                    Content = "Добър ден! Клалифициран ли сте да подготвяте ученици за IELTS изпита по англииски? Синът ми иска да учи в чужбина, а англииският му изобщо не е добър. Можете ли да помогнете като го подготвите за формата?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage9);
+
+                var userMessage10 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chat3,
+                    Content = "Добър ден и на вас! Имам опит и с трите формата на изпити които се изискват за чужбина. В момента помагам на много ученици и не мисля че мога да включа някой нов, но от май месец нататъка ще имам едно свободно място. Искате ли го? Два дни в седмицата."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage10);
+
+                var userMessage11 = new UserMessage()
+                {
+                    Owner = commenter5,
+                    Chat = chat3,
+                    Content = "Да, идеално."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage11);
+
+                var userMessage12 = new UserMessage()
+                {
+                    Owner = skiller1,
+                    Chat = chat3,
+                    Content = "Добре, в такъв случай ще ви пиша след месец, за да изберем двата дни в седмицата, в които ще проведем уроците."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage12);
+
+                var userMessage13 = new UserMessage()
+                {
+                    Owner = ordinaryUser2,
+                    Chat = chat4,
+                    Content = "Здравейте, пиша ви във връзка с поправка на булчинска рокля. Купих роклята преди половин година, но за съжаление от тогава досега съм напълняла и роклята вече не ми става. Мислите ли че можете да ми помогнете и някак да я разширите? Цената няма значение, трябва просто да я оправим бързо защото сватбата е след 2 месеца. "
+                };
+                await dbContext.UserMessages.AddAsync(userMessage13);
+
+                var userMessage14 = new UserMessage()
+                {
+                    Owner = skiller3,
+                    Chat = chat4,
+                    Content = "Да, разбирам проблема ви, не сте първата която се свързва с мен за тази задача. Няма проблем, можем да измислим нещо, но трябва да видя роклята първо и ще ви кажа."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage14);
+
+                var userMessage15 = new UserMessage()
+                {
+                    Owner = ordinaryUser2,
+                    Chat = chat4,
+                    Content = "Добре, ще ви я донеса в понеделник преди обяд."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage15);
+
+                var userMessage16 = new UserMessage()
+                {
+                    Owner = skiller3,
+                    Chat = chat4,
+                    Content = "Страхотно! Не се притеснявайте, ще я оправим преди сватбата."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage16);
+
+                var userMessage17 = new UserMessage()
+                {
+                    Owner = commenter3,
+                    Chat = chat5,
+                    Content = "Здравейте, сватбата ми е след 2 месеца и търся някой който иска да ми направи първо пробен грим и после на самия ден. Но само при условие че имате биологични гримове, тъй като много лесно правя алергии."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage17);
+
+                var userMessage18 = new UserMessage()
+                {
+                    Owner = skiller6,
+                    Chat = chat5,
+                    Content = "Хубаво е че споменахте за алергиите защото моите гримове са качествени, но не са биологични."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage18);
+
+                var userMessage19 = new UserMessage()
+                {
+                    Owner = commenter3,
+                    Chat = chat5,
+                    Content = "Добре, в такъв случай май няма да успеем да работим заедно за съжаление. Познавате ли някой друг гримьор, който има такива гримове."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage19);
+
+                var userMessage20 = new UserMessage()
+                {
+                    Owner = skiller6,
+                    Chat = chat5,
+                    Content = "Не, за съжаление не познавам никой толкова специализиран. Извинете, приятен ден и успех."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage20);
+
+                var userMessage21 = new UserMessage()
+                {
+                    Owner = commenter4,
+                    Chat = chat6,
+                    Content = "Имам голяма нужда от помощ за намирането на работа, кандидатствам всеки ден и никога не ми се обаждат. Може ли да ми помогнете."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage21);
+
+                var userMessage22 = new UserMessage()
+                {
+                    Owner = skiller15,
+                    Chat = chat6,
+                    Content = "Да, това е работата ми. Като за начало изпратете ми автобиографията си и мотивационното писмо, за да мога да видя дали имаме много работа по тях."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage22);
+
+                var userMessage23 = new UserMessage()
+                {
+                    Owner = commenter4,
+                    Chat = chat6,
+                    Content = "Добре, изпращам веднага, а кога ще можем да проведем сесия за да обсъдим потенциални работни места."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage23);
+
+                var userMessage24 = new UserMessage()
+                {
+                    Owner = skiller15,
+                    Chat = chat6,
+                    Content = "Чакайте да проверя... мисля че идния вторник съм свободен да се видим. До тогава."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage24);
+
+                var userMessage25 = new UserMessage()
+                {
+                    Owner = ordinaryUser1,
+                    Chat = chat7,
+                    Content = "Здравейте, имам проблем с хазяйн, който не иска да ми върне депозита от апартамента. Имам договора и всички необходими документи, но ми трябва адвокат който да внесе случая в съда и да ме защитава ако отсрещната страна оспорва. Колко добър сте в жилищно право?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage25);
+
+                var userMessage26 = new UserMessage()
+                {
+                    Owner = skiller3,
+                    Chat = chat7,
+                    Content = "Повярвайте не сте първия ми случай, в който хазяина просто си прибира парите в джоба и никога не ги връща. Не се притесявайте, щом имате всички документи, със сигурност ще спечелим в съда. Нека да се срещнем за една сесия преди да внесем делото за да ми разкажете подробно всичко и да ми дадете документите. Кога сте свободна?!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage26);
+
+                var userMessage27 = new UserMessage()
+                {
+                    Owner = ordinaryUser1,
+                    Chat = chat7,
+                    Content = "Да се срещнем още утре ако е възможно."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage27);
+
+                var userMessage28 = new UserMessage()
+                {
+                    Owner = skiller3,
+                    Chat = chat7,
+                    Content = "Да, мисля че ще бъде! Ще ви се обадя утре сутрин да потвърдя, че утре имам дело по друг случай."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage28);
+
+                var userMessage29 = new UserMessage()
+                {
+                    Owner = commenter1,
+                    Chat = chat8,
+                    Content = "Добър ден, свързвам се с вас защото искаме да отиваме на почивка семейно и няма кой да гледа любимото ни куче. Свободен ли си от 8 до 15 май?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage29);
+
+                var userMessage30 = new UserMessage()
+                {
+                    Owner = skiller7,
+                    Chat = chat8,
+                    Content = "Да, няма проблем мога да поема ангажимента. Колко голамо е кучето?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage30);
+
+                var userMessage31 = new UserMessage()
+                {
+                    Owner = commenter1,
+                    Chat = chat8,
+                    Content = "Пинчър е, много послушен. През тази една седмица може да останете в къщата ни заедно с кучето."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage31);
+
+                var userMessage32 = new UserMessage()
+                {
+                    Owner = skiller7,
+                    Chat = chat8,
+                    Content = "Добре, разбрахме се, в такъв случай ме очаквайте на 8 май сутринта на адреса ви. Хубав ден!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage32);
+                
+                var userMessage33 = new UserMessage()
+                {
+                    Owner = commenter2,
+                    Chat = chat9,
+                    Content = "Здравейте, Г-н Георгиев! Свързвам се с вас, тъй като искам да си закупя къща. Моите предпочитания са да е ново строителство, поне 1 спалня и половина и да не е повече от 100 000 лв. Мислите ли че звучи реалистично?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage33);
+
+                var userMessage34 = new UserMessage()
+                {
+                    Owner = skiller5,
+                    Chat = chat9,
+                    Content = "Здравейте и на вас, след няколко минути ще ви изпратя всички имоти, които имам в момента за продажба, разгледайте ги и ми кажете, ако ви хареса нещо. В случай че нищо не ви хареса, мога да започна да търся за вас."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage34);
+
+                var userMessage35 = new UserMessage()
+                {
+                    Owner = commenter2,
+                    Chat = chat9,
+                    Content = "Добре, добра идея нека да направим и така е ще говорим после."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage35);
+
+                var userMessage36 = new UserMessage()
+                {
+                    Owner = skiller5,
+                    Chat = chat9,
+                    Content = "Добре разбрахме се, пишете какво мислите за имотите. Лек ден!"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage36);
+
+                var userMessage37 = new UserMessage()
+                {
+                    Owner = commenter5,
+                    Chat = chat10,
+                    Content = "Добър ден, чух много добри отзиви за вас и реших да се свържа."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage37);
+
+                var userMessage38 = new UserMessage()
+                {
+                    Owner = skiller4,
+                    Chat = chat10,
+                    Content = "Здравейте, радвам се да го чуя. Какъв е проблема на детето ви?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage38);
+
+                var userMessage39 = new UserMessage()
+                {
+                    Owner = commenter5,
+                    Chat = chat10,
+                    Content = "Не може да казва Р. Забелязахме го от преди време и очаквахме да се оправи от самосебе си, но за съжаление ще имаме нужда от вашата професионална помощ."
+                };
+                await dbContext.UserMessages.AddAsync(userMessage39);
+
+                var userMessage40 = new UserMessage()
+                {
+                    Owner = skiller4,
+                    Chat = chat10,
+                    Content = "Разбирам, не се притеснявайте, ще поправим този лек говорен дефект. Защо направо не ми се обадите?"
+                };
+                await dbContext.UserMessages.AddAsync(userMessage40);
+                #endregion
+
+                //TODO Add Chat groups (Groups, ChatGroupUsers, UserGroupMessages)
 
                 await dbContext.SaveChangesAsync();
             }
+        }
+        private static void SetCustomEntityProperties(
+            SkillBoxService service,
+            Category category,
+            SkillBoxUser owner,
+            decimal price,
+            decimal discount = 0)
+        {
+            service.Category = category;
+            service.Owner = owner;
+            service.OwnerName = $"{owner.FirstName} {owner.LastName}";
+            service.PhoneNumber = owner.PhoneNumber;
+            service.City = owner.City;
+            service.Price = price;
+            service.Discount = discount;
         }
     }
 }

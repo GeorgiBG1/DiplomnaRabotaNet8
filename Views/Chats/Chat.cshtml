@@ -14,11 +14,11 @@
                     {
                         if (message.Owner.UserName == User.Identity?.Name)
                         {
-                            <li><span>@message.Content</span></li>
+                            <li class="messages"><span>@message.Content</span></li>
                         }
                         else
                         {
-                            <li>@@<span>@message.Owner.UserName @message.Content</span></li>
+                            <li class="messages">@@<span>@message.Owner.UserName @message.Content</span></li>
                         }
                     }
                 </ul>

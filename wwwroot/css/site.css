@@ -16,3 +16,12 @@ html {
 body {
     margin-bottom: 60px;
 }
+
+.messages {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 4px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
