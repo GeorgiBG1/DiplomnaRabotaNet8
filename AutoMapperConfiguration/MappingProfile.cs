@@ -15,6 +15,7 @@ namespace SkillBox.App.AutoMapperConfiguration
             //TODO add more members
 
             //OUT
+            #region Chats
             CreateMap<Chat, ChatMiniDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name))
@@ -26,7 +27,9 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.ServiceName, opt => opt.MapFrom(c => c.Service.Name))
                 .ForMember(d => d.ChatUsers, opt => opt.MapFrom(c => c.ChatUsers))
                 .ForMember(d => d.Messages, opt => opt.MapFrom(c => c.Messages));
+            #endregion
 
+            #region Services
             CreateMap<SkillBoxService, ServiceCardDTO>()
                  .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
                  .ForMember(d => d.AuthorName, opt => opt.MapFrom(s => s.OwnerName))
@@ -35,7 +38,23 @@ namespace SkillBox.App.AutoMapperConfiguration
                  .ForMember(d => d.MainImage, opt => opt.MapFrom(s => s.MainImage))
                  .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
                  .ForMember(d => d.Discount, opt => opt.MapFrom(s => s.Discount));
+            #endregion
 
+            #region Categories
+            CreateMap<Category, CategoryDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(d => d.Id))
+                .ForMember(d => d.Name, opt => opt.MapFrom(d => d.Name))
+                .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
+                .ForMember(d => d.ParentCategoryId, opt => opt.MapFrom(d => d.ParentCategoryId))
+                .ForMember(d => d.ParentCategory, opt => opt.MapFrom(d => d.ParentCategory))
+                .ForMember(d => d.Kids, opt => opt.MapFrom(d => d.Kids))
+                .ForMember(d => d.Services, opt => opt.MapFrom(d => d.Services));
+
+            CreateMap<Category, CategoryCardDTO>()
+                .ForMember(d => d.Name, opt => opt.MapFrom(d => d.Name))
+                .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
+                .ForMember(d => d.ServicesCount, opt => opt.MapFrom(c => c.Services!.Count()));
+            #endregion
         }
     }
 }

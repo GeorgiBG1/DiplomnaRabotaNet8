@@ -23,6 +23,10 @@ namespace SkillBox.App.Services
             if (!await dbContext.Categories.AnyAsync())
             {
                 Random rnd = new Random();
+                var urlStart = "https://images.pexels.com/photos/";
+                var urlBetween = "/pexels-photo-";
+                var urlEnd = "?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+                var extension = ".jpeg";
 
                 #region Phone numbers
                 string[] phoneNumbers = new string[25];
@@ -457,7 +461,8 @@ namespace SkillBox.App.Services
                 #region Categories
                 var category1 = new Category()
                 {
-                    Name = "Домашни услуги"
+                    Name = "Домашни услуги",
+                    MainImage = $"{urlStart}{12278557}{urlBetween}{12278557}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category1);
 
@@ -465,6 +470,7 @@ namespace SkillBox.App.Services
                 {
                     Name = "Почистване",
                     ParentCategory = category1,
+                    MainImage = $"{urlStart}{5217899}{urlBetween}{5217899}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category2);
 
@@ -472,84 +478,97 @@ namespace SkillBox.App.Services
                 {
                     Name = "Други",
                     ParentCategory = category1,
+                    MainImage = $"{urlStart}{4506274}{urlBetween}{4506274}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category3);
 
                 var category4 = new Category()
                 {
                     Name = "Градинарство и домашни любимци",
+                    MainImage = $"{urlStart}{3265437}{urlBetween}{3265437}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category4);
 
                 var category5 = new Category()
                 {
                     Name = "Професионални услуги",
+                    MainImage = $"{urlStart}{730564}{urlBetween}{730564}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category5);
 
                 var category6 = new Category()
                 {
                     Name = "Лични услуги",
-                    ParentCategory = category5
+                    ParentCategory = category5,
+                    MainImage = $"{urlStart}{927022}{urlBetween}{927022}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category6);
 
                 var category7 = new Category()
                 {
                     Name = "Консултантски услуги",
-                    ParentCategory = category5
+                    ParentCategory = category5,
+                    MainImage = $"{urlStart}{4960379}{urlBetween}{4960379}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category7);
 
                 var category8 = new Category()
                 {
                     Name = "Събития и Развлечения",
+                    MainImage = $"{urlStart}{2774556}{urlBetween}{2774556}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category8);
 
                 var category9 = new Category()
                 {
                     Name = "Събития",
-                    ParentCategory = category8
+                    ParentCategory = category8,
+                    MainImage = $"{urlStart}{668137}{urlBetween}{668137}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category9);
 
                 var category10 = new Category()
                 {
                     Name = "Развлечения",
-                    ParentCategory = category8
+                    ParentCategory = category8,
+                    MainImage = $"{urlStart}{587741}{urlBetween}{587741}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category10);
 
                 var category11 = new Category()
                 {
                     Name = "Технически услуги",
+                    MainImage = $"{urlStart}{2582937}{urlBetween}{2582937}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category11);
 
                 var category12 = new Category()
                 {
                     Name = "Здраве и Красота",
+                    MainImage = $"{urlStart}{863926}{urlBetween}{863926}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category12);
 
                 var category13 = new Category()
                 {
                     Name = "Здраве",
-                    ParentCategory = category12
+                    ParentCategory = category12,
+                    MainImage = $"{urlStart}{327098}{urlBetween}{327098}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category13);
 
                 var category14 = new Category()
                 {
                     Name = "Красота",
-                    ParentCategory = category12
+                    ParentCategory = category12,
+                    MainImage = $"{urlStart}{20139713}{urlBetween}{20139713}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category14);
 
                 var category15 = new Category()
                 {
                     Name = "Образование",
+                    MainImage = $"{urlStart}{4145153}{urlBetween}{4145153}{extension}{urlEnd}"
                 };
                 await dbContext.Categories.AddAsync(category15);
                 #endregion
@@ -834,11 +853,6 @@ namespace SkillBox.App.Services
                     3212164,
                     1040685
                 };
-
-                var urlStart = "https://images.pexels.com/photos/";
-                var urlBetween = "/pexels-photo-";
-                var urlEnd = "?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-                var extension = ".jpeg";
 
                 var services = new List<SkillBoxService>();
                 for (int i = 0; i < 52; i++)

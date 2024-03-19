@@ -4,21 +4,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SkillBox.App.Services;
 using System.Diagnostics;
+using Contracts;
+using Services;
 
 namespace DiplomnaRabotaNet8.Controllers
 {
     public class HomeController : Controller
     {
         private readonly DatabaseSeedService dbSeedService;
+        private readonly ICategoryService categoryService;
 
-        public HomeController(DatabaseSeedService dbSeedService)
+        public HomeController(DatabaseSeedService dbSeedService,
+            ICategoryService categoryService)
         {
             this.dbSeedService = dbSeedService;
+            this.categoryService = categoryService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var categoryCards = categoryService.GetAllCategoryCardDTOs();
+            var categoriesWithKids = categoryService.GetAllCategoryDTOs();
+            ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
+            return View(categoryCards);
         }
 
         [HttpGet]

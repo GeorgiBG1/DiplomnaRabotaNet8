@@ -1,5 +1,5 @@
 ﻿@using DTOs.OUTPUT
-@model IEnumerable<ServiceDTO>
+@model IEnumerable<CategoryCardDTO>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,3 +11,10 @@ else
 {
     <h1>Hello, world!</h1>
 }
+<div>
+    @foreach (var cCard in Model)
+    {
+        <h3>@cCard.Name</h3>
+        <img src="@cCard.MainImage" width="260" height="301"/>
+    }
+</div>
