@@ -16,6 +16,8 @@ namespace Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SkillBoxService> Services { get; set; }
+        public DbSet<Offering> Offerings { get; set; }
+        public DbSet<Skill> Skills { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }

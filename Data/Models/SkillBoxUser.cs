@@ -8,6 +8,7 @@ namespace Data.Models
         {
             ChatUsers = new HashSet<ChatUser>();
             Services = new HashSet<SkillBoxService>();
+            Skills = new HashSet<Skill>();
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,5 +18,7 @@ namespace Data.Models
         public City? City { get; set; }
         public virtual ICollection<ChatUser> ChatUsers { get; set; }
         public virtual ICollection<SkillBoxService> Services { get; set; }
+        public virtual ICollection<Skill> Skills { get; set; }
+        public virtual ICollection<Offering> Offerings { get; set; }
     }
 }

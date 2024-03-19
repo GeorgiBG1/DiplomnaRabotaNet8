@@ -28,21 +28,25 @@
                             <div class="dropdown">
                                 @{
                                     var categories = (List<CategoryDTO>)ViewData["categoriesWithKids"]!;
-                                    if (categories.Any())
+                                    if (categories != null)
                                     {
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown button
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            @foreach (var cCard in categories)
-                                            {
-                                                <li><p>@cCard.Name</p></li>
-                                                @foreach (var kid in cCard.Kids!)
+                                        if (categories.Count() != 0)
+                                        {
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Категории
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                @foreach (var cCard in categories)
                                                 {
-                                                    <p style="color: red;">@kid.Name</p>
+                                                    <li><p>@cCard.Name</p></li>
+                                                    @foreach (var kid in cCard.Kids!)
+                                                    {
+                                                        <li><p style="color: red;">@kid.Name</p></li>
+                                                    }
                                                 }
-                                            }
-                                        </ul>
+                                            </ul>
+                                        }
+
                                     }
                                 }
                             </div>

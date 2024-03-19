@@ -17,6 +17,7 @@ namespace Data.Models
         public string MainImage { get; set; }
         public string Images { get; set; }
         public decimal Price { get; set; }
+        public string? UnitPrice { get; set; }
         public decimal Discount { get; set; }
         public virtual string? PhoneNumber { get; set; }
         public virtual string? WebsiteURL { get; set; }

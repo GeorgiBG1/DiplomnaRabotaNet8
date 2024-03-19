@@ -100,6 +100,48 @@ namespace SkillBox.App.Migrations
                     b.ToTable("ChatUsers");
                 });
 
+            modelBuilder.Entity("Data.Models.Offering", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinishedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Offerings");
+                });
+
             modelBuilder.Entity("Data.Models.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -138,6 +180,38 @@ namespace SkillBox.App.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("Data.Models.Skill", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("Data.Models.SkillBoxService", b =>
@@ -196,6 +270,9 @@ namespace SkillBox.App.Migrations
 
                     b.Property<int>("ServiceStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("UnitPrice")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WebsiteName")
                         .HasColumnType("nvarchar(max)");
@@ -508,6 +585,25 @@ namespace SkillBox.App.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Models.Offering", b =>
+                {
+                    b.HasOne("Data.Models.SkillBoxService", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.SkillBoxUser", "User")
+                        .WithMany("Offerings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Models.Review", b =>
                 {
                     b.HasOne("Data.Models.SkillBoxService", "Service")
@@ -523,6 +619,17 @@ namespace SkillBox.App.Migrations
                         .IsRequired();
 
                     b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.Skill", b =>
+                {
+                    b.HasOne("Data.Models.SkillBoxUser", "User")
+                        .WithMany("Skills")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -641,7 +748,11 @@ namespace SkillBox.App.Migrations
                 {
                     b.Navigation("ChatUsers");
 
+                    b.Navigation("Offerings");
+
                     b.Navigation("Services");
+
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

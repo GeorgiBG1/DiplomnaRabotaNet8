@@ -8,6 +8,7 @@ namespace Data.Models
         {
             Id = Guid.NewGuid().ToString();
             ChatUsers = new HashSet<ChatUser>();
+            Messages = new HashSet<UserMessage>();
         }
         public string Name { get; set; }
         public int ServiceId { get; set; }
