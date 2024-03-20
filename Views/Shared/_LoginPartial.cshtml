@@ -3,9 +3,8 @@
 @inject SignInManager<SkillBoxUser> SignInManager
 @inject UserManager<SkillBoxUser> UserManager
 
-<ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
-    {
+    { 
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
@@ -17,11 +16,16 @@
     }
     else
     {
-        <li class="nav-item">
+        <div class="d-flex align-items-center">
+            <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
+            <a class="login-info mx15-xl mx30" href="page-become-seller.html"><span class="d-none d-xl-inline-block">Become a</span> Seller</a>
+        <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
+        <a class="ud-btn btn-white add-joining bdrs50 text-thm2" asp-area="Identity" asp-page="/Account/Register">Join</a>
+        </div>
+       @*  <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
+        </li> *@
     }
-</ul>
