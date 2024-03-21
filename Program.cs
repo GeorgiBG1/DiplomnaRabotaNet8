@@ -24,6 +24,7 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddScoped<DatabaseSeedService>();
             builder.Services.AddTransient<IOfferingService, OfferingService>();
             builder.Services.AddTransient<ICategoryService, CategoryService>();
+            builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IChatService, ChatService>();
             builder.Services.AddTransient<IImageService, ImageService>();
 

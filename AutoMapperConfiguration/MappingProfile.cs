@@ -3,6 +3,7 @@ using Data.Models;
 using DTOs.INPUT;
 using DTOs.OUTPUT;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Identity.Client;
 
 namespace SkillBox.App.AutoMapperConfiguration
 {
@@ -56,7 +57,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
                 .ForMember(d => d.ServicesCount, opt => opt.MapFrom(c => c.Services!.Count()));
             //TODO Get ParentCategory (ServiceCount) from Kids (ServiceCount)
-
+                
             CreateMap<Category, SelectListItem>()
                 .ForMember(d => d.Value, opt => opt.MapFrom(d => d.Id))
                 .ForMember(d => d.Text, opt => opt.MapFrom(d => d.Name));
@@ -64,7 +65,23 @@ namespace SkillBox.App.AutoMapperConfiguration
 
             #region Users
             CreateMap<SkillBoxUser, UserCardDTO>()
-                .ForMember(d => d.Name, opt => opt.MapFrom(d => $"{d.FirstName} {d.LastName}"));
+                .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))
+                .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
+                .ForMember(d => d.ReviewAvgCoef, opt => opt.MapFrom((u, d) =>
+                {
+                    var reviews = u.Services.SelectMany(s => s.Reviews!).ToList();
+                    var stars = reviews.Select(r => r.RatingStars).ToList();
+                    var starsSum = stars.Sum();
+                    var reviewAvgCoef = (double)starsSum! / stars.Count();
+                    return reviewAvgCoef;
+                })) //TODO Test
+                .ForMember(d => d.ReviewsCount, opt => opt.MapFrom((u, d) =>
+                {
+                    var reviews = u.Services.SelectMany(s => s.Reviews!).ToList();
+                    return reviews.Count();
+                }))
+                .ForMember(d => d.Skills, opt => opt.MapFrom(u => u.Skills!))
+                .ForMember(d => d.City, opt => opt.MapFrom(u => u.City!));
             //TODO Add more members
             #endregion
         }

@@ -14,6 +14,7 @@ namespace Data.Models
         public string LastName { get; set; }
         public string? WebsiteURL { get; set; }
         public string? WebsiteName { get; set; }
+        //TODO ProfilePhoto property
         public Gender Gender { get; set; }
         public City? City { get; set; }
         //TODO Career property

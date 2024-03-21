@@ -1582,195 +1582,36 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="navi_pagi_bottom_center slider-4-grid owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-1.png" alt=""><!--Get User Profile Pic-->
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Robert Fox</h5>
-                                    <p class="mb-0">Nursing Assistant</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
+                        @foreach (var skiller in Model.UserCardDTOs)
+                        {
+                            <div class="item">
+                                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
+                                    <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                                        <img class="rounded-circle mx-auto" src="images/team/fl-1.png" alt=""><!--Get User Profile Pic-->
+                                        <span class="online"></span>
                                     </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-2.png" alt="">
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Kristin Watson</h5>
-                                    <p class="mb-0">Dog Trainer</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
-                                    </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                                    <div class="details">
+                                        <h5 class="title mb-1">@skiller.Name</h5>
+                                        <p class="mb-0">Career Ex.Nursing Assistant</p>
+                                        <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">@skiller.ReviewAvgCoef</span> (@skiller.ReviewsCount reviews)</p></div>
+                                        <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                                            <span class="tag">Figma</span>
+                                            <span class="tag mx10">Sketch</span>
+                                            <span class="tag">HTML5</span>
+                                        </div>
+                                        <hr class="opacity-100 mt20 mb15">
+                                        <div class="fl-meta d-flex align-items-center justify-content-between">
+                                            <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">@skiller.City</span></a>
+                                            <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                                            <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                                        </div>
+                                        <div class="d-grid mt15">
+                                            <a class="ud-btn btn-light-thm bdrs90">@* href="page-freelancer-single.html" *@View Profile<i class="fal fa-arrow-right-long"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-3.png" alt="">
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Darrell Steward</h5>
-                                    <p class="mb-0">Medical Assistant</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
-                                    </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-4.png" alt="">
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Theresa Webb</h5>
-                                    <p class="mb-0">Marketing Coordinator</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
-                                    </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-1.png" alt="">
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Robert Fox</h5>
-                                    <p class="mb-0">Nursing Assistant</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
-                                    </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-2.png" alt="">
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Kristin Watson</h5>
-                                    <p class="mb-0">Dog Trainer</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
-                                    </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60 bdrs16">
-                                <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
-                                    <img class="rounded-circle mx-auto" src="images/team/fl-3.png" alt="">
-                                    <span class="online"></span>
-                                </div>
-                                <div class="details">
-                                    <h5 class="title mb-1">Darrell Steward</h5>
-                                    <p class="mb-0">Medical Assistant</p>
-                                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
-                                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                        <span class="tag">Figma</span>
-                                        <span class="tag mx10">Sketch</span>
-                                        <span class="tag">HTML5</span>
-                                    </div>
-                                    <hr class="opacity-100 mt20 mb15">
-                                    <div class="fl-meta d-flex align-items-center justify-content-between">
-                                        <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                                        <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                                        <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
-                                    </div>
-                                    <div class="d-grid mt15">
-                                        <a href="page-freelancer-single.html" class="ud-btn btn-light-thm bdrs90">View Profile<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
