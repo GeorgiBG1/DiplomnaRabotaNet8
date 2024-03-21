@@ -2,6 +2,7 @@
 using Data.Models;
 using DTOs.INPUT;
 using DTOs.OUTPUT;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SkillBox.App.AutoMapperConfiguration
 {
@@ -54,6 +55,11 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.Name, opt => opt.MapFrom(d => d.Name))
                 .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
                 .ForMember(d => d.ServicesCount, opt => opt.MapFrom(c => c.Services!.Count()));
+            //TODO Get ParentCategory (ServiceCount) from Kids (ServiceCount)
+
+            CreateMap<Category, SelectListItem>()
+                .ForMember(d => d.Value, opt => opt.MapFrom(d => d.Id))
+                .ForMember(d => d.Text, opt => opt.MapFrom(d => d.Name));
             #endregion
         }
     }

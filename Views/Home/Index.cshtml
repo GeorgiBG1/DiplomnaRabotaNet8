@@ -1,5 +1,4 @@
-﻿@using DTOs.OUTPUT
-@model IEnumerable<CategoryCardDTO>
+﻿@model HomeViewModel
 
 <div class="body_content">
     <!-- Home Banner Style V1 -->
@@ -61,20 +60,14 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-3">
                                     <div class="bselect-style1 bdrl1 bdrn-sm">
-                                        <select class="selectpicker" data-width="100%">
-                                            <option>Choose Category</option>
-                                            <option data-tokens="Graphics&Design">Graphics & Design</option>
-                                            <option data-tokens="DigitlMarketing">Digital Marketing</option>
-                                            <option data-tokens="Writing&Translation">Writing & Translation</option>
-                                            <option data-tokens="Video&Animation">Video & Animation</option>
-                                            <option data-tokens="Music&Audio">Music & Audio</option>
-                                            <option data-tokens="Programming&Tech">Programming & Tech</option>
+                                        <select class="selectpicker" data-width="100%" asp-items="@Model.CategoryList">
+                                            <option disabled>Избери категория</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-xl-3">
                                     <div class="text-center text-xl-start">
-                                        <button class="ud-btn btn-thm w-100 bdrs60" type="button">Search</button>
+                                        <button class="ud-btn btn-thm w-100 bdrs60" type="button">Търси</button>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +198,7 @@
             <div class="row align-items-center wow fadeInUp">
                 <div class="col-xl-3">
                     <div class="main-title mb30-lg">
-                        <h2 class="title">Popular Services</h2>
+                        <h2 class="title">Топ услуги</h2>
                         <p class="paragraph">Most viewed and all-time top-selling services</p>
                     </div>
                 </div>
@@ -479,7 +472,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="text-center mt30">
-                                            <a class="ud-btn btn-light-thm bdrs60" href="page-service-v1.html">All Services<i class="fal fa-arrow-right-long"></i></a>
+                                            <a asp-action="Index" asp-controller="Services" class="ud-btn btn-light-thm bdrs60">Всички услуги<i class="fal fa-arrow-right-long"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -509,6 +502,7 @@
                                                         <span class="fz14">Wanda Runo</span>
                                                     </a>
                                                     <div class="budget">
+                                                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
                                                         <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
                                                     </div>
                                                 </div>
@@ -728,7 +722,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="text-center mt30">
-                                            <a class="ud-btn btn-light-thm bdrs60" href="page-service-v1.html">All Services<i class="fal fa-arrow-right-long"></i></a>
+                                            <a asp-action="Index" asp-controller="Services" class="ud-btn btn-light-thm bdrs60">Всички услуги<i class="fal fa-arrow-right-long"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1516,40 +1510,7 @@
         <img class="home2-cta-img" src="images/about/about-10.jpg" alt="">
     </section>
 
-    <!-- Our Partners -->
-    <section class="our-partners">
-        <div class="container">
-            <div class="row wow fadeInUp">
-                <div class="col-lg-12">
-                    <div class="main-title text-center">
-                        <h6>Trusted by the world’s best</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="row wow fadeInUp">
-                <div class="col-6 col-md-4 col-xl-2">
-                    <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/1.png" alt="1.png"></div>
-                </div>
-                <div class="col-6 col-md-4 col-xl-2">
-                    <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/2.png" alt="2.png"></div>
-                </div>
-                <div class="col-6 col-md-4 col-xl-2">
-                    <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/3.png" alt="3.png"></div>
-                </div>
-                <div class="col-6 col-md-4 col-xl-2">
-                    <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/4.png" alt="4.png"></div>
-                </div>
-                <div class="col-6 col-md-4 col-xl-2">
-                    <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/5.png" alt="5.png"></div>
-                </div>
-                <div class="col-6 col-md-4 col-xl-2">
-                    <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/6.png" alt="6.png"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- talent by category -->
+    <!-- Categories -->
     <section class="pb-0 pt0">
         <div class="container">
             <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
@@ -1561,68 +1522,41 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="text-start text-lg-end mb-4">
-                        <a class="ud-btn btn-light-thm bdrs90" href="page-service-v1.html">All Category<i class="fal fa-arrow-right-long"></i></a>
+                        <a asp-action="Index" asp-controller="Categories" class="ud-btn btn-light-thm bdrs90">Всички категории<i class="fal fa-arrow-right-long"></i></a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 wow fadeInUp" data-wow-delay="300ms">
                     <div class="dots_none slider-dib-sm slider-5-grid vam_nav_style owl-theme owl-carousel">
-                        <div class="item">
-                            <div class="feature-style1 mb30 bdrs16">
-                                <div class="feature-img bdrs16 overflow-hidden"><img class="w-100" src="images/listings/category-1.jpg" alt=""></div>
-                                <div class="feature-content">
-                                    <div class="top-area">
-                                        <h6 class="title mb-1">1.853 skills</h6>
-                                        <h5 class="text">Development & <br class="d-none d-lg-block">IT</h5>
+                        @foreach (var cCard in Model.CategoryCardDTOs)
+                        {
+                            <div class="item">
+                                <div class="feature-style1 mb30 bdrs16">
+                                    <div class="feature-img bdrs16 overflow-hidden"><img class="w-100" src="@cCard.MainImage" width="260" height="301" alt="Category Image"></div>
+                                    <div class="feature-content">
+                                        <div class="top-area">
+                                            <h6 class="title mb-1">@cCard.ServicesCount услуги</h6>
+                                            @if (cCard.Name.Contains(" и "))
+                                            {
+                                                <h5 class="text">
+                                                    @for (int i = 0; i < cCard.Name.Split(" и ").Count(); i++)
+                                                    {
+                                                        @cCard.Name.Split(" и ")[i]
+                                                        <br class="d-none d-lg-block">
+                                                    }
+
+                                                </h5>
+                                            }
+                                            else
+                                            {
+                                                <h5 class="text">@cCard.Name</h5>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="feature-style1 mb30 bdrs16">
-                                <div class="feature-img bdrs16 overflow-hidden"><img class="w-100" src="images/listings/category-2.jpg" alt=""></div>
-                                <div class="feature-content">
-                                    <div class="top-area">
-                                        <h6 class="title mb-1">1.853 skills</h6>
-                                        <h5 class="text">Design & <br class="d-none d-lg-block">Creative</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="feature-style1 mb30 bdrs16">
-                                <div class="feature-img bdrs16 overflow-hidden"><img class="w-100" src="images/listings/category-3.jpg" alt=""></div>
-                                <div class="feature-content">
-                                    <div class="top-area">
-                                        <h6 class="title mb-1">1.853 skills</h6>
-                                        <h5 class="text">Digital <br class="d-none d-lg-block">Marketing</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="feature-style1 mb30 bdrs16">
-                                <div class="feature-img bdrs16 overflow-hidden"><img class="w-100" src="images/listings/category-4.jpg" alt=""></div>
-                                <div class="feature-content">
-                                    <div class="top-area">
-                                        <h6 class="title mb-1">1.853 skills</h6>
-                                        <h5 class="text">Writing & <br class="d-none d-lg-block">Translation</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="feature-style1 mb30 bdrs16">
-                                <div class="feature-img bdrs16 overflow-hidden"><img class="w-100" src="images/listings/category-5.jpg" alt=""></div>
-                                <div class="feature-content">
-                                    <div class="top-area">
-                                        <h6 class="title mb-1">1.853 skills</h6>
-                                        <h5 class="text">Music & <br class="d-none d-lg-block">Audio</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -1843,263 +1777,7 @@
         </div>
     </section>
 
-    <!-- Learn With Freeio -->
-    <section class="bgc-thm3">
-        <div class="container">
-            <div class="row align-items-md-center">
-                <div class="col-md-6 col-lg-8 mb30-md wow fadeInUp" data-wow-delay="100ms">
-                    <div class="main-title">
-                        <h2 class="title">People Love To Learn With Freeio</h2>
-                        <p class="paragraph">Lorem ipsum dolor sit amet, consectetur.</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="funfact_one">
-                                <div class="details">
-                                    <ul class="ps-0 d-flex mb-0">
-                                        <li><div class="timer">4</div></li>
-                                        <li><div>.</div></li>
-                                        <li><div class="timer">9</div></li>
-                                        <li><span>/</span></li>
-                                        <li><div class="timer">5</div></li>
-                                    </ul>
-                                    <p class="text mb-0">Clients rate professionals on Freeio</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="funfact_one">
-                                <div class="details">
-                                    <ul class="ps-0 d-flex mb-0">
-                                        <li><div class="timer">99</div></li>
-                                        <li><span>%</span></li>
-                                    </ul>
-                                    <p class="text mb-0">95% of customers are satisfied <br> through to see their freelancers</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="funfact_one">
-                                <div class="details">
-                                    <h2>Award winner</h2>
-                                    <p class="text mb-0">Home ownership</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="testimonial-slider2 mb15 navi_pagi_bottom_center slider-1-grid owl-carousel owl-theme wow fadeInUp" data-wow-delay="300ms">
-                        <div class="item">
-                            <div class="testimonial-style1 default-box-shadow1 position-relative bdrs16 mb35">
-                                <div class="testimonial-content">
-                                    <h4 class="title text-thm">Great Work</h4>
-                                    <span class="icon fas fa-quote-left"></span>
-                                    <h4 class="t_content">“I found the course material to be highly engaging, and the instructors to be helpful and communicative.”</h4>
-                                </div>
-                                <div class="thumb d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="wa" src="images/testimonials/testimonial-1.png" alt="">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0">Courtney Henry</h6>
-                                        <p class="fz14 mb-0">Web Designer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-style1 default-box-shadow1 position-relative bdrs16 mb35">
-                                <div class="testimonial-content">
-                                    <h4 class="title text-thm">Great Work</h4>
-                                    <span class="icon fas fa-quote-left"></span>
-                                    <h4 class="t_content">“I found the course material to be highly engaging, and the instructors to be helpful and communicative.”</h4>
-                                </div>
-                                <div class="thumb d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="wa" src="images/testimonials/testimonial-2.png" alt="">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0">Courtney Henry</h6>
-                                        <p class="fz14 mb-0">Web Designer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-style1 default-box-shadow1 position-relative bdrs16 mb35">
-                                <div class="testimonial-content">
-                                    <h4 class="title text-thm">Great Work</h4>
-                                    <span class="icon fas fa-quote-left"></span>
-                                    <h4 class="t_content">“I found the course material to be highly engaging, and the instructors to be helpful and communicative.”</h4>
-                                </div>
-                                <div class="thumb d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="wa" src="images/testimonials/testimonial-3.png" alt="">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0">Courtney Henry</h6>
-                                        <p class="fz14 mb-0">Web Designer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-style1 default-box-shadow1 position-relative bdrs16 mb35">
-                                <div class="testimonial-content">
-                                    <h4 class="title text-thm">Great Work</h4>
-                                    <span class="icon fas fa-quote-left"></span>
-                                    <h4 class="t_content">“I found the course material to be highly engaging, and the instructors to be helpful and communicative.”</h4>
-                                </div>
-                                <div class="thumb d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="wa" src="images/testimonials/testimonial-3.png" alt="">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0">Courtney Henry</h6>
-                                        <p class="fz14 mb-0">Web Designer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Table Area -->
-    <section class="our-pricing pb90">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 m-auto wow fadeInUp">
-                    <div class="main-title text-center mb30">
-                        <h2 class="title">Membership Plans</h2>
-                        <p class="paragraph mt10">Give your visitor a smooth online experience with a solid UX design</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row wow fadeInUp" data-wow-delay="200ms">
-                <div class="col-lg-12">
-                    <div class="pricing_packages_top d-flex align-items-center justify-content-center mb60">
-                        <div class="toggle-btn">
-                            <span class="pricing_save1 dark-color ff-heading">Billed Monthly</span>
-                            <label class="switch">
-                                <input type="checkbox" id="checbox" onclick="check()" />
-                                <span class="pricing_table_switch_slide round"></span>
-                            </label>
-                            <span class="pricing_save2 dark-color ff-heading">Billed Yearly</span>
-                            <span class="pricing_save3">Save 20%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row wow fadeInUp" data-wow-delay="300ms">
-                <div class="col-sm-6 col-xl-3">
-                    <div class="pricing_packages at-home2 text-center bdrs16">
-                        <div class="heading mb10">
-                            <h1 class="text2">$29 <small>/ monthly</small></h1>
-                            <h1 class="text1">$39 <small>/ monthly</small></h1>
-                            <h4 class="package_title mt-2">Basic Plan</h4>
-                        </div>
-                        <div class="details">
-                            <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
-                            <div class="pricing-list mb40">
-                                <ul class="px-0">
-                                    <li>1 Listing</li>
-                                    <li>30 Days Visibility</li>
-                                    <li>Highlighted in Search Results</li>
-                                    <li>4 Revisions</li>
-                                    <li>9 days Delivery Time</li>
-                                    <li>Products Support</li>
-                                </ul>
-                            </div>
-                            <div class="d-grid">
-                                <a href="" class="ud-btn btn-light-thm">Buy Now<i class="fal fa-arrow-right-long"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="pricing_packages at-home2 active text-center bdrs16">
-                        <div class="heading mb10">
-                            <h1 class="text2">$49 <small>/ monthly</small></h1>
-                            <h1 class="text1">$59 <small>/ monthly</small></h1>
-                            <h4 class="package_title mt-2">Standard Plan</h4>
-                        </div>
-                        <div class="details">
-                            <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
-                            <div class="pricing-list mb40">
-                                <ul class="px-0">
-                                    <li>1 Listing</li>
-                                    <li>30 Days Visibility</li>
-                                    <li>Highlighted in Search Results</li>
-                                    <li>4 Revisions</li>
-                                    <li>9 days Delivery Time</li>
-                                    <li>Products Support</li>
-                                </ul>
-                            </div>
-                            <div class="d-grid">
-                                <a href="" class="ud-btn btn-light-thm">Buy Now<i class="fal fa-arrow-right-long"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="pricing_packages at-home2 text-center bdrs16">
-                        <div class="heading mb10">
-                            <h1 class="text2">$89 <small>/ monthly</small></h1>
-                            <h1 class="text1">$99 <small>/ monthly</small></h1>
-                            <h4 class="package_title mt-2">Extended Plan</h4>
-                        </div>
-                        <div class="details">
-                            <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
-                            <div class="pricing-list mb40">
-                                <ul class="px-0">
-                                    <li>1 Listing</li>
-                                    <li>30 Days Visibility</li>
-                                    <li>Highlighted in Search Results</li>
-                                    <li>4 Revisions</li>
-                                    <li>9 days Delivery Time</li>
-                                    <li>Products Support</li>
-                                </ul>
-                            </div>
-                            <div class="d-grid">
-                                <a href="" class="ud-btn btn-light-thm">Buy Now<i class="fal fa-arrow-right-long"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="pricing_packages at-home2 text-center bdrs16">
-                        <div class="heading mb10">
-                            <h1 class="text2">$129 <small>/ monthly</small></h1>
-                            <h1 class="text1">$139 <small>/ monthly</small></h1>
-                            <h4 class="package_title mt-2">Enterprise Plan</h4>
-                        </div>
-                        <div class="details">
-                            <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
-                            <div class="pricing-list mb40">
-                                <ul class="px-0">
-                                    <li>1 Listing</li>
-                                    <li>30 Days Visibility</li>
-                                    <li>Highlighted in Search Results</li>
-                                    <li>4 Revisions</li>
-                                    <li>9 days Delivery Time</li>
-                                    <li>Products Support</li>
-                                </ul>
-                            </div>
-                            <div class="d-grid">
-                                <a href="" class="ud-btn btn-light-thm">Buy Now<i class="fal fa-arrow-right-long"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Our Footer -->
+    <!-- Footer -->
     <section class="footer-style1 at-home6 home2-footer-radius pt25 pb-0">
         <div class="container">
             <div class="row bb-white-light pb10 mb60">

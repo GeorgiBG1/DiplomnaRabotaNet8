@@ -23,10 +23,18 @@ namespace DiplomnaRabotaNet8.Controllers
 
         public IActionResult Index()
         {
-            var categoryCards = categoryService.GetAllCategoryCardDTOs();
+            //Menu - Nav
             var categoriesWithKids = categoryService.GetAllCategoryDTOs();
             ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
-            return View(categoryCards);
+            //
+            var categoryList = categoryService.GetAllCategoriesAsSelectListItem();
+            var categoryCards = categoryService.GetAllCategoryCardDTOs();
+            var model = new HomeViewModel
+            { 
+                CategoryList = categoryList,
+                CategoryCardDTOs = categoryCards
+            };
+            return View(model);
         }
 
         [HttpGet]

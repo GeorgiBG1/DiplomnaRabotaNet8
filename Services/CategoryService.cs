@@ -3,6 +3,7 @@ using Contracts;
 using Data;
 using Data.Models;
 using DTOs.OUTPUT;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services
@@ -59,12 +60,21 @@ namespace Services
             var model = new List<CategoryDTO>();
             categories = dbContext.Categories
                     .OrderByDescending(s => s.Id)
-                    .Include(s => s.ParentCategory)
+                    .Where(s => s.ParentCategoryId == null)
                     .Include(s => s.Kids)
-                    .Include(s => s.Services)
                     .ToList();
 
             model = categories.Select(mapper.Map<CategoryDTO>).ToList();
+            return model;
+        }
+        public ICollection<SelectListItem> GetAllCategoriesAsSelectListItem()
+        {
+             var categories = dbContext.Categories
+                    .OrderByDescending(s => s.Id)
+                    .Include(s => s.Kids)
+                    .ToList();
+
+            var model = categories.Select(mapper.Map<SelectListItem>).ToList();
             return model;
         }
     }
