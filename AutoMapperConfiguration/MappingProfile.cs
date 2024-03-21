@@ -61,6 +61,12 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.Value, opt => opt.MapFrom(d => d.Id))
                 .ForMember(d => d.Text, opt => opt.MapFrom(d => d.Name));
             #endregion
+
+            #region Users
+            CreateMap<SkillBoxUser, UserCardDTO>()
+                .ForMember(d => d.Name, opt => opt.MapFrom(d => $"{d.FirstName} {d.LastName}"));
+            //TODO Add more members
+            #endregion
         }
     }
 }

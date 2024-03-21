@@ -7,5 +7,6 @@ namespace Models
     {
         public IEnumerable<SelectListItem> CategoryList { get; set; }
         public ICollection<CategoryCardDTO> CategoryCardDTOs { get; set; }
+        public ICollection<UserCardDTO> UserCardDTOs { get; set; }
     }
 }

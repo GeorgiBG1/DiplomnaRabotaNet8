@@ -16,6 +16,7 @@ namespace Data.Models
         public string? WebsiteName { get; set; }
         public Gender Gender { get; set; }
         public City? City { get; set; }
+        //TODO Career property
         public virtual ICollection<ChatUser> ChatUsers { get; set; }
         public virtual ICollection<SkillBoxService> Services { get; set; }
         public virtual ICollection<Skill> Skills { get; set; }

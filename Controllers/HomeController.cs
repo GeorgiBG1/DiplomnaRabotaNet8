@@ -13,12 +13,15 @@ namespace DiplomnaRabotaNet8.Controllers
     {
         private readonly DatabaseSeedService dbSeedService;
         private readonly ICategoryService categoryService;
+        private readonly IUserService userService;
 
         public HomeController(DatabaseSeedService dbSeedService,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            IUserService userService)
         {
             this.dbSeedService = dbSeedService;
             this.categoryService = categoryService;
+            this.userService = userService;
         }
 
         public IActionResult Index()
@@ -29,10 +32,12 @@ namespace DiplomnaRabotaNet8.Controllers
             //
             var categoryList = categoryService.GetAllCategoriesAsSelectListItem();
             var categoryCards = categoryService.GetAllCategoryCardDTOs();
+            var userCards = userService.GetTopSkillersAsUserCardDTOs(8);
             var model = new HomeViewModel
             { 
                 CategoryList = categoryList,
-                CategoryCardDTOs = categoryCards
+                CategoryCardDTOs = categoryCards,
+                UserCardDTOs = userCards
             };
             return View(model);
         }
