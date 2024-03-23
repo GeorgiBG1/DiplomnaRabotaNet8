@@ -1,11 +1,10 @@
 ﻿using Data;
 using Data.Models;
-using Data.Enums;
+using Data.Records;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.Intrinsics.X86;
 
-namespace SkillBox.App.Services
+namespace Services
 {
     public class DatabaseSeedService
     {
@@ -42,10 +41,11 @@ namespace SkillBox.App.Services
                 #endregion
 
                 #region Citites
-                City[] cities = new City[25];
-                for (int i = 0; i < cities.Count(); i++)
+                var cityLastId = BaseRecord.GetLastId<City>();
+                List<City> cities = new List<City>();
+                for (int i = 0; i < 25; i++)
                 {
-                    cities[i] = (City)rnd.Next(0, 228);
+                    cities.Add(BaseRecord.GetById<City>(rnd.Next(1, cityLastId + 1))!);
                 }
                 #endregion
 
@@ -855,6 +855,7 @@ namespace SkillBox.App.Services
                 };
 
                 var services = new List<SkillBoxService>();
+                var serviceLastId = BaseRecord.GetLastId<ServiceStatus>();
                 for (int i = 0; i < 52; i++)
                 {
                     var service = new SkillBoxService()
@@ -864,7 +865,7 @@ namespace SkillBox.App.Services
                         MainImage = $"{urlStart}{mainImgIds[i]}{urlBetween}{mainImgIds[i]}{extension}{urlEnd}",
                         Images = $"{urlStart}{imgSet1[i]}{urlBetween}{imgSet1[i]}{extension}{urlEnd}|" +
                         $"{urlStart}{imgSet2[i]}{urlBetween}{imgSet2[i]}{extension}{urlEnd}|",
-                        ServiceStatus = (ServiceStatus)rnd.Next(0, 4)
+                        ServiceStatus = BaseRecord.GetById<ServiceStatus>(rnd.Next(0, serviceLastId + 1))!
                     };
                     services.Add(service);
                 }
@@ -1212,14 +1213,14 @@ namespace SkillBox.App.Services
                     Service = services[48]
                 };
                 await dbContext.Chats.AddAsync(chatGroup1);
-                
+
                 var chatGroup2 = new Chat()
                 {
                     Name = $"{skiller1.FirstName}, {commenter5.FirstName}",
                     Service = services[16]
                 };
                 await dbContext.Chats.AddAsync(chatGroup2);
-                
+
                 var chatGroup3 = new Chat()
                 {
                     Name = $"{skiller3.FirstName}, {skiller12.FirstName}",
@@ -1339,7 +1340,7 @@ namespace SkillBox.App.Services
                     Content = "Да, даже по-добре, за да имам време да го изпера днес."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage4);
-                
+
                 var userMessage5 = new UserMessage()
                 {
                     Owner = ordinaryUser1,
@@ -1563,7 +1564,7 @@ namespace SkillBox.App.Services
                     Content = "Добре, разбрахме се, в такъв случай ме очаквайте на 8 май сутринта на адреса ви. Хубав ден!"
                 };
                 await dbContext.UserMessages.AddAsync(userMessage32);
-                
+
                 var userMessage33 = new UserMessage()
                 {
                     Owner = commenter2,
@@ -1635,7 +1636,7 @@ namespace SkillBox.App.Services
                     Content = "Здравейте, свързваме се с вас по случай наближаващата ни сватба. В чата добавих младоженеца- Виктор Попов, нашия сватбен агент Елиза Иванова, и майка ми Радостина Димитрова."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage41);
-                
+
                 var userMessage42 = new UserMessage()
                 {
                     Owner = skiller1,
@@ -1643,7 +1644,7 @@ namespace SkillBox.App.Services
                     Content = "Добър ден на всички ви, радвам се че се запознаваме поради такъв хубав случай. Бихте ли споделили идеите ви за торта и колко гости мислите да поканите, за да предвидим каква да бъде тортата и колко ще ви струва."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage42);
-                
+
                 var userMessage43 = new UserMessage()
                 {
                     Owner = ordinaryUser2,
@@ -1651,7 +1652,7 @@ namespace SkillBox.App.Services
                     Content = "Това което младоженците вече споделиха, че харесват е тъмно синия цвят, мислят да го използват много в декорацията на сватбата. Харесват и бели рози, което също ще бъде част от декорацията, така че мисля че ако внесем малко цвят в тортата няма да е лошо."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage43);
-                
+
                 var userMessage44 = new UserMessage()
                 {
                     Owner = skiller14,
@@ -1659,7 +1660,7 @@ namespace SkillBox.App.Services
                     Content = "Да, харесва ми идеята и на мен, но да не е прекалено шарено, може би 1-2 цвята най-много. Абе най-добре розово. А гостите ще бъдат 120 човека, така че 130 парчета торта."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage44);
-                
+
                 var userMessage45 = new UserMessage()
                 {
                     Owner = commenter1,
@@ -1667,7 +1668,7 @@ namespace SkillBox.App.Services
                     Content = "А, само да не е всичко розово. По-добре по-неутрален цвят."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage45);
-                
+
                 var userMessage46 = new UserMessage()
                 {
                     Owner = skiller1,
@@ -1683,7 +1684,7 @@ namespace SkillBox.App.Services
                     Content = "Добър ден г-н Иванов. Свързваме се с вас защото и двамата искаме да учим в чужбина след 12 клас, но англииският ни не е на много добро ниво."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage47);
-                
+
                 var userMessage48 = new UserMessage()
                 {
                     Owner = skiller1,
@@ -1691,7 +1692,7 @@ namespace SkillBox.App.Services
                     Content = "Здравейте ученици, кой клас сте и за кое ниво трябва да се подготвите?"
                 };
                 await dbContext.UserMessages.AddAsync(userMessage48);
-                
+
                 var userMessage49 = new UserMessage()
                 {
                     Owner = commenter4,
@@ -1699,7 +1700,7 @@ namespace SkillBox.App.Services
                     Content = "Сега сме 10ти клас и нивото ни е колко A2, но трябва да го повишим до C1, защото това е което се изисква от университетите."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage49);
-                
+
                 var userMessage50 = new UserMessage()
                 {
                     Owner = skiller1,
@@ -1707,7 +1708,7 @@ namespace SkillBox.App.Services
                     Content = "Разбирам, в такиъв случай може ли да споделите адрес на някой от вас където мога да дойда и да проведем бърз тест, за да знаем със сигурност нивото? Вторник другата седмица в 11 добре ли е?"
                 };
                 await dbContext.UserMessages.AddAsync(userMessage50);
-                
+
                 var userMessage51 = new UserMessage()
                 {
                     Owner = commenter5,
@@ -1715,7 +1716,7 @@ namespace SkillBox.App.Services
                     Content = "Да, можете да дойдете на този адрес. Вторник в 11 е удобно и за двама ни. Има ли нещо което трябва да подготвим за изпита?"
                 };
                 await dbContext.UserMessages.AddAsync(userMessage51);
-                
+
                 var userMessage52 = new UserMessage()
                 {
                     Owner = skiller1,
@@ -1731,7 +1732,7 @@ namespace SkillBox.App.Services
                     Content = "Здравейте г-н Василев! Свързваме се с вас по препоръка на наш познат, които вече работи с вас по бракоразводно дело. Нашия случай е същия, ние искаме да се разведем, но имаме много имоти заедно и фирма за подялба, което прави нещата малко по-сложни."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage53);
-                
+
                 var userMessage54 = new UserMessage()
                 {
                     Owner = skiller3,
@@ -1739,7 +1740,7 @@ namespace SkillBox.App.Services
                     Content = "Приятно ми е да се запознаем, какво точно имате за подялба и какви са вашите предпочитания, имате ли план кой ще остане във фирмата например?"
                 };
                 await dbContext.UserMessages.AddAsync(userMessage54);
-                
+
                 var userMessage55 = new UserMessage()
                 {
                     Owner = skiller13,
@@ -1747,7 +1748,7 @@ namespace SkillBox.App.Services
                     Content = "Тъй като аз създадох фирмата, мисля че е редно аз да продължа да я управлявам, което означама че мога да заплатя на Милена нейната част от фирмата и тя да напусне. Останалата част от имотите мисля че можем да продадем и да си разделим по равно, тъй като сме се сдобили с тях по време на брака."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage55);
-                
+
                 var userMessage56 = new UserMessage()
                 {
                     Owner = skiller12,
@@ -1755,7 +1756,7 @@ namespace SkillBox.App.Services
                     Content = "Да, аз също съм съгласна с това, може да продадем всичко и да оставим по един апартамент на всеки от нас, който има същата стойност като другия. Мисля че така е честно."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage56);
-                
+
                 var userMessage57 = new UserMessage()
                 {
                     Owner = skiller3,
@@ -1763,7 +1764,7 @@ namespace SkillBox.App.Services
                     Content = "В такъв случай мисля че можем да започнем процеса от утре. Хубаво е че вече сте обсъдили и решили всичко предварително. Аз ще се заема с подробностите и ще ви изпратя по-късно линк, чрез който да ми изпратите всичките си документи."
                 };
                 await dbContext.UserMessages.AddAsync(userMessage57);
-                
+
                 var userMessage58 = new UserMessage()
                 {
                     Owner = skiller13,

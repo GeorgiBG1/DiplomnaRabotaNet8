@@ -3,163 +3,148 @@
 @{
     ViewData["Title"] = "Регистрация";
 }
-<h1 class="text-center mt-3">@ViewData["Title"]</h1>
-<hr class="mt-3 bg-skillBox hr-2" />
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Създай нов акаунт.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="потребителско име" />
-                <label asp-for="Input.UserName">Потребителско име</label>
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="име" />
-                <label asp-for="Input.FirstName">Име</label>
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="фамилия" />
-                <label asp-for="Input.LastName">Фамилия</label>
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="phonenumber" aria-required="true" placeholder="телефон" />
-                <label asp-for="Input.PhoneNumber">Телефон за връзка</label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="потребителско име" />
-                <label asp-for="Input.Email">E-Mail адрес</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Парола</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Потвърди парола</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Регистрирай</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                article
-                                about setting up this ASP.NET application to support logging in via external services
-                            </a>.
-                        </p>
+<div class="body_content bgc-thm4">
+    <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! -->
+    <!-- SignUp Area -->
+    <section class="our-register">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
+                    <div class="main-title text-center">
+                        <h2 class="title">Регистрация</h2>
+                        <p class="paragraph">Give your visitor a smooth online experience with a solid UX design</p>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-            <p>Template Gplay.bg</p>
-        </section>
-    </div>
-</div>
-
-
-
-<div class="container-fluid appointment py-5">
-    <div class="container py-5">
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.4s">
-                <div class="appointment-form rounded p-5">
-                    <p class="fs-4 text-uppercase text-primary">Get In Touch</p>
-                    <h1 class="display-5 mb-4">Създай нов акаунт</h1>
-                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                        <div class="row gy-3 gx-4">
-                            <div class="col-xl-6 form-control py-3 border-primary bg-transparent">
-                                <input asp-for="Input.Skiller" type="checkbox">
-                                <label asp-for="Input.Skiller" class="form-check-label w-50">Регистриране като Skiller</label>
+                </div>
+            </div>
+            <div class="row wow fadeInRight" data-wow-delay="300ms">
+                <div class="col-xl-6 mx-auto">
+                    <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div class="mb30">
+                                <h4>Нека създадем вашия акаунт!</h4>
+                                <p class="text mt20">Вече имате акаунт? <a asp-area="Identity" asp-page="/Account/Login" class="text-thm">Влизане!</a></p>
                             </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.UserName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Потребителско име">
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="mb25">
+                                <label asp-for="Input.UserName" class="form-label fw500 dark-color">Потребителско име</label>
+                                <input asp-for="Input.UserName" type="text" class="form-control" aria-required="true" placeholder="потребителско име" />
                                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
                             </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.Email" type="email" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Имейл">
+                            <div class="mb25">
+                                <label asp-for="Input.FirstName" class="form-label fw500 dark-color">Име</label>
+                                <input asp-for="Input.FirstName" type="text" class="form-control" aria-required="true" placeholder="име" />
+                                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="mb25">
+                                <label asp-for="Input.LastName" class="form-label fw500 dark-color">Фамилия</label>
+                                <input asp-for="Input.LastName" type="text" class="form-control" aria-required="true" placeholder="фамилия" />
+                                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                            </div>
+                            <div class="mb25">
+                                <div class="form-style1">
+                                    <label asp-for="Input.Gender" class="heading-color ff-heading fw500 mb10">Пол</label>
+                                    <div class="bootselect-multiselect">
+                                        <select asp-for="Input.Gender" class="selectpicker">
+                                            <option disabled>Избери</option>
+                                            <option value="1">Мъж</option>
+                                            <option value="2">Жена</option>
+                                            <option value="3">Друго</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb25">
+                                <div class="form-style1">
+                                    <label asp-for="Input.City" class="form-label fw500 fz16 dark-color">Град</label>
+                                    <div class="bootselect-multiselect">
+                                        <div class="dropdown bootstrap-select dropup" style="width: 100%;">
+                                            <select asp-for="Input.City" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                <option disabled>Избери</option>
+                                                @foreach (var city in Model.Cities)
+                                                {
+                                                    <option value="@city.Id" data-tokens="@city.Name">@city.Name</option>
+                                                }
+                                            </select>
+                                            <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
+                                                <div class="bs-searchbox">
+                                                    <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                                </div>
+                                                <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
+                                                    <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                        <li class="selected active">
+                                                            <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
+                                                                <span class="text">@Model.Cities[0].Name</span>
+                                                            </a>
+                                                        </li>
+                                                        @for (int i = 0; i < Model.Cities.Count(); i++)
+                                                        {
+                                                            <li>
+                                                                <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
+                                                                    <span class="text">@Model.Cities[i].Name</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb25">
+                                <label asp-for="Input.PhoneNumber" class="form-label fw500 dark-color">Телефон за връзка</label>
+                                <input asp-for="Input.PhoneNumber" type="tel" class="form-control" aria-required="true" placeholder="телефон" />
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="mb25">
+                                <label asp-for="Input.Email" class="form-label fw500 dark-color">E-Mail адрес</label>
+                                <input asp-for="Input.Email" type="email" class="form-control" aria-required="true" placeholder="email" />
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.FirstName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Име">
+                            <div class="mb25">
+                                <label asp-for="Input.Password" class="form-label fw500 dark-color">Парола</label>
+                                <input asp-for="Input.Password" type="password" class="form-control" aria-required="true" placeholder="*******" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.LastName" type="text" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Фамилия">
+                            <div class="mb15">
+                                <label asp-for="Input.ConfirmPassword" class="form-label fw500 dark-color">Потвърди парола</label>
+                                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" aria-required="true" placeholder="*******" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.PhoneNumber" type="tel" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Телефон">
+                            <div class="d-grid mb20">
+                                <button type="submit" class="ud-btn btn-thm default-box-shadow2">Създаване на акаунт <i class="fal fa-arrow-right-long"></i></button>
                             </div>
-                            <div class="col-xl-6">
-                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example" asp-for="Input.Genders">
-                                    <option selected>Пол</option> 
-                                </select>
-                            </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.Password" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Парола">
-                            </div>
-                            <div class="col-xl-6">
-                                <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
-                                    <option selected>Избери град</option>
-                                    <option value="1">София</option>
-                                    <option value="2">Пловдив</option>
-                                    <option value="3">Варна</option>
-                                    <option value="4">Бургас</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-6">
-                                <input asp-for="Input.ConfirmPassword" type="password" class="form-control py-3 border-primary bg-transparent text-black-50" placeholder="Потвърди парола">
-                            </div>
-                            @if ((Model.ExternalLogins?.Count ?? 0) != 0)
-                            {
-                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                    <div class="col-xl-6 form-control py-0 w-50 bg-transparent border-0">
-                                        @foreach (var provider in Model.ExternalLogins!)
+                        </form>
+                        @if ((Model.ExternalLogins?.Count ?? 0) != 0)
+                        {
+                            <div class="hr_content mb20"><hr><span class="hr_top_text">ИЛИ</span></div>
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div class="d-md-flex justify-content-between">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        if (provider.Name == "Facebook")
                                         {
-                                            <button type="submit" class="btn col-xl-6 form-control py-3 border-primary bg-transparent text-black-50" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                            <button type="submit" class="ud-btn btn-fb fz14 fw400 mb-2 mb-md-0"><i class="fab fa-facebook-f pr10"></i> Вход с Facebook</button>
                                         }
-                                    </div>
-                                </form>
-                            }
-                            <div class="col-12">
-                                <button id="registerSubmit" type="submit" class="btn btn-primary text-white w-100 py-3 px-5">Регистриране</button>
-                            </div>
-                        </div>
-                    </form>
+                                        if (provider.Name == "Google")
+                                        {
+                                            <button type="submit" class="ud-btn btn-google fz14 fw400 mb-2 mb-md-0"><i class="fab fa-google" name="provider" value="@provider.Name"></i> Вход с Google</button>
+                                        }
+                                        if (provider.Name == "Apple")
+                                        {
+                                            <button type="submit" class="ud-btn btn-apple fz14 fw400"><i class="fab fa-apple"></i> Вход с Apple</button>
+                                        }
+                                    }
+                                </div>
+                            </form>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
 </div>
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

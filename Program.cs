@@ -2,7 +2,6 @@ using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SkillBox.App.Services;
 using SkillBox.App.Hubs;
 using Contracts;
 using Services;

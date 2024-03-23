@@ -196,9 +196,6 @@ namespace SkillBox.App.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -223,9 +220,6 @@ namespace SkillBox.App.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("City")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -268,9 +262,6 @@ namespace SkillBox.App.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ServiceStatus")
-                        .HasColumnType("int");
-
                     b.Property<string>("UnitPrice")
                         .HasColumnType("nvarchar(max)");
 
@@ -297,9 +288,6 @@ namespace SkillBox.App.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("City")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -314,9 +302,6 @@ namespace SkillBox.App.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -1,8 +1,5 @@
-using Data;
 using Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using SkillBox.App.Services;
 using System.Diagnostics;
 using Contracts;
 using Services;

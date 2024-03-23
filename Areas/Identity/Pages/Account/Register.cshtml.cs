@@ -2,25 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Data.Models;
-using Data.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Data.Records;
 
 namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
 {
@@ -54,6 +47,8 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
+
+        public List<City> Cities { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -98,15 +93,14 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            public int GenderId { get; set; }
-            public SelectListItem Genders { get; set; }
+            [Display(Name = "City")]
+            public int City { get; set; }
 
             [Required]
-            public int CityId { get; set; }
-            public SelectListItem Cities { get; set; }
+            [Display(Name = "Gender")]
+            public int Gender { get; set; }
 
-            [Required]
-            public bool Skiller { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -129,6 +123,13 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            Cities = new List<City>();
+            var lastCityId = BaseRecord.GetLastId<City>();
+            lastCityId++;
+            for (int i = 1; i < lastCityId; i++)
+            {
+                Cities.Add(BaseRecord.GetById<City>(i));
+            }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -143,20 +144,14 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-                user.UserName = Input.UserName;
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
-                user.Email = Input.Email;
-                
+                user.City = BaseRecord.GetById<City>(Input.City);
+                user.Gender = BaseRecord.GetById<Gender>(Input.Gender);
                 user.EmailConfirmed = true; //TODO scaffolding
                 //CreateUser();
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
-                if (Input.Skiller)
-                {
-                    result = await _userManager.AddToRoleAsync(user, "Skiller");
-                }
 
                 if (result.Succeeded)
                 {

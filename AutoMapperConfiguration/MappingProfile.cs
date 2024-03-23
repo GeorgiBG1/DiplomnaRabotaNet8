@@ -35,11 +35,11 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<SkillBoxService, ServiceCardDTO>()
                  .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
                  .ForMember(d => d.AuthorName, opt => opt.MapFrom(s => s.OwnerName))
-                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
                  .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
                  .ForMember(d => d.MainImage, opt => opt.MapFrom(s => s.MainImage))
                  .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
-                 .ForMember(d => d.Discount, opt => opt.MapFrom(s => s.Discount));
+                 .ForMember(d => d.Discount, opt => opt.MapFrom(s => s.Discount))
+                 .ForMember(d => d.ReviewsCount, opt => opt.MapFrom(s => s.Reviews!.Count()));
             #endregion
 
             #region Categories
@@ -55,9 +55,15 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<Category, CategoryCardDTO>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(d => d.Name))
                 .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
-                .ForMember(d => d.ServicesCount, opt => opt.MapFrom(c => c.Services!.Count()));
-            //TODO Get ParentCategory (ServiceCount) from Kids (ServiceCount)
-                
+                .ForMember(d => d.ServicesCount, opt => opt.MapFrom((c, d) =>
+                {
+                    if (c.Kids!.Count != 0)
+                    {
+                        return d.ServicesCount = c.Kids.Select(k => k.Services!.Count()).Sum();
+                    }
+                    return d.ServicesCount = c.Services!.Count();
+                }));
+
             CreateMap<Category, SelectListItem>()
                 .ForMember(d => d.Value, opt => opt.MapFrom(d => d.Id))
                 .ForMember(d => d.Text, opt => opt.MapFrom(d => d.Name));
