@@ -12,14 +12,15 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Data.Records;
+using Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<SkillBoxUser> _signInManager;
+        private readonly SkillBoxDbContext _dbContext;
         private readonly UserManager<SkillBoxUser> _userManager;
         private readonly IUserStore<SkillBoxUser> _userStore;
         private readonly IUserEmailStore<SkillBoxUser> _emailStore;
@@ -30,6 +31,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             UserManager<SkillBoxUser> userManager,
             IUserStore<SkillBoxUser> userStore,
             SignInManager<SkillBoxUser> signInManager,
+            SkillBoxDbContext dbContext,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -37,6 +39,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _dbContext = dbContext;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -124,12 +127,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             Cities = new List<City>();
-            var lastCityId = BaseRecord.GetLastId<City>();
-            lastCityId++;
-            for (int i = 1; i < lastCityId; i++)
-            {
-                Cities.Add(BaseRecord.GetById<City>(i));
-            }
+            Cities = await _dbContext.Cities.ToListAsync();
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -147,10 +145,11 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
-                user.City = BaseRecord.GetById<City>(Input.City);
-                user.Gender = BaseRecord.GetById<Gender>(Input.Gender);
+                user.City = _dbContext.Cities.FirstOrDefault(c => c.Id == Input.City);
+                user.Gender = _dbContext.Genders.FirstOrDefault(c => c.Id == Input.Gender);
                 user.EmailConfirmed = true; //TODO scaffolding
                 //CreateUser();
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

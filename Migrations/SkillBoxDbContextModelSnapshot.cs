@@ -100,6 +100,48 @@ namespace SkillBox.App.Migrations
                     b.ToTable("ChatUsers");
                 });
 
+            modelBuilder.Entity("Data.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BGName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Data.Models.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BGName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genders");
+                });
+
             modelBuilder.Entity("Data.Models.Offering", b =>
                 {
                     b.Property<string>("Id")
@@ -182,6 +224,27 @@ namespace SkillBox.App.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("Data.Models.ServiceStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BGName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceStatuses");
+                });
+
             modelBuilder.Entity("Data.Models.Skill", b =>
                 {
                     b.Property<string>("Id")
@@ -196,6 +259,9 @@ namespace SkillBox.App.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LevelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -205,6 +271,8 @@ namespace SkillBox.App.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LevelId");
 
                     b.HasIndex("UserId");
 
@@ -220,6 +288,9 @@ namespace SkillBox.App.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -262,6 +333,9 @@ namespace SkillBox.App.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ServiceStatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UnitPrice")
                         .HasColumnType("nvarchar(max)");
 
@@ -275,7 +349,11 @@ namespace SkillBox.App.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CityId");
+
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("ServiceStatusId");
 
                     b.ToTable("Services");
                 });
@@ -286,6 +364,9 @@ namespace SkillBox.App.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -302,6 +383,9 @@ namespace SkillBox.App.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -348,6 +432,10 @@ namespace SkillBox.App.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("GenderId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -357,6 +445,27 @@ namespace SkillBox.App.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Data.Models.SkillLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BGName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SkillLevels");
                 });
 
             modelBuilder.Entity("Data.Models.UserMessage", b =>
@@ -610,11 +719,19 @@ namespace SkillBox.App.Migrations
 
             modelBuilder.Entity("Data.Models.Skill", b =>
                 {
+                    b.HasOne("Data.Models.SkillLevel", "Level")
+                        .WithMany()
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.SkillBoxUser", "User")
                         .WithMany("Skills")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Level");
 
                     b.Navigation("User");
                 });
@@ -627,15 +744,50 @@ namespace SkillBox.App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.SkillBoxUser", "Owner")
                         .WithMany("Services")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Models.ServiceStatus", "ServiceStatus")
+                        .WithMany()
+                        .HasForeignKey("ServiceStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
+                    b.Navigation("City");
+
                     b.Navigation("Owner");
+
+                    b.Navigation("ServiceStatus");
+                });
+
+            modelBuilder.Entity("Data.Models.SkillBoxUser", b =>
+                {
+                    b.HasOne("Data.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("Data.Models.UserMessage", b =>

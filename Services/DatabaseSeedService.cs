@@ -1,6 +1,5 @@
 ﻿using Data;
 using Data.Models;
-using Data.Records;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +26,309 @@ namespace Services
                 var urlEnd = "?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
                 var extension = ".jpeg";
 
+                #region Cities
+                List<City> cities = new List<City>
+                {
+                    new City("Sofia", "София"),
+
+                    new City("Plovdiv", "Пловдив"),
+
+                    new City("Varna", "Варна"),
+
+                    new City("Burgas", "Бургас"),
+
+                    new City("Ruse", "Русе"),
+
+                    new City("Stara_Zagora", "Стара Загора"),
+
+                    new City("Pleven", "Плевен"),
+
+                    new City("Sliven", "Сливен"),
+
+                    new City("Dobrich", "Добрич"),
+
+                    new City("Shumen", "Шумен"),
+
+                    new City("Pernik", "Перник"),
+
+                    new City("Yambol", "Ямбол"),
+
+                    new City("Haskovo","Хасково"),
+
+                    new City("Pazardzhik","Пазарджик"),
+
+                    new City("Blagoevgrad","Благоевград"),
+                    
+                    new City("Veliko_Tarnovo","Велико Търново"),
+                    
+                    new City("Garbrovo","Габрово"),
+                    
+                    new City("Vratsa","Враца"),
+                    
+                    new City("Kazanluk","Казанлък"),
+                    
+                    new City("Vidin","Видин"),
+                    
+                    new City("Asenovgrad","Асеновград"),
+                    
+                    new City("Kardzali","Кърджали"),
+                    
+                    new City("Kostendil","Кюстендил"),
+                    
+                    new City("Montana","Монтана"),
+                    
+                    new City("Dimitrovgrad","Димитровград"),
+                    
+                    new City("Lovech","Ловеч"),
+                    
+                    new City("Silistra","Силистра"),
+                    
+                    new City("Razgrad","Разград"),
+                    
+                    new City("Targovishte","Търговище"),
+                    
+                    new City("Dupnitsa","Дупница"),
+                    
+                    new City("Gorna_Oryahovitsa","Горна Оряховица"),
+                    
+                    new City("Svishtov","Свищов"),
+                    
+                    new City("Smolyan","Смолян"),
+                    
+                    new City("Petrich","Петрич"),
+                    
+                    new City("Samokov","Самоков"),
+                    
+                    new City("Lom","Лом"),
+                    
+                    new City("Sandanski","Сандански"),
+                    
+                    new City("Sevlievo","Севлиево"),
+                    
+                    new City("Nova_Zagora","Нова Загора"),
+                    
+                    new City("Velingrad","Велинград"),
+                    
+                    new City("Cherven_Bryag","Червен бряг"),
+                    
+                    new City("Troyan","Троян"),
+                    
+                    new City("Aytos","Айтос"),
+                    
+                    new City("Botevgrad","Ботевград"),
+                    
+                    new City("Gotse_Delchev","Гоце Делчев"),
+                    
+                    new City("Karlovo","Карлово"),
+                    
+                    new City("Karnobat","Карнобат"),
+                    
+                    new City("Panagyurishte","Панагюрище"),
+                    
+                    new City("Svilengrad","Свиленград"),
+                    
+                    new City("Harmanli","Харманли"),
+                    
+                    new City("Peshtera","Пещера"),
+                    
+                    new City("Chirpan","Чирпан"),
+                    
+                    new City("Parvomay","Първомай"),
+                    
+                    new City("Popovo","Попово"),
+                    
+                    new City("Rakovski","Раковски"),
+                    
+                    new City("Berkovitsa","Берковица"),
+                    
+                    new City("Radomir", "Радомир"),
+                    new City("Ihtiman", "Ихтиман"),
+                    new City("Tryavna", "Трявна"),
+                    new City("Provadia","Провадия"),
+                    
+                    new City("Pomorie","Поморие"),
+                    
+                    new City("Byala_Slatina","Бяла Слатина"),
+                    
+                    new City("Novi_pazar","Нови пазар"),
+                    
+                    new City("Balchik","Балчик"),
+                    
+                    new City("Razlog","Разлог"),
+                    
+                    new City("Pavlikeni","Павликени"),
+                    
+                    new City("Kostinbrod","Костинброд"),
+                    
+                    new City("Stamboliyski","Стамболийски"),
+                    
+                    new City("Mezdra", "Мездра"),
+                    new City("Levski", "Левски"),
+                    new City("Kavarna","Каварна"),
+                    
+                    new City("Elhovo","Елхово"),
+                    
+                    new City("Etropole","Етрополе"),
+                    
+                    new City("Teteven","Тетевен"),
+                    
+                    new City("Tutrakan","Тутракан"),
+                    
+                    new City("Lukovid","Луковид"),
+                    
+                    new City("Belene","Белене"),
+                    
+                    new City("Zlatni_Pyasatsi","Златни Пясъци"),
+                    
+                    new City("Isperih", "Исперих"),
+                    new City("Sredets", "Средец"),
+                    new City("Veliki_Preslav","Велики Преслав"),
+                    
+                    new City("Bansko","Банско"),
+                    
+                    new City("Omurtag","Омуртаг"),
+                    
+                    new City("Kubrat","Кубрат"),
+                    
+                    new City("Svoge","Своге"),
+                    
+                    new City("Septemvri","Септември"),
+                    
+                    new City("Krimich","Кримич"),
+                    
+                    new City("Lyaskovets","Лясковец"),
+                    
+                    new City("Beloslav","Белослав"),
+                    
+                    new City("Hisarya","Хисаря"),
+                    
+                    new City("General_Toshevo","Генерал Тошево"),
+                    
+                    new City("Slivnitsa","Сливница"),
+                    
+                    new City("Varshec","Вършец"),
+                    
+                    new City("Devin","Девин"),
+                    
+                    new City("Simeonovgrad","Симеоновград"),
+                    
+                    new City("Elin_Pelin","Елин Пелин"),
+                    
+                    new City("Zlatograd","Златоград"),
+                    
+                    new City("Dolni_Chiflik","Долни Чифлик"),
+                    
+                    new City("Aksakovo","Аксаково"),
+                    
+                    new City("Knezha","Кнежа"),
+                    
+                    new City("Tervel","Тервел"),
+                    
+                    new City("Dulovo","Дулово"),
+                    
+                    new City("Simitli","Симитли"),
+                    
+                    new City("Tvarditsa","Твърдица"),
+                    
+                    new City("Topolovgrad","Тополовград"),
+                    
+                    new City("Saedinienie","Съединение"),
+                    
+                    new City("Kotel","Котел"),
+                    
+                    new City("Nesebar","Несебър"),
+                    
+                    new City("Bobov_Dol","Бобов дол"),
+                    
+                    new City("Tsarevo","Царево"),
+                    
+                    new City("Yakoruda","Якоруда"),
+                    
+                    new City("Strandzha","Странджа"),
+                    
+                    new City("Zlatitsa","Златица"),
+                    
+                    new City("Strazhitsa","Стражица"),
+                    
+                    new City("Oryahovo","Оряхово"),
+                    
+                    new City("Belogradchik", "Белоградчик"),
+                    new City("Polski_Trambesh", "Полски Тръмбеш"),
+                    new City("Madan","Мадан"),
+                    
+                    new City("Chepelare","Чепеларе"),
+                    
+                    new City("Perushtits","Перущица"),
+                    
+                    new City("Dalgopol","Дългопол"),
+                    
+                    new City("Krumovgrad","Крумовград"),
+                    
+                    new City("Dolni_Dabnik","Долни Дъбник"),
+                    
+                    new City("Valchedram","Вълчедръм"),
+                    
+                    new City("Vetovo","Ветово"),
+                    
+                    new City("Godech", "Годеч"),
+
+                    new City("Nedelino", "Неделино"),
+                };
+                foreach (var city in cities)
+                {
+                    await dbContext.Cities.AddAsync(city);
+                }
+                #endregion
+
+                #region Genders
+                List<Gender> genders = new List<Gender>()
+                {
+                    new Gender("Male", "Мъж"),
+                    new Gender("Female", "Жена"),
+                    new Gender("Other", "Друго"),
+                };
+
+                foreach (var gender in genders)
+                {
+                    await dbContext.Genders.AddAsync(gender);
+                }
+                #endregion
+
+                #region Service Statuses
+                List<ServiceStatus> serviceStatuses = new List<ServiceStatus>
+                {
+                    new ServiceStatus("Active", "Активна"),
+                    new ServiceStatus("Inactive", "Неактивна"),
+                    new ServiceStatus("VIP", "VIP"),
+                };
+
+                foreach (var status in serviceStatuses)
+                {
+                    await dbContext.ServiceStatuses.AddAsync(status);
+                }
+                #endregion
+
+                #region Skill Levels
+                List<SkillLevel> skillLevels = new List<SkillLevel>
+                {
+                    new SkillLevel("Level1", "10%"),
+                    new SkillLevel("Level2", "20%"),
+                    new SkillLevel("Level3", "30%"),
+                    new SkillLevel("Level4", "40%"),
+                    new SkillLevel("Level5", "50%"),
+                    new SkillLevel("Level6", "60%"),
+                    new SkillLevel("Level7", "70%"),
+                    new SkillLevel("Level8", "80%"),
+                    new SkillLevel("Level9", "90%"),
+                    new SkillLevel("Level10", "100%"),
+                };
+
+                foreach (var skillLevel in skillLevels)
+                {
+                    await dbContext.SkillLevels.AddAsync(skillLevel);
+                }
+                #endregion
+
                 #region Phone numbers
                 string[] phoneNumbers = new string[25];
                 for (int i = 0; i < phoneNumbers.Count(); i++)
@@ -37,15 +339,6 @@ namespace Services
                         rndNums += rnd.Next(0, 10).ToString();
                     }
                     phoneNumbers[i] = "3598" + rndNums;
-                }
-                #endregion
-
-                #region Citites
-                var cityLastId = BaseRecord.GetLastId<City>();
-                List<City> cities = new List<City>();
-                for (int i = 0; i < 25; i++)
-                {
-                    cities.Add(BaseRecord.GetById<City>(rnd.Next(1, cityLastId + 1))!);
                 }
                 #endregion
 
@@ -61,7 +354,7 @@ namespace Services
                     LastName = "Василев",
                     PhoneNumber = phoneNumbers[0],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[0],
                 };
                 await userManager.CreateAsync(ordinaryUser1, "123456");
@@ -77,7 +370,7 @@ namespace Services
                     LastName = "Ивановa",
                     PhoneNumber = phoneNumbers[1],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[1],
                 };
                 await userManager.CreateAsync(ordinaryUser2, "123456");
@@ -95,7 +388,7 @@ namespace Services
                     LastName = "Ангелов",
                     PhoneNumber = phoneNumbers[2],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[2],
                 };
                 await userManager.CreateAsync(admin1, "123456");
@@ -111,7 +404,7 @@ namespace Services
                     LastName = "Петрова",
                     PhoneNumber = phoneNumbers[3],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[3],
                 };
                 await userManager.CreateAsync(admin2, "123456");
@@ -129,7 +422,7 @@ namespace Services
                     LastName = "Попов",
                     PhoneNumber = phoneNumbers[4],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[4],
                 };
                 await userManager.CreateAsync(commenter1, "123456");
@@ -145,7 +438,7 @@ namespace Services
                     LastName = "Георгиев",
                     PhoneNumber = phoneNumbers[5],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[5],
                 };
                 await userManager.CreateAsync(commenter2, "123456");
@@ -161,7 +454,7 @@ namespace Services
                     LastName = "Димитрова",
                     PhoneNumber = phoneNumbers[6],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[6],
                 };
                 await userManager.CreateAsync(commenter3, "123456");
@@ -177,7 +470,7 @@ namespace Services
                     LastName = "Вълчев",
                     PhoneNumber = phoneNumbers[7],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[7],
                 };
                 await userManager.CreateAsync(commenter4, "123456");
@@ -193,7 +486,7 @@ namespace Services
                     LastName = "Илиева",
                     PhoneNumber = phoneNumbers[8],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[8],
                 };
                 await userManager.CreateAsync(commenter5, "123456");
@@ -211,7 +504,7 @@ namespace Services
                     LastName = "Иванов",
                     PhoneNumber = phoneNumbers[9],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[9],
                 };
                 await userManager.CreateAsync(skiller1, "123456");
@@ -227,7 +520,7 @@ namespace Services
                     LastName = "Петрова",
                     PhoneNumber = phoneNumbers[10],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[10],
                 };
                 await userManager.CreateAsync(skiller2, "123456");
@@ -243,7 +536,7 @@ namespace Services
                     LastName = "Василев",
                     PhoneNumber = phoneNumbers[11],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[11],
                 };
                 await userManager.CreateAsync(skiller3, "123456");
@@ -259,7 +552,7 @@ namespace Services
                     LastName = "Георгиева",
                     PhoneNumber = phoneNumbers[12],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[12],
                 };
                 await userManager.CreateAsync(skiller4, "123456");
@@ -275,7 +568,7 @@ namespace Services
                     LastName = "Георгиев",
                     PhoneNumber = phoneNumbers[13],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[13],
                 };
                 await userManager.CreateAsync(skiller5, "123456");
@@ -291,7 +584,7 @@ namespace Services
                     LastName = "Иванова",
                     PhoneNumber = phoneNumbers[14],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[14],
                 };
                 await userManager.CreateAsync(skiller6, "123456");
@@ -307,7 +600,7 @@ namespace Services
                     LastName = "Димитров",
                     PhoneNumber = phoneNumbers[15],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[15],
                     WebsiteName = "NewHorizons"
                 };
@@ -324,7 +617,7 @@ namespace Services
                     LastName = "Ангелова",
                     PhoneNumber = phoneNumbers[16],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[16],
                 };
                 await userManager.CreateAsync(skiller8, "123456");
@@ -340,7 +633,7 @@ namespace Services
                     LastName = "Стефанов",
                     PhoneNumber = phoneNumbers[17],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[17],
                 };
                 await userManager.CreateAsync(skiller9, "123456");
@@ -356,7 +649,7 @@ namespace Services
                     LastName = "Василева",
                     PhoneNumber = phoneNumbers[18],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[18],
                 };
                 await userManager.CreateAsync(skiller10, "123456");
@@ -372,7 +665,7 @@ namespace Services
                     LastName = "Петров",
                     PhoneNumber = phoneNumbers[19],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[19],
                 };
                 await userManager.CreateAsync(skiller11, "123456");
@@ -388,7 +681,7 @@ namespace Services
                     LastName = "Николова",
                     PhoneNumber = phoneNumbers[20],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[20],
                 };
                 await userManager.CreateAsync(skiller12, "123456");
@@ -404,7 +697,7 @@ namespace Services
                     LastName = "Николов",
                     PhoneNumber = phoneNumbers[21],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[21],
                 };
                 await userManager.CreateAsync(skiller13, "123456");
@@ -420,7 +713,7 @@ namespace Services
                     LastName = "Димитрова",
                     PhoneNumber = phoneNumbers[22],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[22],
                 };
                 await userManager.CreateAsync(skiller14, "123456");
@@ -436,7 +729,7 @@ namespace Services
                     LastName = "Владимиров",
                     PhoneNumber = phoneNumbers[23],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Male,
+                    Gender = genders[0],
                     City = cities[23],
                 };
                 await userManager.CreateAsync(skiller15, "123456");
@@ -452,7 +745,7 @@ namespace Services
                     LastName = "Георгиева",
                     PhoneNumber = phoneNumbers[24],
                     PhoneNumberConfirmed = true,
-                    Gender = Gender.Female,
+                    Gender = genders[1],
                     City = cities[24],
                 };
                 await userManager.CreateAsync(skiller16, "123456");
@@ -855,7 +1148,6 @@ namespace Services
                 };
 
                 var services = new List<SkillBoxService>();
-                var serviceLastId = BaseRecord.GetLastId<ServiceStatus>();
                 for (int i = 0; i < 52; i++)
                 {
                     var service = new SkillBoxService()
@@ -865,7 +1157,7 @@ namespace Services
                         MainImage = $"{urlStart}{mainImgIds[i]}{urlBetween}{mainImgIds[i]}{extension}{urlEnd}",
                         Images = $"{urlStart}{imgSet1[i]}{urlBetween}{imgSet1[i]}{extension}{urlEnd}|" +
                         $"{urlStart}{imgSet2[i]}{urlBetween}{imgSet2[i]}{extension}{urlEnd}|",
-                        ServiceStatus = BaseRecord.GetById<ServiceStatus>(rnd.Next(0, serviceLastId + 1))!
+                        ServiceStatus = serviceStatuses[rnd.Next(0, 3)]
                     };
                     services.Add(service);
                 }

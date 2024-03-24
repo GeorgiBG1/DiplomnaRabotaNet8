@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using Data.Records;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +19,9 @@ namespace Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<UserMessage> UserMessages { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Ignore<City>();
-            modelBuilder.Ignore<Gender>();
-            modelBuilder.Ignore<ServiceStatus>();
-            modelBuilder.Ignore<SkillLevel>();
-            base.OnModelCreating(modelBuilder);
-        }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<ServiceStatus> ServiceStatuses { get; set; }
+        public DbSet<SkillLevel> SkillLevels { get; set; }
     }
 }

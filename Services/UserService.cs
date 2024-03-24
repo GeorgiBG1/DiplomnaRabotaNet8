@@ -21,6 +21,7 @@ namespace Services
         {
             var skillers = dbContext.Users
                 .Where(u => u.Services.Any())
+                .Include(u => u.City)
                 .Include(u => u.Skills)
                 .Include(u => u.Services)
                 .ThenInclude(s => s.Reviews)

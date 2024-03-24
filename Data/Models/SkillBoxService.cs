@@ -1,5 +1,4 @@
 ﻿using ServiceStack.DataAnnotations;
-using Data.Records;
 namespace Data.Models
 {
     public class SkillBoxService : BaseEntity<int>
@@ -26,8 +25,8 @@ namespace Data.Models
         [Unique]
         public string OwnerId { get; set; }
         public virtual SkillBoxUser Owner { get; set; }
-        public City? City { get; set; }
-        public ServiceStatus? ServiceStatus { get; set; } = ServiceStatus.None;
+        public virtual City City { get; set; }
+        public virtual ServiceStatus ServiceStatus { get; set; }
         public virtual ICollection<Review>? Reviews { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }
     }

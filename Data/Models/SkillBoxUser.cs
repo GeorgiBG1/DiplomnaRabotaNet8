@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Data.Records;
 namespace Data.Models
 {
     public class SkillBoxUser : IdentityUser
@@ -15,8 +14,8 @@ namespace Data.Models
         public string? WebsiteURL { get; set; }
         public string? WebsiteName { get; set; }
         //TODO ProfilePhoto property
-        public Gender? Gender { get; set; }
-        public City? City { get; set; }
+        public virtual Gender Gender { get; set; }
+        public virtual City City { get; set; }
         //TODO Career property
         public virtual ICollection<ChatUser> ChatUsers { get; set; }
         public virtual ICollection<SkillBoxService> Services { get; set; }

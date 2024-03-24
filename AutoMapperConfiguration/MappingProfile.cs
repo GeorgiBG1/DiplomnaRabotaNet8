@@ -87,7 +87,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                     return reviews.Count();
                 }))
                 .ForMember(d => d.Skills, opt => opt.MapFrom(u => u.Skills!))
-                .ForMember(d => d.City, opt => opt.MapFrom(u => u.City!));
+                .ForMember(d => d.City, opt => opt.MapFrom(u => u.City!.BGName));
             //TODO Add more members
             #endregion
         }
