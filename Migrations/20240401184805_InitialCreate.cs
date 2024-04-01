@@ -134,6 +134,8 @@ namespace SkillBox.App.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WebsiteURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Career = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GenderId = table.Column<int>(type: "int", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

@@ -10,14 +10,17 @@ namespace DiplomnaRabotaNet8.Controllers
     {
         private readonly DatabaseSeedService dbSeedService;
         private readonly ICategoryService categoryService;
+        private readonly IOfferingService offeringService;
         private readonly IUserService userService;
 
         public HomeController(DatabaseSeedService dbSeedService,
             ICategoryService categoryService,
+            IOfferingService offeringService,
             IUserService userService)
         {
             this.dbSeedService = dbSeedService;
             this.categoryService = categoryService;
+            this.offeringService = offeringService;
             this.userService = userService;
         }
 
@@ -27,14 +30,24 @@ namespace DiplomnaRabotaNet8.Controllers
             var categoriesWithKids = categoryService.GetAllCategoryDTOs();
             ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
             //
+            var skillersCount = userService.GetSkillersCount();
+            var servicesCount = offeringService.GetServicesCount();
+            var positiveViewsCount = offeringService.GetPositiveReiewsCount();
+            var skillsCount = userService.GetSkillsCount();
             var categoryList = categoryService.GetAllCategoriesAsSelectListItem();
             var categoryCards = categoryService.GetAllCategoryCardDTOs();
             var userCards = userService.GetTopSkillersAsUserCardDTOs(8);
+            var serviceCards = offeringService.GetTopServicesAsServiceCardDTOs(8);
             var model = new HomeViewModel
-            { 
+            {
+                SkillersCount = skillersCount,
+                ServicesCount = servicesCount,
+                PositiveReviewsCount = positiveViewsCount,
+                SkillsCount = skillsCount,
                 CategoryList = categoryList,
                 CategoryCardDTOs = categoryCards,
-                UserCardDTOs = userCards
+                UserCardDTOs = userCards,
+                ServiceCardDTOs = serviceCards
             };
             return View(model);
         }
@@ -51,6 +64,10 @@ namespace DiplomnaRabotaNet8.Controllers
             return View("Error");
         }
 
+        public IActionResult BecomeSkiller()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

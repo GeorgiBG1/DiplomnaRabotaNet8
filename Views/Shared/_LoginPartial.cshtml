@@ -3,29 +3,29 @@
 @inject SignInManager<SkillBoxUser> SignInManager
 @inject UserManager<SkillBoxUser> UserManager
 
-    @if (SignInManager.IsSignedIn(User))
-    { 
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <div class="d-flex align-items-center">
-            <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
-            <a class="login-info mx15-xl mx30" href="page-become-seller.html"><span class="d-none d-xl-inline-block">Become a</span> Seller</a>
-        <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
-        <a class="ud-btn btn-white add-joining bdrs50 text-thm2" asp-area="Identity" asp-page="/Account/Register">Join</a>
-        </div>
-       @*  <li class="nav-item">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <div class="d-flex align-items-center">
+        <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
+        <a class="login-info mx15-xl mx30" asp-action="BecomeSkiller" asp-controller="Home"><span class="d-none d-xl-inline-block">Стани</span> Skiller</a>
+        <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+        <a class="ud-btn btn-white add-joining bdrs50 text-thm2" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+    </div>
+    @*  <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li> *@
-    }
+}

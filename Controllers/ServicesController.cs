@@ -28,6 +28,10 @@ namespace SkillBox.App.Controllers
             var services = offeringService.GetServiceCardDTOs(8);
             return View(services);
         }
+        public IActionResult Service(int id)
+        {
+            return View();
+        }
         public IActionResult Details()
         {
             return View();

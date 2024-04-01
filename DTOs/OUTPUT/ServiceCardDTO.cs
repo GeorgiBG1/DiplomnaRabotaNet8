@@ -4,6 +4,8 @@
     {
         public string Name { get; set; }
         public string AuthorName { get; set; }
+        public string AuthorProfilePhoto { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string MainImage { get; set; }
         public decimal Price { get; set; }

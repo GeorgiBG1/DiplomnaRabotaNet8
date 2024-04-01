@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Global_Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,8 @@ namespace Services
                 var urlBetween = "/pexels-photo-";
                 var urlEnd = "?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
                 var extension = ".jpeg";
+
+                var userDefaultProfilePhoto = GlobalConstant.UserDefaultProfilePhoto;
 
                 #region Cities
                 List<City> cities = new List<City>
@@ -356,6 +359,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[0],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(ordinaryUser1, "123456");
 
@@ -372,6 +376,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[1],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(ordinaryUser2, "123456");
                 #endregion
@@ -390,6 +395,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[2],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(admin1, "123456");
 
@@ -406,6 +412,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[3],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(admin2, "123456");
                 #endregion
@@ -424,6 +431,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[4],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(commenter1, "123456");
 
@@ -440,6 +448,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[5],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(commenter2, "123456");
 
@@ -456,6 +465,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[6],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(commenter3, "123456");
 
@@ -472,6 +482,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[7],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(commenter4, "123456");
 
@@ -488,6 +499,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[8],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(commenter5, "123456");
                 #endregion
@@ -506,6 +518,8 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[9],
+                    ProfilePhoto = userDefaultProfilePhoto,
+
                 };
                 await userManager.CreateAsync(skiller1, "123456");
 
@@ -522,6 +536,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[10],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller2, "123456");
 
@@ -538,6 +553,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[11],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller3, "123456");
 
@@ -554,6 +570,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[12],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller4, "123456");
 
@@ -570,6 +587,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[13],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller5, "123456");
 
@@ -586,6 +604,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[14],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller6, "123456");
 
@@ -602,6 +621,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[15],
+                    ProfilePhoto = userDefaultProfilePhoto,
                     WebsiteName = "NewHorizons"
                 };
                 await userManager.CreateAsync(skiller7, "123456");
@@ -619,6 +639,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[16],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller8, "123456");
 
@@ -635,6 +656,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[17],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller9, "123456");
 
@@ -651,6 +673,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[18],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller10, "123456");
 
@@ -667,6 +690,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[19],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller11, "123456");
 
@@ -683,6 +707,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[20],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller12, "123456");
 
@@ -699,6 +724,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[21],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller13, "123456");
 
@@ -715,6 +741,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[22],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller14, "123456");
 
@@ -731,6 +758,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[23],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller15, "123456");
 
@@ -747,6 +775,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[1],
                     City = cities[24],
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller16, "123456");
                 #endregion

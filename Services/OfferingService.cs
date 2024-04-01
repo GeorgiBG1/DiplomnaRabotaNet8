@@ -19,6 +19,10 @@ namespace Services
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+        public ServiceDTO GetServiceDTO(int id)
+        {
+            return null!;
+        }
         public ICollection<ServiceCardDTO> GetServiceCardDTOs(int count = 1, int skipCount = 0)
         {
             var services = new List<SkillBoxService>();
@@ -41,11 +45,32 @@ namespace Services
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }
+        public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1)
+        {
+            var services = dbContext.Services
+                .Include(s => s.Category)
+                .Include(s => s.Owner)
+                .Include(s => s.Reviews)
+                .Take(count)
+                .OrderByDescending(s => s.Id)
+                .ThenByDescending(s => s.Reviews.Count())
+                .ToList();
+            var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
+            return model;
+        }
         public void CreateService(ServiceInDTO serviceInDTO)
         {
             var service = mapper.Map<SkillBoxService>(serviceInDTO);
             dbContext.Services.Add(service);
             dbContext.SaveChanges();
+        }
+        public int GetServicesCount()
+        {
+            return dbContext.Services.Count();
+        }
+        public int GetPositiveReiewsCount()
+        {
+            return dbContext.Reviews.Where(r => r.RatingStars > 2).Count();
         }
     }
 }

@@ -35,6 +35,8 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<SkillBoxService, ServiceCardDTO>()
                  .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
                  .ForMember(d => d.AuthorName, opt => opt.MapFrom(s => s.OwnerName))
+                 .ForMember(d => d.AuthorProfilePhoto, opt => opt.MapFrom(s => s.Owner.ProfilePhoto))
+                 .ForMember(d => d.CategoryId, opt => opt.MapFrom(s => s.CategoryId))
                  .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
                  .ForMember(d => d.MainImage, opt => opt.MapFrom(s => s.MainImage))
                  .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
@@ -73,6 +75,7 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<SkillBoxUser, UserCardDTO>()
                 .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))
                 .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
+                .ForMember(d => d.ProfilePhoto, opt => opt.MapFrom(u => u.ProfilePhoto))
                 .ForMember(d => d.ReviewAvgCoef, opt => opt.MapFrom((u, d) =>
                 {
                     var reviews = u.Services.SelectMany(s => s.Reviews!).ToList();

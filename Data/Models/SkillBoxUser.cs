@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Global_Constants;
+using Microsoft.AspNetCore.Identity;
 namespace Data.Models
 {
     public class SkillBoxUser : IdentityUser
@@ -13,10 +14,10 @@ namespace Data.Models
         public string LastName { get; set; }
         public string? WebsiteURL { get; set; }
         public string? WebsiteName { get; set; }
-        //TODO ProfilePhoto property
+        public string ProfilePhoto { get; set; } = GlobalConstant.UserDefaultProfilePhoto;
+        public string? Career { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual City City { get; set; }
-        //TODO Career property
         public virtual ICollection<ChatUser> ChatUsers { get; set; }
         public virtual ICollection<SkillBoxService> Services { get; set; }
         public virtual ICollection<Skill> Skills { get; set; }
