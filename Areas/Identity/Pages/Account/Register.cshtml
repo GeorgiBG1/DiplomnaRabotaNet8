@@ -4,15 +4,14 @@
     ViewData["Title"] = "Регистрация";
 }
 <div class="body_content bgc-thm4">
-    <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! -->
+    <!--Fix header!!! Layout BodyTag and Wrapper classes!!! -->
     <!-- SignUp Area -->
     <section class="our-register">
         <div class="container">
-            <div class="row">
+            <div class="row" style="height: 50px !important;">
                 <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
                     <div class="main-title text-center">
                         <h2 class="title">Регистрация</h2>
-                        <p class="paragraph">Give your visitor a smooth online experience with a solid UX design</p>
                     </div>
                 </div>
             </div>
@@ -124,15 +123,15 @@
                                     {
                                         if (provider.Name == "Facebook")
                                         {
-                                            <button type="submit" class="ud-btn btn-fb fz14 fw400 mb-2 mb-md-0"><i class="fab fa-facebook-f pr10"></i> Вход с Facebook</button>
+                                            <button type="submit" class="ud-btn btn-fb fz14 fw400 mb-2 mb-md-0" name="provider" value="@provider.Name"><i class="fab fa-facebook-f pr10"></i> Вход с Facebook</button>
                                         }
                                         if (provider.Name == "Google")
                                         {
-                                            <button type="submit" class="ud-btn btn-google fz14 fw400 mb-2 mb-md-0"><i class="fab fa-google" name="provider" value="@provider.Name"></i> Вход с Google</button>
+                                            <button type="submit" class="ud-btn btn-google fz14 fw400 mb-2 mb-md-0" name="provider" value="@provider.Name"><i class="fab fa-google"></i> Вход с Google</button>
                                         }
                                         if (provider.Name == "Apple")
                                         {
-                                            <button type="submit" class="ud-btn btn-apple fz14 fw400"><i class="fab fa-apple"></i> Вход с Apple</button>
+                                            <button type="submit" class="ud-btn btn-apple fz14 fw400" name="provider" value="@provider.Name"><i class="fab fa-apple"></i> Вход с Apple</button>
                                         }
                                     }
                                 </div>

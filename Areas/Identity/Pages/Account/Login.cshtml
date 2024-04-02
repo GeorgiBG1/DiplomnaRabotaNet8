@@ -1,83 +1,80 @@
 ﻿@page
 @model LoginModel
-
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Вход";
 }
-
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.EmailOrUsername" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.EmailOrUsername" class="form-label">Email или потребителско име</label>
-                    <span asp-validation-for="Input.EmailOrUsername" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Парола</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+<div class="body_content bgc-thm4">
+    <!--Fix header!!! Layout BodyTag and Wrapper classes!!! -->
+    <!-- LogIn Area -->
+    <section class="our-login">
+        <div class="container">
+            <div class="row" style="height: 50px !important;">
+                <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
+                    <div class="main-title text-center">
+                        <h2 class="title">Вход</h2>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+                </div>
+            </div>
+            <div class="row wow fadeInRight" data-wow-delay="300ms">
+                <div class="col-xl-6 mx-auto">
+                    <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+                        <form id="account" method="post">
+                            <div class="mb30">
+                                <h4>Радваме се да ви видим отново!</h4>
+                                <p class="text">Нямате акаунт? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-thm">Създаване!</a></p>
+                            </div>
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="mb20">
+                                <label asp-for="Input.EmailOrUsername" class="form-label fw600 dark-color">E-Mail адрес или потребителско име</label>
+                                <input asp-for="Input.EmailOrUsername" type="text" class="form-control" autocomplete="on" aria-required="true" placeholder="email или потребителско име">
+                                <span asp-validation-for="Input.EmailOrUsername" class="text-danger"></span>
+                            </div>
+                            <div class="mb15">
+                                <label asp-for="Input.Password" class="form-label fw600 dark-color">Парола</label>
+                                <input asp-for="Input.Password" type="password" autocomplete="on" aria-required="true" class="form-control" placeholder="*******">
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
+                                <label asp-for="Input.RememberMe" class="custom_checkbox fz14 ff-heading">
+                                    Запомни ме
+                                    <input asp-for="Input.RememberMe" type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <a id="forgot-password" asp-page="./ForgotPassword" class="fz14 ff-heading">Забравили сте си паролата?</a>
+                            </div>
+                            <div class="d-grid mb20">
+                                <button type="submit" class="ud-btn btn-thm">Влизане <i class="fal fa-arrow-right-long"></i></button>
+                            </div>
+                        </form>
+                        @if ((Model.ExternalLogins?.Count ?? 0) != 0)
+                        {
+                            <div class="hr_content mb20"><hr><span class="hr_top_text">ИЛИ</span></div>
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div class="d-md-flex justify-content-between">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        if (provider.Name == "Facebook")
+                                        {
+                                            <button type="submit" class="ud-btn btn-fb fz14 fw400 mb-2 mb-md-0" name="provider" value="@provider.Name"><i class="fab fa-facebook-f pr10"></i> Вход с Facebook</button>
+                                        }
+                                        if (provider.Name == "Google")
+                                        {
+                                            <button type="submit" class="ud-btn btn-google fz14 fw400 mb-2 mb-md-0" name="provider" value="@provider.Name"><i class="fab fa-google"></i> Вход с Google</button>
+                                        }
+                                        if (provider.Name == "Apple")
+                                        {
+                                            <button type="submit" class="ud-btn btn-apple fz14 fw400" name="provider" value="@provider.Name"><i class="fab fa-apple"></i> Вход с Apple</button>
+                                        }
+                                    }
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
