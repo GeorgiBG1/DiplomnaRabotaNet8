@@ -269,6 +269,7 @@ namespace SkillBox.App.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UnitPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Schedule = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteName = table.Column<string>(type: "nvarchar(max)", nullable: true),

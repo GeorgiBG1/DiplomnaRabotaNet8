@@ -30,8 +30,7 @@ namespace Services
                 .Include(u => u.Skills)
                 .Include(u => u.Services)
                 .ThenInclude(s => s.Reviews)
-                //TODO Add orderby and thenby
-                //TODO Change all skillers' names
+                .OrderByDescending(u => u.Services.SelectMany(s => s.Reviews!).Count())
                 .Take(count).ToList();
             var model = skillers.Select(mapper.Map<UserCardDTO>).ToList();
             return model;

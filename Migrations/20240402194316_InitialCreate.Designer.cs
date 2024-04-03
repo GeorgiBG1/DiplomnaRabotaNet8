@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SkillBox.App.Migrations
 {
     [DbContext(typeof(SkillBoxDbContext))]
-    [Migration("20240401184805_InitialCreate")]
+    [Migration("20240402194316_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -335,6 +335,9 @@ namespace SkillBox.App.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Schedule")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ServiceStatusId")
                         .HasColumnType("int");

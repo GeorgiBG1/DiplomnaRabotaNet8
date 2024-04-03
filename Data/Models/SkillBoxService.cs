@@ -18,6 +18,7 @@ namespace Data.Models
         public decimal Price { get; set; }
         public string? UnitPrice { get; set; }
         public decimal Discount { get; set; }
+        public string? Schedule { get; set; }
         public virtual string? PhoneNumber { get; set; }
         public virtual string? WebsiteURL { get; set; }
         public virtual string? WebsiteName { get; set; }

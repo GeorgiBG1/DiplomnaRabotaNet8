@@ -1,0 +1,394 @@
+﻿@model SingleServiceViewModel
+<div class="body_content" style="margin-top: 100px; background-color: #ebfaf9;">
+    <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! Remove this style-margin-top! -->
+    <section class="categories_list_section overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="listings_category_nav_list_menu">
+                        <ul class="mb0 d-flex ps-0">
+                            <li><a asp-action="Index" asp-controller="Categories">Всички категории</a></li>
+                            @foreach (var category in Model.CategoryList)
+                            {
+                                <li><a asp-action="Category" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcumb Sections -->
+    <section class="breadcumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-lg-10">
+                    <div class="breadcumb-style1 mb10-xs">
+                        <div class="breadcumb-list">
+                            <a asp-action="Index" asp-controller="Home">Начало</a>
+                            <a asp-action="Index" asp-controller="Services">Услуги</a>
+                            <a>@Model.Service.Name</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-lg-2">
+                    <div class="d-flex align-items-center justify-content-sm-end">
+                        <div class="share-save-widget d-flex align-items-center">
+                            <span class="icon flaticon-share dark-color fz12 mr10"></span>
+                            <div class="h6 mb-0">Запази</div>
+                        </div>
+                        <div class="share-save-widget d-flex align-items-center ml15">
+                            <span class="icon flaticon-like dark-color fz12 mr10"></span>
+                            <div class="h6 mb-0">Сподели</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Service Details -->
+    <section class="pt10 pb-0">
+        <div class="container">
+            <div class="row wrap">
+                <div class="col-lg-8">
+                    <div class="column">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="iconbox-style1 contact-style d-flex align-items-start mb30">
+                                    <div class="icon flex-shrink-0"><span class="flaticon-calendar"></span></div>
+                                    <div class="details">
+                                        <h5 class="title">График</h5>
+                                        @if (Model.Service.Schedule == null)
+                                        {
+                                            <p class="mb-0 text">Без график</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0 text">@Model.Service.Schedule</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="iconbox-style1 contact-style d-flex align-items-start mb30">
+                                    <div class="icon flex-shrink-0"><span class="flaticon-goal"></span></div>
+                                    <div class="details">
+                                        <h5 class="title">English Level</h5>
+                                        <p class="mb-0 text">Professional TODO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="iconbox-style1 contact-style d-flex align-items-start mb30">
+                                    <div class="icon flex-shrink-0"><span class="flaticon-tracking"></span></div>
+                                    <div class="details">
+                                        <h5 class="title">Местоположение</h5>
+                                        @if (Model.Service.Location == null)
+                                        {
+                                            <p class="mb-0 text">Липсва</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0 text">@Model.Service.Location</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-single-sldier vam_nav_style slider-1-grid owl-carousel owl-theme mb60">
+                            @foreach (var image in Model.Service.Images)
+                            {
+                                <div class="item">
+                                    <div class="thumb p50 p30-sm"><img src="@image" class="w-100" width="636" height="415" alt="Service image"></div>
+                                </div>
+                            }
+                        </div>
+                        <div class="service-about">
+                            <h4>Описание</h4>
+                            <p class="text mb50">@Model.Service.Description</p>
+                            <hr class="opacity-100 mb15">
+                            <div class="product_single_content mb50">
+                                <div class="mbp_pagination_comments">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="total_review mb30 mt45">
+                                                <h4>@Model.Service.ReviewsCount Ревюта</h4>
+                                            </div>
+                                            <div class="d-md-flex align-items-center mb30">
+                                                <div class="total-review-box d-flex align-items-center text-center mb30-sm">
+                                                    <div class="wrapper mx-auto">
+                                                        <div class="t-review mb15">
+                                                            @if (Model.Service.ReviewAvgCoef.Equals(double.NaN))
+                                                            {
+                                                                <span>0</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Model.Service.ReviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture)
+                                                            }
+                                                        </div>
+                                                        <!--TODO Rating scale-->
+                                                        @* <h5>Отлично</h5>
+                                                        <h5>Добро</h5>
+                                                        <h5>Средно</h5>
+                                                        <h5>Лошо</h5>
+                                                        <h5>Много лошо</h5> *@
+                                                        <p class="text mb-0">@Model.Service.ReviewsCount ревюта</p>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper ml60 ml0-sm">
+                                                    <!--TODO Star rating progress bars-->
+                                                    <div class="review-list d-flex align-items-center mb10">
+                                                        <div class="list-number">5 Star</div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 90%;" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <div class="value text-end">58</div>
+                                                    </div>
+                                                    <div class="review-list d-flex align-items-center mb10">
+                                                        <div class="list-number">4 Star</div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <div class="value text-end">20</div>
+                                                    </div>
+                                                    <div class="review-list d-flex align-items-center mb10">
+                                                        <div class="list-number">3 Star</div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <div class="value text-end">15</div>
+                                                    </div>
+                                                    <div class="review-list d-flex align-items-center mb10">
+                                                        <div class="list-number">2 Star</div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 30%;" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <div class="value text-end">2</div>
+                                                    </div>
+                                                    <div class="review-list d-flex align-items-center mb10">
+                                                        <div class="list-number">1 Star</div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 20%;" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <div class="value text-end">1</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach (var comment in Model.Service.Reviews)
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="mbp_first position-relative d-flex align-items-center justify-content-start mb30-sm">
+                                                    <img src="@comment.User.ProfilePhoto" class="mr-3 rounded-circle" width="60" height="60" alt="Commenter image">
+                                                    <div class="ml20">
+                                                        <h6 class="mt-0 mb-0">@comment.User.Name</h6>
+                                                        <div><span class="fz14">@comment.CreatedOn</span></div>
+                                                    </div>
+                                                </div>
+                                                <p class="text mt20 mb20 bg-light rounded-2 p-2 border border-2">@comment.Content</p>
+                                            </div>
+                                        }
+                                        @if (Model.Service.Reviews.Count != 0)
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="position-relative bdrb1 pb50">
+                                                    <a href="page-service-single.html" class="ud-btn btn-light-thm">Зареди още<i class="fal fa-arrow-right-long"></i></a>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bsp_reveiw_wrt">
+                                <h6 class="fz17">Добави ревю</h6>
+                                <h6>Вашата оценка за тази услуга</h6>
+                                <div class="d-flex">
+                                    <i class="fas fa-star review-color"></i>
+                                    <i class="far fa-star review-color ms-2"></i>
+                                    <i class="far fa-star review-color ms-2"></i>
+                                    <i class="far fa-star review-color ms-2"></i>
+                                    <i class="far fa-star review-color ms-2"></i>
+                                </div>
+                                <form class="comments_form mt30 mb30-md">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-4">
+                                                <label class="fw500 fz16 ff-heading dark-color mb-2">Коментар</label>
+                                                <textarea class="pt15" rows="6" placeholder="Напишете какво мислите за тази услуга..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <a href="" class="ud-btn btn-thm">Изпрати<i class="fal fa-arrow-right-long"></i></a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="column">
+                        <div class="blog-sidebar ms-lg-auto">
+                            <div class="price-widget">
+                                <div class="navtab-style1">
+                                    <nav>
+                                        <div class="nav nav-tabs mb20" id="nav-tab2p" role="tablist">
+                                            <button class="nav-link fw500" id="nav-item1p-tab" data-bs-toggle="tab" data-bs-target="#nav-item1p" type="button" role="tab" aria-controls="nav-item1p" aria-selected="true">Basic</button>
+                                            <button class="nav-link active fw500" id="nav-item2p-tab" data-bs-toggle="tab" data-bs-target="#nav-item2p" type="button" role="tab" aria-controls="nav-item2p" aria-selected="false">Standart</button>
+                                            <button class="nav-link fw500" id="nav-item3-tab" data-bs-toggle="tab" data-bs-target="#nav-item3p" type="button" role="tab" aria-controls="nav-item3p" aria-selected="false">Premium</button>
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade" id="nav-item1p" role="tabpanel" aria-labelledby="nav-item1p-tab">
+                                            <div class="price-content">
+                                                <div class="price">$50</div>
+                                                <div class="h5 mb-2">High-converting Landing Pages</div>
+                                                <p class="text fz14">I will redesign your current landing page or create one for you (upto 4 sections)</p>
+                                                <hr class="opacity-100 mb20">
+                                                <ul class="p-0 mb15 d-sm-flex align-items-center">
+                                                    <li class="fz14 fw500 dark-color"><i class="flaticon-sandclock fz20 text-thm2 me-2 vam"></i>3 Days Delivery</li>
+                                                    <li class="fz14 fw500 dark-color ml20 ml0-xs"><i class="flaticon-recycle fz20 text-thm2 me-2 vam"></i>2 Revisions</li>
+                                                </ul>
+                                                <div class="list-style1">
+                                                    <ul class="">
+                                                        <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
+                                                        <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <a href="" class="ud-btn btn-thm">Continue $50<i class="fal fa-arrow-right-long"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show active" id="nav-item2p" role="tabpanel" aria-labelledby="nav-item2p-tab">
+                                            <div class="price-content">
+                                                <div class="price">$29</div>
+                                                <div class="h5 mb-2">High-converting Landing Pages</div>
+                                                <p class="text fz14">I will redesign your current landing page or create one for you (upto 4 sections)</p>
+                                                <hr class="opacity-100 mb20">
+                                                <ul class="p-0 mb15 d-sm-flex align-items-center">
+                                                    <li class="fz14 fw500 dark-color"><i class="flaticon-sandclock fz20 text-thm2 me-2 vam"></i>3 Days Delivery</li>
+                                                    <li class="fz14 fw500 dark-color ml20 ml0-xs"><i class="flaticon-recycle fz20 text-thm2 me-2 vam"></i>2 Revisions</li>
+                                                </ul>
+                                                <div class="list-style1">
+                                                    <ul class="">
+                                                        <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
+                                                        <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <a href="" class="ud-btn btn-thm">Continue $29<i class="fal fa-arrow-right-long"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-item3p" role="tabpanel" aria-labelledby="nav-item3p-tab">
+                                            <div class="price-content">
+                                                <div class="price">$250</div>
+                                                <div class="h5 mb-2">High-converting Landing Pages</div>
+                                                <p class="text fz14">I will redesign your current landing page or create one for you (upto 4 sections)</p>
+                                                <hr class="opacity-100 mb20">
+                                                <ul class="p-0 mb15 d-sm-flex align-items-center">
+                                                    <li class="fz14 fw500 dark-color"><i class="flaticon-sandclock fz20 text-thm2 me-2 vam"></i>3 Days Delivery</li>
+                                                    <li class="fz14 fw500 dark-color ml20 ml0-xs"><i class="flaticon-recycle fz20 text-thm2 me-2 vam"></i>2 Revisions</li>
+                                                </ul>
+                                                <div class="list-style1">
+                                                    <ul class="">
+                                                        <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
+                                                        <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <a href="" class="ud-btn btn-thm">Continue $250<i class="fal fa-arrow-right-long"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="freelancer-style1 service-single mb-0">
+                                <div class="wrapper d-flex align-items-center">
+                                    <div class="thumb position-relative mb25">
+                                        <img class="rounded-circle mx-auto" src="@Model.Service.OwnerProfilePhoto" width="90" height="90" alt="">
+                                        <span class="online"></span>
+                                    </div>
+                                    <div class="ml20">
+                                        <h5 class="title mb-1">@Model.Service.OwnerName</h5>
+                                        <p class="mb-0">Career Ex.Nursing Assistant TODO</p>
+                                    </div>
+                                </div>
+                                <hr class="opacity-100">
+                                <div class="details">
+                                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                                        <a class="meta fw500 text-start">Моето текущо местоположение е град<br><span class="fz14 fw400">@Model.Service.OwnerCurrentLocation</span></a>
+                                    </div>
+                                </div>
+                                <div class="d-grid mt30">
+                                    <a href="page-freelancer-single.html" class="ud-btn btn-thm-border">Свържи се с мен<i class="fal fa-arrow-right-long"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listings -->
+    <section class="pt30 pb90 pb30-md">
+        <div class="container">
+            <div class="row wow fadeInUp">
+                <div class="col-lg-12">
+                    <div class="main-title mb35">
+                        <h2>Още популярни услуги </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row wow fadeInUp">
+                @foreach (var service in Model.ServiceCardDTOs)
+                {
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="listing-style1">
+                            <div class="list-thumb">
+                                <img class="w-100" src="@service.MainImage" width="259" height="193" alt="service image">
+                                <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                            </div>
+                            <div class="list-content">
+                                <p class="list-text body-color fz14 mb-1">@service.CategoryName</p>
+                                <h5 class="list-title"><a asp-action="Service" asp-route-id="@service.Id">@service.Name</a></h5>
+                                <div class="review-meta d-flex align-items-center">
+                                    <i class="fas fa-star fz10 review-color me-2"></i>
+                                    <p class="mb-0 body-color fz14">
+                                        <span class="dark-color me-2">
+                                            @if (service.ReviewAvgCoef.Equals(double.NaN))
+                                            {
+                                                <span>0</span>
+                                            }
+                                            else
+                                            {
+                                                @service.ReviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture)
+                                            }
+                                        </span>@service.ReviewsCount ревюта
+                                    </p>
+                                </div>
+                                <hr class="my-2">
+                                <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                                    <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="1">
+                                        <span class="position-relative mr10">
+                                            <img class="rounded-circle" src="@service.AuthorProfilePhoto" width="40" height="40" alt="Skiller profile photo">
+                                            <span class="online-badge"></span>
+                                        </span>
+                                        <span class="fz14">@service.AuthorName</span>
+                                    </a>
+                                    <div class="budget">
+                                        <span class="fz17 fw500 dark-color ms-1">@service.Price</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

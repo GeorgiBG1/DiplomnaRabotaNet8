@@ -61,218 +61,218 @@ namespace Services
                     new City("Pazardzhik","Пазарджик"),
 
                     new City("Blagoevgrad","Благоевград"),
-                    
+
                     new City("Veliko_Tarnovo","Велико Търново"),
-                    
+
                     new City("Garbrovo","Габрово"),
-                    
+
                     new City("Vratsa","Враца"),
-                    
+
                     new City("Kazanluk","Казанлък"),
-                    
+
                     new City("Vidin","Видин"),
-                    
+
                     new City("Asenovgrad","Асеновград"),
-                    
+
                     new City("Kardzali","Кърджали"),
-                    
+
                     new City("Kostendil","Кюстендил"),
-                    
+
                     new City("Montana","Монтана"),
-                    
+
                     new City("Dimitrovgrad","Димитровград"),
-                    
+
                     new City("Lovech","Ловеч"),
-                    
+
                     new City("Silistra","Силистра"),
-                    
+
                     new City("Razgrad","Разград"),
-                    
+
                     new City("Targovishte","Търговище"),
-                    
+
                     new City("Dupnitsa","Дупница"),
-                    
+
                     new City("Gorna_Oryahovitsa","Горна Оряховица"),
-                    
+
                     new City("Svishtov","Свищов"),
-                    
+
                     new City("Smolyan","Смолян"),
-                    
+
                     new City("Petrich","Петрич"),
-                    
+
                     new City("Samokov","Самоков"),
-                    
+
                     new City("Lom","Лом"),
-                    
+
                     new City("Sandanski","Сандански"),
-                    
+
                     new City("Sevlievo","Севлиево"),
-                    
+
                     new City("Nova_Zagora","Нова Загора"),
-                    
+
                     new City("Velingrad","Велинград"),
-                    
+
                     new City("Cherven_Bryag","Червен бряг"),
-                    
+
                     new City("Troyan","Троян"),
-                    
+
                     new City("Aytos","Айтос"),
-                    
+
                     new City("Botevgrad","Ботевград"),
-                    
+
                     new City("Gotse_Delchev","Гоце Делчев"),
-                    
+
                     new City("Karlovo","Карлово"),
-                    
+
                     new City("Karnobat","Карнобат"),
-                    
+
                     new City("Panagyurishte","Панагюрище"),
-                    
+
                     new City("Svilengrad","Свиленград"),
-                    
+
                     new City("Harmanli","Харманли"),
-                    
+
                     new City("Peshtera","Пещера"),
-                    
+
                     new City("Chirpan","Чирпан"),
-                    
+
                     new City("Parvomay","Първомай"),
-                    
+
                     new City("Popovo","Попово"),
-                    
+
                     new City("Rakovski","Раковски"),
-                    
+
                     new City("Berkovitsa","Берковица"),
-                    
+
                     new City("Radomir", "Радомир"),
                     new City("Ihtiman", "Ихтиман"),
                     new City("Tryavna", "Трявна"),
                     new City("Provadia","Провадия"),
-                    
+
                     new City("Pomorie","Поморие"),
-                    
+
                     new City("Byala_Slatina","Бяла Слатина"),
-                    
+
                     new City("Novi_pazar","Нови пазар"),
-                    
+
                     new City("Balchik","Балчик"),
-                    
+
                     new City("Razlog","Разлог"),
-                    
+
                     new City("Pavlikeni","Павликени"),
-                    
+
                     new City("Kostinbrod","Костинброд"),
-                    
+
                     new City("Stamboliyski","Стамболийски"),
-                    
+
                     new City("Mezdra", "Мездра"),
                     new City("Levski", "Левски"),
                     new City("Kavarna","Каварна"),
-                    
+
                     new City("Elhovo","Елхово"),
-                    
+
                     new City("Etropole","Етрополе"),
-                    
+
                     new City("Teteven","Тетевен"),
-                    
+
                     new City("Tutrakan","Тутракан"),
-                    
+
                     new City("Lukovid","Луковид"),
-                    
+
                     new City("Belene","Белене"),
-                    
+
                     new City("Zlatni_Pyasatsi","Златни Пясъци"),
-                    
+
                     new City("Isperih", "Исперих"),
                     new City("Sredets", "Средец"),
                     new City("Veliki_Preslav","Велики Преслав"),
-                    
+
                     new City("Bansko","Банско"),
-                    
+
                     new City("Omurtag","Омуртаг"),
-                    
+
                     new City("Kubrat","Кубрат"),
-                    
+
                     new City("Svoge","Своге"),
-                    
+
                     new City("Septemvri","Септември"),
-                    
+
                     new City("Krimich","Кримич"),
-                    
+
                     new City("Lyaskovets","Лясковец"),
-                    
+
                     new City("Beloslav","Белослав"),
-                    
+
                     new City("Hisarya","Хисаря"),
-                    
+
                     new City("General_Toshevo","Генерал Тошево"),
-                    
+
                     new City("Slivnitsa","Сливница"),
-                    
+
                     new City("Varshec","Вършец"),
-                    
+
                     new City("Devin","Девин"),
-                    
+
                     new City("Simeonovgrad","Симеоновград"),
-                    
+
                     new City("Elin_Pelin","Елин Пелин"),
-                    
+
                     new City("Zlatograd","Златоград"),
-                    
+
                     new City("Dolni_Chiflik","Долни Чифлик"),
-                    
+
                     new City("Aksakovo","Аксаково"),
-                    
+
                     new City("Knezha","Кнежа"),
-                    
+
                     new City("Tervel","Тервел"),
-                    
+
                     new City("Dulovo","Дулово"),
-                    
+
                     new City("Simitli","Симитли"),
-                    
+
                     new City("Tvarditsa","Твърдица"),
-                    
+
                     new City("Topolovgrad","Тополовград"),
-                    
+
                     new City("Saedinienie","Съединение"),
-                    
+
                     new City("Kotel","Котел"),
-                    
+
                     new City("Nesebar","Несебър"),
-                    
+
                     new City("Bobov_Dol","Бобов дол"),
-                    
+
                     new City("Tsarevo","Царево"),
-                    
+
                     new City("Yakoruda","Якоруда"),
-                    
+
                     new City("Strandzha","Странджа"),
-                    
+
                     new City("Zlatitsa","Златица"),
-                    
+
                     new City("Strazhitsa","Стражица"),
-                    
+
                     new City("Oryahovo","Оряхово"),
-                    
+
                     new City("Belogradchik", "Белоградчик"),
                     new City("Polski_Trambesh", "Полски Тръмбеш"),
                     new City("Madan","Мадан"),
-                    
+
                     new City("Chepelare","Чепеларе"),
-                    
+
                     new City("Perushtits","Перущица"),
-                    
+
                     new City("Dalgopol","Дългопол"),
-                    
+
                     new City("Krumovgrad","Крумовград"),
-                    
+
                     new City("Dolni_Dabnik","Долни Дъбник"),
-                    
+
                     new City("Valchedram","Вълчедръм"),
-                    
+
                     new City("Vetovo","Ветово"),
-                    
+
                     new City("Godech", "Годеч"),
 
                     new City("Nedelino", "Неделино"),
@@ -1138,7 +1138,7 @@ namespace Services
                     7859953,
                     4792521,
                     4247770,
-                    159581,
+                    10549488,
                     1476321,
                     3738088,
                     3993449,
@@ -1231,6 +1231,9 @@ namespace Services
                     services[15], category3, skiller8, 30);
                 SetCustomEntityProperties(
                     services[16], category15, skiller1, 27, 2);
+                AddReview(services[16], commenter1, 3, "Това е коментар № 1.");
+                AddReview(services[16], commenter2, 5, "Това е коментар № 2.");
+                AddReview(services[16], commenter3, 5, "Това е коментар № 3.");
                 SetCustomEntityProperties(
                     services[17], category11, skiller9, 50);
                 SetCustomEntityProperties(
@@ -2113,6 +2116,27 @@ namespace Services
             service.City = owner.City;
             service.Price = price;
             service.Discount = discount;
+        }
+        private static void AddReview(
+            SkillBoxService service,
+            SkillBoxUser owner,
+            int ratingStars,
+            string comment)
+        {
+            var review = new Review
+            {
+                User = owner,
+                RatingStars = ratingStars,
+                Comment = comment
+            };
+            if (service.Reviews == null)
+            {
+                service.Reviews = new List<Review>();
+            }
+            else
+            {
+                service.Reviews.Add(review);
+            }
         }
     }
 }

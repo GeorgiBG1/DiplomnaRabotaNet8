@@ -333,6 +333,9 @@ namespace SkillBox.App.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Schedule")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ServiceStatusId")
                         .HasColumnType("int");
 

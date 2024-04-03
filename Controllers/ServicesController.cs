@@ -3,23 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using DTOs.INPUT;
 using Contracts;
 using Services;
+using Models;
 
 namespace SkillBox.App.Controllers
 {
     public class ServicesController : Controller
     {
         private readonly SkillBoxDbContext dbContext;
-        private ICloudinaryService cloudinaryService;
+        private readonly ICloudinaryService cloudinaryService;
+        private readonly ICategoryService categoryService;
         private readonly IOfferingService offeringService;
         private readonly IImageService imageService;
 
         public ServicesController(SkillBoxDbContext dbContext,
             ICloudinaryService cloudinaryService,
+            ICategoryService categoryService,
             IOfferingService offeringService,
             IImageService imageService)
         {
             this.dbContext = dbContext;
             this.cloudinaryService = cloudinaryService;
+            this.categoryService = categoryService;
             this.offeringService = offeringService;
             this.imageService = imageService;
         }
@@ -30,9 +34,18 @@ namespace SkillBox.App.Controllers
         }
         public IActionResult Service(int id)
         {
-            return View();
+            var categories = categoryService.GetCategoryMiniDTOs(7);
+            var service = offeringService.GetServiceDTO(id);
+            var popularServices = offeringService.GetTopServicesAsServiceCardDTOs(4, id);
+            var model = new SingleServiceViewModel
+            {
+                CategoryList = categories,
+                Service = service,
+                ServiceCardDTOs = popularServices
+            };
+            return View(model);
         }
-        public IActionResult Details()
+        public IActionResult Details(int id)
         {
             return View();
         }

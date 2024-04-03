@@ -2,7 +2,7 @@
 
 <div class="body_content">
     <!-- Home Banner Style V1 -->
-    <section class="hero-home2 pb100-xs" style="background-color: #1F4B3F; background-image: url("https://demoapus1.com/freeio-new/wp-content/uploads/2022/10/slider2_bg.png");">
+    <section class="hero-home2 pb100-xs" style="background-color: #1F4B3F; background-image: url(" https: //demoapus1.com/freeio-new/wp-content/uploads/2022/10/slider2_bg.png");">
         <div class="container">
             <div class="row mb60 mb0-xl">
                 <div class="col-xl-7">
@@ -216,10 +216,21 @@
                             </div>
                             <div class="list-content">
                                 <p class="list-text body-color fz14 mb-1">@service.CategoryName</p>
-                                <h5 class="list-title"><a href="page-services-single.html">@service.Name</a></h5>
+                                <h5 class="list-title"><a asp-action="Service" asp-controller="Services" asp-route-id="@service.Id">@service.Name</a></h5>
                                 <div class="review-meta d-flex align-items-center">
                                     <i class="fas fa-star fz10 review-color me-2"></i>
-                                    <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82 Review Coef TODO</span>@service.ReviewsCount ревюта</p>
+                                    <p class="mb-0 body-color fz14">
+                                        <span class="dark-color me-2">
+                                            @if (service.ReviewAvgCoef.Equals(double.NaN))
+                                            {
+                                                <span>0</span>
+                                            }
+                                            else
+                                            {
+                                                @service.ReviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture)
+                                            }
+                                        </span>@service.ReviewsCount ревюта
+                                    </p>
                                 </div>
                                 <hr class="my-2">
                                 <div class="list-meta d-flex justify-content-between align-items-center mt15">
@@ -360,7 +371,21 @@
                                     <div class="details">
                                         <h5 class="title mb-1">@skiller.Name</h5>
                                         <p class="mb-0">Career Ex.Nursing Assistant</p>
-                                        <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">@skiller.ReviewAvgCoef</span> (@skiller.ReviewsCount ревюта)</p></div>
+                                        <div class="review">
+                                            <p>
+                                                <i class="fas fa-star fz10 review-color pr10"></i>
+                                                <span class="dark-color">
+                                                    @if (skiller.ReviewAvgCoef.Equals(double.NaN))
+                                                    {
+                                                        <span>0</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @skiller.ReviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture)
+                                                    }
+                                                </span> (@skiller.ReviewsCount ревюта)
+                                            </p>
+                                        </div>
                                         <div class="skill-tags d-flex align-items-center justify-content-center mb5">
                                             <span class="tag" style="background-color: #5BBB7B1A;">Figma</span>
                                             <span class="tag mx10" style="background-color: #5BBB7B1A;">Sketch</span>

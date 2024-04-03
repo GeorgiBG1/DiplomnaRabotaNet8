@@ -8,5 +8,9 @@ namespace SkillBox.App.Controllers
         {
             return View();
         }
+        public IActionResult Category(int id)
+        {
+            return View();
+        }
     }
 }

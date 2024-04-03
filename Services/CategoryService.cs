@@ -19,6 +19,14 @@ namespace Services
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+        public ICollection<CategoryMiniDTO> GetCategoryMiniDTOs(int count = 1)
+        {
+            var categories = dbContext.Categories
+                .OrderByDescending(c => c.Id)
+                .Take(count).ToList();
+            var model = categories.Select(mapper.Map<CategoryMiniDTO>).ToList();
+            return model;
+        }
         public ICollection<CategoryCardDTO> GetCategoryCardDTOs(int count = 1, int skipCount = 0)
         {
             var categories = new List<Category>();

@@ -21,7 +21,15 @@ namespace Services
         }
         public ServiceDTO GetServiceDTO(int id)
         {
-            return null!;
+            var service = dbContext.Services.Where(s => s.Id == id)
+                .Include(s => s.Owner)
+                .Include(s => s.City)
+                .Include(s => s.Reviews!)
+                .ThenInclude(r => r.User)
+                .ThenInclude(u => u.City)
+                .FirstOrDefault();
+            var model = mapper.Map<ServiceDTO>(service);
+            return model;
         }
         public ICollection<ServiceCardDTO> GetServiceCardDTOs(int count = 1, int skipCount = 0)
         {
@@ -45,15 +53,16 @@ namespace Services
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }
-        public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1)
+        public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1, int serviceId = 0)
         {
             var services = dbContext.Services
                 .Include(s => s.Category)
                 .Include(s => s.Owner)
                 .Include(s => s.Reviews)
+                .Where(s => s.Id !=  serviceId && s.Id != 0)
                 .Take(count)
                 .OrderByDescending(s => s.Id)
-                .ThenByDescending(s => s.Reviews.Count())
+                .ThenByDescending(s => s.Reviews!.Count())
                 .ToList();
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
