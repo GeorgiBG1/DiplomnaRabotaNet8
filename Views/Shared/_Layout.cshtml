@@ -54,14 +54,16 @@
                                                         @foreach (var category in categories)
                                                         {
                                                             <li>
-                                                                <a asp-action="Index" asp-controller="Categories" asp-route-id="@category.Id" class="dropdown"> <span class="menu-icn flaticon-developer"></span> <span class="menu-title">@category.Name</span> </a>
+                                                                <a asp-action="Category" asp-controller="Categories" asp-route-id="@category.Id" class="dropdown"> <span class="menu-icn flaticon-developer"></span> <span class="menu-title">@category.Name</span> </a>
                                                                 <div class="drop-menu d-flex justify-content-between">
                                                                     @foreach (var kidCard in category.Kids!)
                                                                     {
-                                                                        <div class="one-third p-3 h-75 rounded-2" style="background-color: #6B7177">
-                                                                            <div class="h6 cat-title text-light">@kidCard.Name</div>
-                                                                            <img src="@kidCard.MainImage" class="rounded-2" width="240" height="240" />
-                                                                        </div>
+                                                                        <a asp-action="Category" asp-controller="Categories" asp-route-id="@kidCard.Id">
+                                                                            <div class="one-third p-3 h-75 rounded-2" style="background-color: #6B7177">
+                                                                                <div class="h6 cat-title text-light">@kidCard.Name</div>
+                                                                                <img src="@kidCard.MainImage" class="rounded-2" width="240" height="240" />
+                                                                            </div>
+                                                                        </a>      
                                                                     }
                                                                 </div>
                                                             </li>

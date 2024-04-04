@@ -31,24 +31,40 @@ namespace Services
             var model = mapper.Map<ServiceDTO>(service);
             return model;
         }
-        public ICollection<ServiceCardDTO> GetServiceCardDTOs(int count = 1, int skipCount = 0)
+        public ICollection<ServiceCardDTO> GetServiceCardDTOs(int count = 1, int skipCount = 0, int categoryId = 0)
         {
             var services = new List<SkillBoxService>();
             var model = new List<ServiceCardDTO>();
-            if (skipCount != 0)
+            if (categoryId != 0)
             {
                 services = dbContext.Services
-                    .OrderByDescending(s => s.Id)
-                    .Include(s => s.Category)
-                    .Skip(skipCount).Take(count).ToList();
-                services.ForEach(s => s.Description = s.Description![..50]);
-                model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
-                return model;
+                  .Include(s => s.Category)
+                  .Where(s => s.CategoryId == categoryId)
+                  .OrderByDescending(s => s.Id)
+                  .Include(s => s.Owner)
+                  .Skip(skipCount)
+                  .Take(count).ToList();
+                if (services.Count == 0)
+                {
+                    services = dbContext.Categories
+                      .Where(c => c.ParentCategoryId == categoryId)
+                      .Include(c => c.Services!)
+                      .ThenInclude(s => s.Owner)
+                      .SelectMany(c => c.Services!)
+                      .OrderByDescending(s => s.Id)
+                      .Skip(skipCount)
+                      .Take(count).ToList();
+                }
             }
-            services = dbContext.Services
-                .OrderByDescending(s => s.Id)
-                .Include(s => s.Category)
-                .Take(count).ToList();
+            else
+            {
+                services = dbContext.Services
+                  .OrderByDescending(s => s.Id)
+                  .Include(s => s.Category)
+                  .Include(s => s.Owner)
+                  .Skip(skipCount)
+                  .Take(count).ToList();
+            }
             services.ForEach(s => s.Description = s.Description![..50]);
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
@@ -59,7 +75,7 @@ namespace Services
                 .Include(s => s.Category)
                 .Include(s => s.Owner)
                 .Include(s => s.Reviews)
-                .Where(s => s.Id !=  serviceId && s.Id != 0)
+                .Where(s => s.Id != serviceId && s.Id != 0)
                 .Take(count)
                 .OrderByDescending(s => s.Id)
                 .ThenByDescending(s => s.Reviews!.Count())
@@ -73,8 +89,23 @@ namespace Services
             dbContext.Services.Add(service);
             dbContext.SaveChanges();
         }
-        public int GetServicesCount()
+        public int GetServicesCount(int categoryId = 0)
         {
+            if (categoryId != 0)
+            {
+                var servicesCount = dbContext.Services
+                    .Where(s => s.CategoryId == categoryId)
+                    .Count();
+                if (servicesCount == 0)
+                {
+                    servicesCount = dbContext.Categories
+                        .Where(c => c.ParentCategoryId == categoryId)
+                        .Include(c => c.Services)
+                        .SelectMany(c => c.Services!)
+                        .Count();
+                }
+                return servicesCount;
+            }
             return dbContext.Services.Count();
         }
         public int GetPositiveReiewsCount()

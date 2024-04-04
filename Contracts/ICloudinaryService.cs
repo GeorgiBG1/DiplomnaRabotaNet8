@@ -3,6 +3,6 @@ namespace Contracts
 {
     public interface ICloudinaryService
     {
-        string UploadFileAndGetURL(IFormFile file);
+        public string UploadFileAndGetURL(IFormFile file, string directory);
     }
 }

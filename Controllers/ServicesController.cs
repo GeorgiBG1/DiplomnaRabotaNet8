@@ -29,13 +29,23 @@ namespace SkillBox.App.Controllers
         }
         public IActionResult Index()
         {
-            var services = offeringService.GetServiceCardDTOs(8);
-            return View(services);
+            var categories = categoryService.GetCategoryMiniDTOs(7);
+            var services = offeringService.GetServiceCardDTOs(4);
+            var model = new AllServiceViewModel
+            {
+                CategoryList = categories,
+                ServiceCardDTOs = services
+            };
+            return View(model);
         }
         public IActionResult Service(int id)
         {
-            var categories = categoryService.GetCategoryMiniDTOs(7);
             var service = offeringService.GetServiceDTO(id);
+            if (service == null)
+            {
+                return View("Error");
+            }
+            var categories = categoryService.GetCategoryMiniDTOs(7);
             var popularServices = offeringService.GetTopServicesAsServiceCardDTOs(4, id);
             var model = new SingleServiceViewModel
             {
@@ -67,7 +77,7 @@ namespace SkillBox.App.Controllers
             var images = string.Empty;
             foreach (var img in bindingModel.ImageFiles)
             {
-                var imgURL = cloudinaryService.UploadFileAndGetURL(img);
+                var imgURL = cloudinaryService.UploadFileAndGetURL(img, "ServiceImgs");
                 if (imgURL != "none")
                     images += $"{imgURL}|";
             }

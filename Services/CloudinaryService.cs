@@ -24,13 +24,14 @@ namespace Services
             cloudinary = new Cloudinary(account);
         }
 
-        public string UploadFileAndGetURL(IFormFile file)
+        public string UploadFileAndGetURL(IFormFile file, string directory)
         {
             //Upload files to Cloudinary
             var uploadParams = new ImageUploadParams
             {
                 File = new FileDescription(file.FileName,
-                file.OpenReadStream())
+                file.OpenReadStream()),
+                Folder = directory
             };
             var uploadResult = cloudinary.Upload(uploadParams);
             if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)

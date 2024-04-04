@@ -114,9 +114,9 @@ namespace SkillBox.App.AutoMapperConfiguration
                 {
                     if (c.Kids!.Count != 0)
                     {
-                        return d.ServicesCount = c.Kids.Select(k => k.Services!.Count()).Sum();
+                        return d.ServicesCount = c.Kids.Select(k => k.Services!.Count).Sum();
                     }
-                    return d.ServicesCount = c.Services!.Count();
+                    return d.ServicesCount = c.Services!.Count;
                 }));
 
             CreateMap<Category, SelectListItem>()

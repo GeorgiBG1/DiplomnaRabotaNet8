@@ -19,6 +19,14 @@ namespace Services
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+        public CategoryDTO GetCategoryDTO(int id)
+        {
+            var category = dbContext.Categories
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+            var model = mapper.Map<CategoryDTO>(category);
+            return model;
+        }
         public ICollection<CategoryMiniDTO> GetCategoryMiniDTOs(int count = 1)
         {
             var categories = dbContext.Categories
