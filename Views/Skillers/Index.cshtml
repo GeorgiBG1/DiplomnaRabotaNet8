@@ -1,4 +1,4 @@
-﻿@model SingleCategoryViewModel
+﻿@model AllSkillerViewModel
 <div class="body_content" style="margin-top: 100px; background-color: #ebfaf9;">
     <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! Remove this style-margin-top! -->
     <section class="categories_list_section overflow-hidden">
@@ -10,7 +10,7 @@
                             <li><a asp-action="Index" asp-controller="Categories" class="active">Всички категории</a></li>
                             @foreach (var category in Model.CategoryList)
                             {
-                                <li><a asp-action="Category" asp-route-id="@category.Id">@category.Name</a></li>
+                                <li><a asp-action="Category" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a></li>
                             }
                         </ul>
                     </div>
@@ -22,12 +22,23 @@
     <section class="breadcumb-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcumb-style1">
+                <div class="col-sm-8 col-lg-10">
+                    <div class="breadcumb-style1 mb10-xs">
                         <div class="breadcumb-list">
                             <a asp-action="Index" asp-controller="Home">Начало</a>
-                            <a asp-action="Index" asp-controller="Categories">Категории</a>
-                            <a>@Model.Category.Name</a>
+                            <a>Skiller-и</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-lg-2">
+                    <div class="d-flex align-items-center justify-content-sm-end">
+                        <div class="share-save-widget d-flex align-items-center">
+                            <span class="icon flaticon-share dark-color fz12 mr10"></span>
+                            <div class="h6 mb-0">Сподели</div>
+                        </div>
+                        <div class="share-save-widget d-flex align-items-center ml15">
+                            <span class="icon flaticon-like dark-color fz12 mr10"></span>
+                            <div class="h6 mb-0">Запази</div>
                         </div>
                     </div>
                 </div>
@@ -38,43 +49,58 @@
     <!-- Listings All Lists -->
     <section class="pt30 pb90">
         <div class="container">
-            <div class="row wow fadeInUp">
+            <div class="row">
                 <div class="col-lg-3">
                     <div class="list-sidebar-style1 d-none d-lg-block">
                         <div class="accordion" id="accordionExample">
-                            <div class="card mb20 pb10 mt-0 p-3 bdrs16">
+                            <div class="card mb20 mt-0 p-3 bdrs16">
                                 <div class="card-header active" id="heading0">
                                     <h4>
-                                        <button class="btn btn-link ps-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">Delivery Time</button>
+                                        <button class="btn btn-link ps-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">Skills</button>
                                     </h4>
                                 </div>
                                 <div id="collapse0" class="collapse show" aria-labelledby="heading0" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
-                                        <div class="radio-element">
-                                            <div class="form-check d-flex align-items-center mb10">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1a">
-                                                <label class="form-check-label" for="flexRadioDefault1a">Express 24H</label><span class="right-tags">(1,945)</span>
-                                            </div>
-                                            <div class="form-check d-flex align-items-center mb10">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2a" checked="checked">
-                                                <label class="form-check-label" for="flexRadioDefault2a">Up to 3 days</label><span class="right-tags">(8,136)</span>
-                                            </div>
-                                            <div class="form-check d-flex align-items-center mb10">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3a">
-                                                <label class="form-check-label" for="flexRadioDefault3a">Up to 7 days</label><span class="right-tags">(917)</span>
-                                            </div>
-                                            <div class="form-check d-flex align-items-center">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4a">
-                                                <label class="form-check-label" for="flexRadioDefault4a">Anytime</label><span class="right-tags">(240)</span>
-                                            </div>
+                                        <div class="checkbox-style1 mb15">
+                                            <label class="custom_checkbox">
+                                                UX Designer
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(1,945)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                Web Developers
+                                                <input type="checkbox" checked="checked">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(8,136)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                Illustrators
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(917)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                Node.js
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(240)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                Project Managers
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(2,460)</span>
+                                            </label>
                                         </div>
+                                        <a class="text-thm" href="">+20 more</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
                                 <div class="card-header active" id="heading1">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Budget</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Price</button>
                                     </h4>
                                 </div>
                                 <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
@@ -93,12 +119,12 @@
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
-                                <div class="card-header active" id="heading3">
+                                <div class="card-header active" id="heading2">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">Location</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">Location</button>
                                     </h4>
                                 </div>
-                                <div id="collapse3" class="collapse show" aria-labelledby="heading3" data-parent="#accordionExample">
+                                <div id="collapse2" class="collapse show" aria-labelledby="heading2" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="search_area mb15">
                                             <input type="text" class="form-control" placeholder="What are you looking for?">
@@ -141,12 +167,12 @@
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
-                                <div class="card-header active" id="heading5">
+                                <div class="card-header active" id="heading4">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">Level</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">Level</button>
                                     </h4>
                                 </div>
-                                <div id="collapse5" class="collapse show" aria-labelledby="heading5" data-parent="#accordionExample">
+                                <div id="collapse4" class="collapse show" aria-labelledby="heading4" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="checkbox-style1">
                                             <label class="custom_checkbox">
@@ -174,6 +200,7 @@
                                                 <span class="right-tags">(240)</span>
                                             </label>
                                         </div>
+                                        <a class="text-thm" href="">+20 more</a>
                                     </div>
                                 </div>
                             </div>
@@ -181,32 +208,24 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="row">
-                        <div class="cta-banner px-0 bdrs16 position-relative overflow-hidden d-flex align-items-center mb55 tag" style="height:300px;">
-                            <img class="left-top-img wow zoomIn" src="~/images/vector-img/left-top.png" alt="">
-                            <img class="right-bottom-img wow zoomIn" src="~/images/vector-img/right-bottom.png" alt="">
-                            <img src="@Model.Category.MainImage" width="450" height="300" class="service-v1-vector bounce-y d-none d-xl-block bdrs16" />
-                            <div class="container">
-                                <div class="row wow fadeInUp">
-                                    <div class="col-xl-8">
-                                        <div class="position-relative pl80 pl0-sm">
-                                            <h2 class="w-50 text-dark-light">@Model.Category.Name</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row align-items-center mb20">
                         <div class="col-md-6">
                             <div class="text-center text-md-start">
-                                <p class="text mb-0 mb10-sm"><span class="fw500 fw-bold">@Model.ServicesCount</span> услуги в тази категория</p>
+                                <p class="text mb-0 mb10-sm"><span class="fw500">@Model.SkillersCount</span> skiller-и</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="page_control_shorting d-md-flex align-items-center justify-content-center justify-content-md-end">
+                                <div class="dropdown-lists d-block d-lg-none me-2 mb10-sm">
+                                    <ul class="p-0 mb-0 text-center text-md-start">
+                                        <li>
+                                            <!-- Advance Features modal trigger -->
+                                            <button type="button" class="open-btn filter-btn-left"> <img class="me-2" src="images/icon/all-filter-icon.svg" alt=""> All Filter</button>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="pcs_dropdown dark-color pr10 text-center text-md-end">
-                                    <span>Сортирай по</span>
+                                    <span>Сортиране по</span>
                                     <select class="selectpicker show-tick">
                                         <option>Best Selling</option>
                                         <option>Recommended</option>
@@ -216,74 +235,75 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        @foreach (var service in Model.ServiceCardDTOs)
-                        {
-                            <div class="col-sm-6 col-xl-4">
-                                <div class="listing-style1 bdrs16">
-                                    <div class="list-thumb">
-                                        <img class="w-100" src="@service.MainImage" width="329" height="245" alt="service image">
-                                        <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                                    </div>
-                                    <div class="list-content">
-                                        <p class="list-text body-color fz14 mb-1">@service.CategoryName</p>
-                                        <h5 class="list-title"><a asp-action="Service" asp-controller="Services" asp-route-id="@service.Id">@service.Name</a></h5>
-                                        <div class="review-meta d-flex align-items-center">
-                                            <i class="fas fa-star fz10 review-color me-2"></i>
-                                            <p class="mb-0 body-color fz14">
-                                                <span class="dark-color me-2">
-                                                    @if (service.ReviewAvgCoef.Equals(double.NaN))
+                    @if (Model.Skillers != null)
+                    {
+                        <div class="row">
+                            @foreach (var skiller in Model.Skillers)
+                            {
+                                <div class="col-md-6 col-lg-12">
+                                    <div class="freelancer-style1 bdr1 hover-box-shadow row ms-0">
+                                        <div class="col-lg-8 ps-0">
+                                            <div class="d-lg-flex bdrr1 bdrn-lg">
+                                                <div class="thumb w90 position-relative rounded-circle mb15-md">
+                                                    <img class="rounded-circle mx-auto" src="@skiller.ProfilePhoto" width="90" height="90" alt="Skiller profile photo">
+                                                    <span class="online"></span>
+                                                </div>
+                                                <div class="details ml15 ml0-md mb15-md">
+                                                    <h5 class="title mb-1">@skiller.Name</h5>
+                                                    @if (skiller.Career != null)
                                                     {
-                                                        <span>0</span>
+                                                        <p class="mb-0">Професия: @skiller.Career</p>
                                                     }
-                                                    else
-                                                    {
-                                                        @service.ReviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture)
-                                                    }
-                                                </span>@service.ReviewsCount ревюта
-                                            </p>
+                                                    <p class="mb-0"><b>@skiller.ServicesCount</b> услуги</p>
+                                                    <div class="review">
+                                                        <p>
+                                                            <i class="fas fa-star fz10 review-color pr10"></i>
+                                                            <span class="dark-color">
+                                                                @if (skiller.ReviewAvgCoef.Equals(double.NaN))
+                                                                {
+                                                                    <span>0</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    @skiller.ReviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture)
+                                                                }
+                                                            </span> (@skiller.ReviewsCount ревюта)
+                                                        </p>
+                                                    </div>
+                                                    <div class="skill-tags d-flex align-items-center justify-content-lg-center mb-0">
+                                                        @if (skiller.Skills.Count() != 0)
+                                                        {
+                                                            foreach (var skill in skiller.Skills)
+                                                            {
+                                                                <a>@skill</a>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <hr class="my-2">
-                                        <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                                            <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@service.AuthorUsername" class="d-flex">
-                                                <span class="position-relative mr10">
-                                                    <img class="rounded-circle wa" src="@service.AuthorProfilePhoto" width="40" height="40" alt="skiller profile photo">
-                                                    <span class="online-badges"></span>
-                                                </span>
-                                                <span class="fz14">@service.AuthorName</span>
-                                            </a>
-                                            <div class="budget">
-                                                <span class="fz17 fw500 dark-color ms-1">@service.Price</span>
+                                        <div class="col-lg-4 ps-0 ps-xl-3 pe-0">
+                                            <div class="details">
+                                                <div class="fl-meta d-flex align-items-center justify-content-between">
+                                                    <a class="meta fw500 text-start">Намира се в град<br><span class="fz14 fw400">@skiller.City</span></a>
+                                                </div>
+                                                <div class="d-grid mt15">
+                                                    <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@skiller.Username" class="ud-btn btn-light-thm">Виж профил<i class="fal fa-arrow-right-long"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                    <div class="row">
-                        <div class="mbp_pagination mt30 text-center">
-                            <ul class="page_navigation">
-                                <li class="page-item">
-                                    <a class="page-link" href="#"> <span class="fas fa-angle-left"></span></a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item d-inline-block d-sm-none"><a class="page-link" href="#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item d-none d-sm-inline-block"><a class="page-link" href="#">...</a></li>
-                                <li class="page-item d-none d-sm-inline-block"><a class="page-link" href="#">20</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><span class="fas fa-angle-right"></span></a>
-                                </li>
-                            </ul>
-                            <p class="mt10 mb-0 pagination_page_count text-center">1 – 20 of 300+ property available</p>
+                            }
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center mt30">
+                                    <a class="ud-btn btn-light-thm bdrs60">Зареди още<i class="fal fa-arrow-right-long"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

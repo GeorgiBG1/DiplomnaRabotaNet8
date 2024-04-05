@@ -4,45 +4,48 @@ using Models;
 
 namespace Controllers
 {
-    public class CategoriesController : Controller
+    public class SkillersController : Controller
     {
+        private readonly IUserService userService;
         private readonly ICategoryService categoryService;
         private readonly IOfferingService offeringService;
 
-        public CategoriesController(
+        public SkillersController(
+            IUserService userService,
             ICategoryService categoryService,
             IOfferingService offeringService)
         {
+            this.userService = userService;
             this.categoryService = categoryService;
             this.offeringService = offeringService;
         }
         public IActionResult Index()
         {
             var categoryList = categoryService.GetCategoryMiniDTOs(7);
-            var categories = categoryService.GetAllCategoryCardDTOs();
-            var model = new AllCategoryViewModel
+            var skillersCount = userService.GetSkillersCount();
+            var skillers = userService.GetSkillerCardDTOs(5);
+            var model = new AllSkillerViewModel
             {
                 CategoryList = categoryList,
-                Categories = categories
+                SkillersCount = skillersCount,
+                Skillers = skillers
             };
             return View(model);
         }
-        public IActionResult Category(int id)
+        public IActionResult Skiller(string id)
         {
-            var category = categoryService.GetCategoryDTO(id);
-            if (category == null)
+            var skiller = userService.GetSkillerDTO(id);
+            if (skiller == null)
             {
                 return View("Error");
             }
-            int servicesCount = offeringService.GetServicesCount(id);
             var categories = categoryService.GetCategoryMiniDTOs(7);
-            var categoryServices = offeringService.GetServiceCardDTOs(6, 0, id);
-            var model = new SingleCategoryViewModel
+            var skillerServices = userService.GetSkillerServicesAsServiceCardDTOs(id, 3);
+            var model = new SingleSkillerViewModel
             {
                 CategoryList = categories,
-                Category = category,
-                ServicesCount = servicesCount,
-                ServiceCardDTOs = categoryServices
+                Skiller = skiller,
+                ServiceCardDTOs = skillerServices
             };
             return View(model);
         }

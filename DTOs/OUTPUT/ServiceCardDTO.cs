@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string AuthorUsername { get; set; }
         public string AuthorName { get; set; }
         public string AuthorProfilePhoto { get; set; }
         public int CategoryId { get; set; }

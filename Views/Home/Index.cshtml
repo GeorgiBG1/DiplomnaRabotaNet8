@@ -1,7 +1,7 @@
 ﻿@model HomeViewModel
 
 <div class="body_content">
-    <!-- Home Banner Style V1 -->
+    <!-- Home Banner -->
     <section class="hero-home2 pb100-xs" style="background-color: #1F4B3F; background-image: url(" https: //demoapus1.com/freeio-new/wp-content/uploads/2022/10/slider2_bg.png");">
         <div class="container">
             <div class="row mb60 mb0-xl">
@@ -234,7 +234,7 @@
                                 </div>
                                 <hr class="my-2">
                                 <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                                    <a class="d-flex" href="">
+                                    <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@service.AuthorUsername" class="d-flex">
                                         <span class="position-relative mr10">
                                             <img class="rounded-circle wa" src="@service.AuthorProfilePhoto" width="40" height="40" alt="skiller profile photo">
                                             <span class="online-badges"></span>
@@ -341,7 +341,7 @@
         </div>
     </section>
 
-    <!-- Highest Rated Freelancers -->
+    <!-- Highest Rated Skillers -->
     <section class="pt90 pt60-md pb130 pb60-md">
         <div class="container">
             <div class="row align-items-center wow fadeInUp">
@@ -353,7 +353,7 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="text-start text-lg-end mb-4">
-                        <a class="ud-btn btn-light-thm bdrs90" href="page-freelancer-v1.html">Skillers<i class="fal fa-arrow-right-long"></i></a>
+                        <a asp-action="Index" asp-controller="Skillers" class="ud-btn btn-light-thm bdrs90">Skiller-и<i class="fal fa-arrow-right-long"></i></a>
                     </div>
                 </div>
             </div>
@@ -370,7 +370,15 @@
                                     </div>
                                     <div class="details">
                                         <h5 class="title mb-1">@skiller.Name</h5>
-                                        <p class="mb-0">Career Ex.Nursing Assistant</p>
+                                        @if (skiller.Career != null)
+                                        {
+                                            <p class="mb-0">Професия: @skiller.Career</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0">Професия: <span class="px-4 text-center fw-bold">-</span></p>
+                                        }
+                                        <p class="mb-0 ms-1 text-start ps-4">Услуги (<b>@skiller.ServicesCount</b>)</p>
                                         <div class="review">
                                             <p>
                                                 <i class="fas fa-star fz10 review-color pr10"></i>
@@ -386,17 +394,12 @@
                                                 </span> (@skiller.ReviewsCount ревюта)
                                             </p>
                                         </div>
-                                        <div class="skill-tags d-flex align-items-center justify-content-center mb5">
-                                            <span class="tag" style="background-color: #5BBB7B1A;">Figma</span>
-                                            <span class="tag mx10" style="background-color: #5BBB7B1A;">Sketch</span>
-                                            <span class="tag" style="background-color: #5BBB7B1A;">HTML5</span>
-                                        </div>
                                         <hr class="opacity-100 mt20 mb15">
                                         <div class="fl-meta d-flex align-items-center justify-content-between">
                                             <a class="meta fw500 text-start">Намира се в град<br><span class="fz14 fw400">@skiller.City</span></a>
                                         </div>
                                         <div class="d-grid mt15">
-                                            <a class="ud-btn btn-light-thm bdrs90">@* href="page-freelancer-single.html" *@Виж профил<i class="fal fa-arrow-right-long"></i></a>
+                                            <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@skiller.Username" class="ud-btn btn-light-thm bdrs90">Виж профил<i class="fal fa-arrow-right-long"></i></a>
                                         </div>
                                     </div>
                                 </div>

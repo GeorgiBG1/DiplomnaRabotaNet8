@@ -5,7 +5,7 @@ using Contracts;
 using Services;
 using Models;
 
-namespace SkillBox.App.Controllers
+namespace Controllers
 {
     public class ServicesController : Controller
     {

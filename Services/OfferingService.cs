@@ -65,7 +65,10 @@ namespace Services
                   .Skip(skipCount)
                   .Take(count).ToList();
             }
-            services.ForEach(s => s.Description = s.Description![..50]);
+            if (services.Any(s => s.Name.Length > 50))
+            {
+                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+            }
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }
@@ -80,6 +83,10 @@ namespace Services
                 .OrderByDescending(s => s.Id)
                 .ThenByDescending(s => s.Reviews!.Count())
                 .ToList();
+            if (services.Any(s => s.Name.Length > 50))
+            {
+                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+            }
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }

@@ -1,1 +1,64 @@
-﻿
+﻿@model AllCategoryViewModel
+<div class="body_content" style="margin-top: 100px; background-color: #ebfaf9;">
+    <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! Remove this style-margin-top! -->
+    <section class="categories_list_section overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="listings_category_nav_list_menu">
+                        <ul class="mb0 d-flex ps-0">
+                            <li><a asp-action="Index" asp-controller="Categories" class="active">Всички категории</a></li>
+                            @foreach (var category in Model.CategoryList)
+                            {
+                                <li><a asp-action="Category" asp-route-id="@category.Id">@category.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcumb Sections -->
+    <section class="breadcumb-section">
+        <div class="container">
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="breadcumb-style1">
+                        <div class="breadcumb-list">
+                            <a asp-action="Index" asp-controller="Home">Начало</a>
+                            <a>Категории</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="px-5 py-0" style="margin: 0 10% 0 10%;">
+        <div class="container">
+            <div class="row">
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="cta-banner px-0 bdrs16 position-relative overflow-hidden d-flex align-items-center mb55 tag" style="height:300px;">
+                        <img class="left-top-img wow zoomIn" src="~/images/vector-img/left-top.png" alt="">
+                        <img class="right-bottom-img wow zoomIn" src="~/images/vector-img/right-bottom.png" alt="">
+                        <img src="@category.MainImage" width="450" height="300" class="service-v1-vector bounce-y d-none d-xl-block bdrs16" />
+                        <div class="container">
+                            <div class="row wow fadeInUp">
+                                <div class="col-xl-8">
+                                    <div class="position-relative pl80 pl0-sm">
+                                        <h2 class="w-50 text-dark-light text-center">
+                                            <a asp-action="Category" asp-route-id="@category.Id">
+                                                @category.Name
+                                            </a>
+                                        </h2>
+                                        <p class="w-50 text text-center mb30"><span class="fw500 fw-bold">@category.ServicesCount</span> услуги в тази категория</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

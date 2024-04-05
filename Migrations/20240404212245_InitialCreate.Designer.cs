@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SkillBox.App.Migrations
 {
     [DbContext(typeof(SkillBoxDbContext))]
-    [Migration("20240402194316_InitialCreate")]
+    [Migration("20240404212245_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -372,6 +372,9 @@ namespace SkillBox.App.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Career")
                         .HasColumnType("nvarchar(max)");
 
@@ -381,6 +384,9 @@ namespace SkillBox.App.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)

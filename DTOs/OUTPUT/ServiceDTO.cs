@@ -3,6 +3,7 @@
     public class ServiceDTO
     {
         public string Name { get; set; }
+        public string OwnerUsername { get; set; }
         public string OwnerName { get; set; }
         public string OwnerProfilePhoto { get; set; }
         public string OwnerCurrentLocation { get; set; }

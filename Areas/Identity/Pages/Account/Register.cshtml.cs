@@ -185,6 +185,8 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            Cities = new List<City>();
+            Cities = await _dbContext.Cities.ToListAsync();
             return Page();
         }
 

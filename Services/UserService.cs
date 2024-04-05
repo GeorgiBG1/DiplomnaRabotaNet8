@@ -5,6 +5,7 @@ using Data.Models;
 using DTOs.OUTPUT;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ServiceStack;
 
 namespace Services
 {
@@ -22,10 +23,49 @@ namespace Services
             this.userManager = userManager;
             this.mapper = mapper;
         }
+        public UserDTO GetSkillerDTO(string username)
+        {
+            var skiller = dbContext.Users.Where(u => u.UserName == username)
+                .Include(u => u.City)
+                .Include(u => u.Gender)
+                .Include(u => u.Skills)
+                .ThenInclude(s => s.Level)
+                .FirstOrDefault();
+            var model = mapper.Map<UserDTO>(skiller);
+            return model;
+        }
+        public ICollection<UserCardDTO> GetSkillerCardDTOs(int count = 1, int skipCount = 0)
+        {
+            var skillers = dbContext.Users
+                .Where(u => u.Services.Count != 0)
+                .Include(u => u.City)
+                .Include(u => u.Skills)
+                .Include(u => u.Services)
+                .ThenInclude(s => s.Reviews)
+                .OrderByDescending(u => u.Services.SelectMany(s => s.Reviews!).Count())
+                .Skip(skipCount)
+                .Take(count).ToList();
+            var model = skillers.Select(mapper.Map<UserCardDTO>).ToList();
+            return model;
+        }
+        public ICollection<ServiceCardDTO> GetSkillerServicesAsServiceCardDTOs(string username, int count = 1)
+        {
+            var services = dbContext.Services
+                .Where(s => s.Owner.UserName == username)
+                .OrderByDescending(s => s.Id)
+                .Include(s => s.Category)
+                .Take(count).ToList();
+            if (services.Any(s => s.Name.Length > 50))
+            {
+                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+            }
+            var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
+            return model;
+        }
         public ICollection<UserCardDTO> GetTopSkillersAsUserCardDTOs(int count = 1)
         {
             var skillers = dbContext.Users
-                .Where(u => u.Services.Any())
+                .Where(u => u.Services.Count != 0)
                 .Include(u => u.City)
                 .Include(u => u.Skills)
                 .Include(u => u.Services)

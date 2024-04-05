@@ -26,7 +26,7 @@
                     <div class="breadcumb-style1">
                         <div class="breadcumb-list">
                             <a asp-action="Index" asp-controller="Home">Начало</a>
-                            <a asp-action="Index" asp-controller="Services">Услуги</a>
+                            <a>Услуги</a>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                 </div>
                                 <hr class="my-2">
                                 <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                                    <a href="">
+                                    <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@service.AuthorUsername">
                                         <span class="position-relative mr10">
                                             <img class="rounded-circle" src="@service.AuthorProfilePhoto" width="30" height="30" alt="Skiller profile photo">
                                             <span class="online-badge"></span>

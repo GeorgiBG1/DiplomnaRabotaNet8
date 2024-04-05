@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Contracts;
 using Services;
 
-namespace DiplomnaRabotaNet8.Controllers
+namespace Controllers
 {
     public class HomeController : Controller
     {
@@ -64,14 +64,9 @@ namespace DiplomnaRabotaNet8.Controllers
             return View("Error");
         }
 
-        public IActionResult BecomeSkiller()
-        {
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult BecomeSkiller() => View();
+        public IActionResult Privacy() => View();
+        public IActionResult Help() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
