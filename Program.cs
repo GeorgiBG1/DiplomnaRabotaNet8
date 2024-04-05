@@ -67,27 +67,6 @@ namespace DiplomnaRabotaNet8
 
             var app = builder.Build();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<SkillBoxDbContext>();
-                context.Database.Migrate();
-                // requires using Microsoft.Extensions.Configuration;
-                // Set password with the Secret Manager tool.
-            }
-            using (var scope = app.Services.CreateScope())
-            {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                var roles = new[] { "Admin", "Skiller" };
-                foreach (var role in roles)
-                {
-                    if (!roleManager.RoleExistsAsync(role).GetAwaiter().GetResult())
-                    {
-                        roleManager.CreateAsync(new IdentityRole(role)).Wait();
-                    }
-                }
-            }
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

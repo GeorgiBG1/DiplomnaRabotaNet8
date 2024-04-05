@@ -86,5 +86,16 @@ namespace Services
         {
             return dbContext.Skills.Count();
         }
+        public string GetUserProfilePhoto(string username)
+        {
+            string userProfilePhoto = null!;
+            if (username != null)
+            {
+                userProfilePhoto = dbContext.Users
+                   .FirstOrDefault(u => u.UserName == username)!
+                   .ProfilePhoto;
+            }
+            return userProfilePhoto;
+        }
     }
 }

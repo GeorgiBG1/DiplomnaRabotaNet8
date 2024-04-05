@@ -10,5 +10,6 @@ namespace Contracts
         public ICollection<UserCardDTO> GetTopSkillersAsUserCardDTOs(int count = 1);
         public int GetSkillersCount();
         public int GetSkillsCount();
+        public string GetUserProfilePhoto(string username);
     }
 }

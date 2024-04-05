@@ -1,10 +1,12 @@
 ﻿@model AllServiceViewModel
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
 <div class="body_content" style="background-color: #ebfaf9;">
-    <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! Remove this style-margin-top! -->
     <section class="categories_list_section overflow-hidden">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 pt50" style="background-color:lightskyblue">
+                <div class="col-lg-12">
                     <div class="listings_category_nav_list_menu">
                         <ul class="mb0 d-flex ps-0">
                             <li><a asp-action="Index" asp-controller="Categories" class="active">Всички категории</a></li>
@@ -111,5 +113,5 @@
             </div>
         </div>
     </section>
-    <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+    <a class="scrollToHome at-home2" href=""><i class="fas fa-angle-up"></i></a>
 </div>

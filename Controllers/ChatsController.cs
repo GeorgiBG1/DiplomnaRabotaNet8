@@ -3,6 +3,7 @@ using Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace Controllers
 {
@@ -11,15 +12,22 @@ namespace Controllers
     {
         private readonly UserManager<SkillBoxUser> userManager;
         private readonly IChatService chatService;
+        private readonly IUserService userService;
 
         public ChatsController(UserManager<SkillBoxUser> userManager,
-            IChatService chatService)
+            IChatService chatService,
+            IUserService userService)
         {
             this.userManager = userManager;
             this.chatService = chatService;
+            this.userService = userService;
         }
         public IActionResult Index()
         {
+            //Menu - Nav
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
             var userId = userManager.GetUserId(HttpContext.User);
             if (userId != null)
             {
@@ -33,6 +41,10 @@ namespace Controllers
         }
         public IActionResult Chat(string id)
         {
+            //Menu - Nav
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
             var userId = userManager.GetUserId(HttpContext.User);
             var chat = chatService.GetChatDTOById(id);
             if (userId != null && chat != null)

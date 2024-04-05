@@ -1,6 +1,8 @@
 ﻿@model SingleCategoryViewModel
-<div class="body_content" style="margin-top: 100px; background-color: #ebfaf9;">
-    <!--Fix header and footer!!! Layout BodyTag and Wrapper classes!!! Remove this style-margin-top! -->
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="body_content" style="background-color: #ebfaf9;">
     <section class="categories_list_section overflow-hidden">
         <div class="container">
             <div class="row">
@@ -288,4 +290,5 @@
             </div>
         </div>
     </section>
+    <a class="scrollToHome at-home2" href=""><i class="fas fa-angle-up"></i></a>
 </div>

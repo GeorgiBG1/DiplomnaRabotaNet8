@@ -1,18 +1,162 @@
-﻿@using Data.Models
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<SkillBoxUser> SignInManager
-@inject UserManager<SkillBoxUser> UserManager
-
-@if (SignInManager.IsSignedIn(User))
+﻿@if (User.Identity!.IsAuthenticated)
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
+    <div class="text-center text-lg-end header_right_widgets">
+        <ul class="dashboard_dd_menu_list d-flex align-items-center justify-content-center justify-content-sm-end mb-0 p-0">
+            <li>
+                <a class="login-info text-center" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe" style="height: 20px !important;"></span></a>
+            </li>
+            <li>
+                @if (!User.IsInRole("Skiller"))
+                {
+                    <a class="login-info mx15-xl mx30" style="width: 100px;" asp-action="BecomeSkiller" asp-controller="Home"><span class="d-none d-xl-inline-block">Стани</span> Skiller</a>
+                }
+            </li>
+            <li class="d-none d-sm-block">
+                <a class="text-center mr5 dropdown-toggle fz20 login-info" type="button" data-bs-toggle="dropdown" href=""><span class="flaticon-notification"></span></a>
+                <div class="dropdown-menu">
+                    <div class="dboard_notific_dd px30 pt10 pb15">
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-1.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">Your resume</p>
+                                <p class="text mb-0">updated!</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-2.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">You changed</p>
+                                <p class="text mb-0">password</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-3.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">Your account has been</p>
+                                <p class="text mb-0">created successfully</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-4.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">You applied for a job </p>
+                                <p class="text mb-0">Front-end Developer</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center">
+                            <img src="images/resource/notif-5.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">Your course uploaded</p>
+                                <p class="text mb-0">successfully</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="d-none d-sm-block">
+                <a class="text-center mr5 dropdown-toggle fz20 login-info" type="button" data-bs-toggle="dropdown" href=""><span class="flaticon-mail"></span></a>
+                <div class="dropdown-menu">
+                    <div class="dboard_notific_dd px30 pt20 pb15">
+                        <div class="notif_list d-flex align-items-start bdrb1 pb25 mb10">
+                            <img class="img-2" src="images/testimonials/testi-1.png" alt="">
+                            <div class="details ml15">
+                                <p class="dark-color fw500 mb-2">Ali Tufan</p>
+                                <p class="text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                                <p class="mb-0 text-thm">4 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-start mb25">
+                            <img class="img-2" src="images/testimonials/testi-2.png" alt="">
+                            <div class="details ml15">
+                                <p class="dark-color fw500 mb-2">Ali Tufan</p>
+                                <p class="text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                                <p class="mb-0 text-thm">4 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <a href="page-dashboard-message.html" class="ud-btn btn-thm w-100">View All Messages<i class="fal fa-arrow-right-long"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="d-none d-sm-block">
+                <a class="text-center mr5 dropdown-toggle fz20 login-info" type="button" data-bs-toggle="dropdown" href=""><span class="flaticon-like"></span></a>
+                <div class="dropdown-menu">
+                    <div class="dboard_notific_dd px30 pt10 pb15">
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-1.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">Your resume</p>
+                                <p class="text mb-0">updated!</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-2.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">You changed</p>
+                                <p class="text mb-0">password</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-3.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">Your account has been</p>
+                                <p class="text mb-0">created successfully</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                            <img src="images/resource/notif-4.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">You applied for a job </p>
+                                <p class="text mb-0">Front-end Developer</p>
+                            </div>
+                        </div>
+                        <div class="notif_list d-flex align-items-center">
+                            <img src="images/resource/notif-5.png" alt="">
+                            <div class="details ml10">
+                                <p class="text mb-0">Your course uploaded</p>
+                                <p class="text mb-0">successfully</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            @{
+                var userProfilePhoto = ViewData["userProfilePhoto"];
+                if (userProfilePhoto != null)
+                {
+                    <li class="user_setting">
+                        <div class="dropdown">
+                            <a class="btn" href="#" data-bs-toggle="dropdown">
+                                <img src="@userProfilePhoto" class="rounded-circle" width="40" height="40" alt="user.png">
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="user_setting_content">
+                                    <!--Account-->
+                                    <a class="dropdown-item active" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr10"></i>Профил</a>
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="dropdown-item"><i class="flaticon-logout mr10"></i>Излизане от акаунта</button>
+                                    </form>
+                                    <!---->
+                                    <a asp-action="Index" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-home mr10"></i>Табло</a>
+                                    <a asp-action="Saved" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-like mr10"></i>Запазени</a>
+                                    <a asp-action="Index" asp-controller="Chats" class="dropdown-item"><i class="flaticon-chat mr10"></i>Съобщения</a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <!--Admin-->
+                                        <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                                        <a asp-action="Services" asp-controller="Admin" class="dropdown-item"><i class="flaticon-presentation mr10"></i>Управление на Услуги</a>
+                                        <a asp-action="Skillers" asp-controller="Admin" class="dropdown-item"><i class="flaticon-briefcase mr10"></i>Управление на Skiller-и</a>
+                                        <!---->
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
 }
 else
 {
@@ -20,12 +164,6 @@ else
         <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
         <a class="login-info mx15-xl mx30" asp-action="BecomeSkiller" asp-controller="Home"><span class="d-none d-xl-inline-block">Стани</span> Skiller</a>
         <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Вход</a>
-        <a class="ud-btn btn-white add-joining bdrs50 text-thm2" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+        <a class="ud-btn btn-white add-joining bdrs50 text-thm2  px-3" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
     </div>
-    @*  <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li> *@
 }

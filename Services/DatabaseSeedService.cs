@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using CloudinaryDotNet;
+using Data;
 using Data.Models;
 using Global_Constants;
 using Microsoft.AspNetCore.Identity;
@@ -10,16 +11,19 @@ namespace Services
     {
         private readonly SkillBoxDbContext dbContext;
         private readonly UserManager<SkillBoxUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public DatabaseSeedService(SkillBoxDbContext dbContext,
-            UserManager<SkillBoxUser> userManager)
+            UserManager<SkillBoxUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             this.dbContext = dbContext;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
         public async Task SeedAsync()
         {
-            if (!await dbContext.Categories.AnyAsync())
+            if (!await dbContext.Roles.AnyAsync())
             {
                 Random rnd = new Random();
                 var urlStart = "https://images.pexels.com/photos/";
@@ -28,6 +32,21 @@ namespace Services
                 var extension = ".jpeg";
 
                 var userDefaultProfilePhoto = GlobalConstant.UserDefaultProfilePhoto;
+
+                #region Roles
+                var adminRole = new IdentityRole
+                {
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                };
+                var skillerRole = new IdentityRole
+                {
+                    Name = "Skiller",
+                    NormalizedName = "SKILLER"
+                };
+                await roleManager.CreateAsync(adminRole);
+                await roleManager.CreateAsync(skillerRole);
+                #endregion
 
                 #region Cities
                 List<City> cities = new List<City>
@@ -398,6 +417,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(admin1, "123456");
+                await userManager.AddToRoleAsync(admin1, adminRole.Name);
 
                 var admin2 = new SkillBoxUser
                 {
@@ -415,6 +435,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(admin2, "123456");
+                await userManager.AddToRoleAsync(admin2, adminRole.Name);
                 #endregion
 
                 #region Commenters
@@ -522,6 +543,7 @@ namespace Services
 
                 };
                 await userManager.CreateAsync(skiller1, "123456");
+                await userManager.AddToRoleAsync(skiller1, skillerRole.Name);
 
                 var skiller2 = new SkillBoxUser
                 {
@@ -539,6 +561,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller2, "123456");
+                await userManager.AddToRoleAsync(skiller2, skillerRole.Name);
 
                 var skiller3 = new SkillBoxUser
                 {
@@ -556,6 +579,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller3, "123456");
+                await userManager.AddToRoleAsync(skiller3, skillerRole.Name);
 
                 var skiller4 = new SkillBoxUser
                 {
@@ -573,6 +597,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller4, "123456");
+                await userManager.AddToRoleAsync(skiller4, skillerRole.Name);
 
                 var skiller5 = new SkillBoxUser
                 {
@@ -590,6 +615,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller5, "123456");
+                await userManager.AddToRoleAsync(skiller5, skillerRole.Name);
 
                 var skiller6 = new SkillBoxUser
                 {
@@ -607,6 +633,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller6, "123456");
+                await userManager.AddToRoleAsync(skiller6, skillerRole.Name);
 
                 var skiller7 = new SkillBoxUser
                 {
@@ -625,6 +652,7 @@ namespace Services
                     WebsiteName = "NewHorizons"
                 };
                 await userManager.CreateAsync(skiller7, "123456");
+                await userManager.AddToRoleAsync(skiller7, skillerRole.Name);
 
                 var skiller8 = new SkillBoxUser
                 {
@@ -642,6 +670,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller8, "123456");
+                await userManager.AddToRoleAsync(skiller8, skillerRole.Name);
 
                 var skiller9 = new SkillBoxUser
                 {
@@ -659,6 +688,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller9, "123456");
+                await userManager.AddToRoleAsync(skiller9, skillerRole.Name);
 
                 var skiller10 = new SkillBoxUser
                 {
@@ -676,6 +706,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller10, "123456");
+                await userManager.AddToRoleAsync(skiller10, skillerRole.Name);
 
                 var skiller11 = new SkillBoxUser
                 {
@@ -693,6 +724,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller11, "123456");
+                await userManager.AddToRoleAsync(skiller11, skillerRole.Name);
 
                 var skiller12 = new SkillBoxUser
                 {
@@ -710,6 +742,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller12, "123456");
+                await userManager.AddToRoleAsync(skiller12, skillerRole.Name);
 
                 var skiller13 = new SkillBoxUser
                 {
@@ -727,6 +760,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller13, "123456");
+                await userManager.AddToRoleAsync(skiller13, skillerRole.Name);
 
                 var skiller14 = new SkillBoxUser
                 {
@@ -744,6 +778,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller14, "123456");
+                await userManager.AddToRoleAsync(skiller14, skillerRole.Name);
 
                 var skiller15 = new SkillBoxUser
                 {
@@ -761,6 +796,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller15, "123456");
+                await userManager.AddToRoleAsync(skiller15, skillerRole.Name);
 
                 var skiller16 = new SkillBoxUser
                 {
@@ -778,6 +814,7 @@ namespace Services
                     ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller16, "123456");
+                await userManager.AddToRoleAsync(skiller16, skillerRole.Name);
                 #endregion
 
                 #region Categories

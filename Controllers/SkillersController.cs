@@ -21,6 +21,12 @@ namespace Controllers
         }
         public IActionResult Index()
         {
+            //Menu - Nav
+            var categoriesWithKids = categoryService.GetAllCategoryDTOs();
+            ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
             var categoryList = categoryService.GetCategoryMiniDTOs(7);
             var skillersCount = userService.GetSkillersCount();
             var skillers = userService.GetSkillerCardDTOs(5);
@@ -34,6 +40,12 @@ namespace Controllers
         }
         public IActionResult Skiller(string id)
         {
+            //Menu - Nav
+            var categoriesWithKids = categoryService.GetAllCategoryDTOs();
+            ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
             var skiller = userService.GetSkillerDTO(id);
             if (skiller == null)
             {

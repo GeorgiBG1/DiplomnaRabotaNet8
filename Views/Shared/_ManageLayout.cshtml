@@ -1,0 +1,408 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillBox</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/css/ace-responsive-menu.css">
+    <link rel="stylesheet" href="~/css/menu.css">
+    <link rel="stylesheet" href="~/css/fontawesome.css">
+    <link rel="stylesheet" href="~/css/flaticon.css">
+    <link rel="stylesheet" href="~/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="~/css/animate.css">
+    <link rel="stylesheet" href="~/css/slider.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/ud-custom-spacing.css">
+
+    <!-- Favicon -->
+    <link href="~/images/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/images/favicon.ico" sizes="128x128" rel="shortcut icon" />
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <!-- Apple Touch Icon -->
+    <link href="~/images/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+    <link href="~/images/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+    <link href="~/images/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="~/images/apple-touch-icon-180x180.png" sizes="180x180" rel="apple-touch-icon">
+</head>
+<body>
+    <div class="wrapper ovh">
+        <div class="preloader"></div>
+        <!--Make header-->
+        <!-- Main Header Nav -->
+        <header class="header-nav nav-innerpage-style menu-home4 dashboard_header main-menu">
+            <!-- Ace Responsive Menu -->
+            <nav class="posr">
+                <div class="container-fluid pr30 pr15-xs pl30 posr menu_bdrt1">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-6 col-lg-auto">
+                            <div class="text-center text-lg-start d-flex align-items-center">
+                                <div class="dashboard_header_logo position-relative me-2 me-xl-5">
+                                    <a class="logo" asp-action="Index" asp-controller="Home"><img src="~/images/header-logo-dark.svg" alt="Header Logo"></a>
+                                </div>
+                                <div class="fz20 ml90">
+                                    <a class="btn p-0 dashboard_sidebar_toggle_icon vam"><img src="~/images/dashboard-navicon.svg" alt="Dashboard-navicon"></a>
+                                </div>
+                                <a class="login-info d-block d-xl-none ml40 vam" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
+                                <div class="ml40 d-none d-xl-block">
+                                    <div class="search_area dashboard-style">
+                                        <input type="text" class="form-control border-0" placeholder="Каква услуга търсиш днес?">
+                                        <label><button type="submit" class="btn p-0"><span class="flaticon-loupe"></span></button></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex align-items-center">
+                                <!-- Responsive Menu Structure-->
+                                <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
+                                    <li class="visible_list">
+                                        <a class="list-item" href=""><span class="title">Меню</span></a>
+                                        <ul>
+                                            <li><a asp-action="Index" asp-controller="Home">Начало</a></li>
+                                            <li><a asp-action="Index" asp-controller="Categories">Категории</a></li>
+                                            <li><a asp-action="Index" asp-controller="Services">Услуги</a></li>
+                                            <li><a asp-action="Index" asp-controller="Skillers">Skiller-и</a></li>
+                                            <li><a href="">@* page-contact.html *@За нас</a></li>
+                                            <li><a href="">@* page-contact.html *@Контакти</a></li>
+                                            <li><a asp-action="Privacy" asp-controller="Home">Политика за поверителност</a></li>
+                                            <li><a href="">@* page-terms.html *@Условия</a></li>
+                                            <li><a asp-action="Help" asp-controller="Home">Помощ</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                @if (!User.IsInRole("Skiller"))
+                                {
+                                    <a class="login-info" asp-action="BecomeSkiller" asp-controller="Home"><span class="d-none d-xl-inline-block">Стани</span> Skiller</a>
+                                }
+                                @if (User.Identity!.IsAuthenticated)
+                                {
+                                    <div class="text-center text-lg-end header_right_widgets">
+                                        <ul class="dashboard_dd_menu_list d-flex align-items-center justify-content-center justify-content-sm-end mb-0 p-0">
+                                            <li class="d-none d-sm-block">
+                                                <a class="text-center mr5 text-thm2 dropdown-toggle fz20" type="button" data-bs-toggle="dropdown" href=""><span class="flaticon-notification"></span></a>
+                                                <div class="dropdown-menu">
+                                                    <div class="dboard_notific_dd px30 pt10 pb15">
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-1.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">Your resume</p>
+                                                                <p class="text mb-0">updated!</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-2.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">You changed</p>
+                                                                <p class="text mb-0">password</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-3.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">Your account has been</p>
+                                                                <p class="text mb-0">created successfully</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-4.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">You applied for a job </p>
+                                                                <p class="text mb-0">Front-end Developer</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center">
+                                                            <img src="images/resource/notif-5.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">Your course uploaded</p>
+                                                                <p class="text mb-0">successfully</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="d-none d-sm-block">
+                                                <a class="text-center mr5 text-thm2 dropdown-toggle fz20" type="button" data-bs-toggle="dropdown" href=""><span class="flaticon-mail"></span></a>
+                                                <div class="dropdown-menu">
+                                                    <div class="dboard_notific_dd px30 pt20 pb15">
+                                                        <div class="notif_list d-flex align-items-start bdrb1 pb25 mb10">
+                                                            <img class="img-2" src="images/testimonials/testi-1.png" alt="">
+                                                            <div class="details ml15">
+                                                                <p class="dark-color fw500 mb-2">Ali Tufan</p>
+                                                                <p class="text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                                                                <p class="mb-0 text-thm">4 hours ago</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-start mb25">
+                                                            <img class="img-2" src="images/testimonials/testi-2.png" alt="">
+                                                            <div class="details ml15">
+                                                                <p class="dark-color fw500 mb-2">Ali Tufan</p>
+                                                                <p class="text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                                                                <p class="mb-0 text-thm">4 hours ago</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid">
+                                                            <a href="page-dashboard-message.html" class="ud-btn btn-thm w-100">View All Messages<i class="fal fa-arrow-right-long"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="d-none d-sm-block">
+                                                <a class="text-center mr5 text-thm2 dropdown-toggle fz20" type="button" data-bs-toggle="dropdown" href=""><span class="flaticon-like"></span></a>
+                                                <div class="dropdown-menu">
+                                                    <div class="dboard_notific_dd px30 pt10 pb15">
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-1.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">Your resume</p>
+                                                                <p class="text mb-0">updated!</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-2.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">You changed</p>
+                                                                <p class="text mb-0">password</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-3.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">Your account has been</p>
+                                                                <p class="text mb-0">created successfully</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center bdrb1 pb15 mb10">
+                                                            <img src="images/resource/notif-4.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">You applied for a job </p>
+                                                                <p class="text mb-0">Front-end Developer</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif_list d-flex align-items-center">
+                                                            <img src="images/resource/notif-5.png" alt="">
+                                                            <div class="details ml10">
+                                                                <p class="text mb-0">Your course uploaded</p>
+                                                                <p class="text mb-0">successfully</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @{
+                                                var userProfilePhoto = ViewData["userProfilePhoto"];
+                                                if (userProfilePhoto != null)
+                                                {
+                                                    <li class="user_setting">
+                                                        <div class="dropdown">
+                                                            <a class="btn" href="#" data-bs-toggle="dropdown">
+                                                                <img src="@userProfilePhoto" class="rounded-circle" width="40" height="40" alt="user.png">
+                                                            </a>
+                                                            <div class="dropdown-menu">
+                                                                <div class="user_setting_content">
+                                                                    <!--Account-->
+                                                                    <a class="dropdown-item active" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr10"></i>Профил</a>
+                                                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                                        <button type="submit" class="dropdown-item"><i class="flaticon-logout mr10"></i>Излизане от акаунта</button>
+                                                                    </form>
+                                                                    <!---->
+                                                                    <a asp-action="Index" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-home mr10"></i>Табло</a>
+                                                                    <a asp-action="Saved" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-like mr10"></i>Запазени</a>
+                                                                    <a asp-action="Index" asp-controller="Chats" class="dropdown-item"><i class="flaticon-chat mr10"></i>Съобщения</a>
+                                                                    @if (User.IsInRole("Admin"))
+                                                                    {
+                                                                        <!--Admin-->
+                                                                        <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                                                                        <a class="dropdown-item" asp-action="Services" asp-controller="Admin"><i class="flaticon-presentation mr10"></i>Управление на Услуги</a>
+                                                                        <a class="dropdown-item" asp-action="Skillers" asp-controller="Admin"><i class="flaticon-briefcase mr10"></i>Управление на Skiller-и</a>
+                                                                        <!---->
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+                                    <a class="ud-btn btn-thm add-joining bdrs50 px-3" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Mobile Nav  -->
+        <div id="page" class="mobilie_header_nav stylehome1">
+            <div class="mobile-menu">
+                <div class="header bdrb1">
+                    <div class="menu_and_widgets">
+                        <div class="mobile_menu_bar d-flex justify-content-between align-items-center">
+                            <a class="mobile_logo" href=""><img src="~/images/header-logo-dark.svg" alt=""></a>
+                            <div class="right-side text-end">
+                                <a class="ud-btn btn-white add-joining bdrs50 text-thm2" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+                                <a class="menubar ml30" href="#menu"><img src="~/images/mobile-dark-nav-icon.svg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="posr"><div class="mobile_menu_close_btn"><span class="far fa-times"></span></div></div>
+                </div>
+            </div>
+            <!-- /.mobile-menu -->
+            <nav id="menu" class="">
+                <ul>
+                    <li>
+                        <span>Home</span>
+                    </li>
+                    <li>
+                        <span>Users</span>
+                        <ul>
+                            <li>
+                                <span>Dashboard</span>
+                                <ul>
+                                    <li><a href="page-dashboard.html">Dashboard</a></li>
+                                    <li><a href="page-dashboard-proposal.html">Proposal</a></li>
+                                    <li><a href="page-dashboard-save.html">Saved</a></li>
+                                    <li><a href="page-dashboard-message.html">Message</a></li>
+                                    <li><a href="page-dashboard-reviews.html">Reviews</a></li>
+                                    <li><a href="page-dashboard-manage-service.html">Manage Service</a></li>
+                                    <li><a href="page-dashboard-add-service.html">Add Services</a></li>
+                                    <li><a href="page-dashboard-profile.html">My Profile</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="page-become-seller.html">Стани Skiller</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>Pages</span>
+                        <ul>
+                            <li>
+                                <span>About</span>
+                                <ul>
+                                    <li><a href="page-about.html">About v1</a></li>
+                                    <li><a href="page-about-v2.html">About v2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Only for Mobile View -->
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard_content_wrapper">
+            <div class="dashboard dashboard_wrapper pr30 pr0-xl">
+
+                <div class="dashboard__sidebar d-none d-lg-block" style="">
+                    <div class="dashboard_sidebar_list">
+                        <p class="fz15 fw400 ff-heading pl30">Общи</p>
+                        <div class="sidebar_list_item">
+                            <a asp-action="Index" asp-controller="Dashboard" class="items-center -is-active"><i class="flaticon-home mr15"></i>Табло</a>
+                        </div>
+                        <div class="sidebar_list_item">
+                            <a asp-action="MyServices" asp-controller="Services" class="items-center"><i class="flaticon-document mr15"></i>Моите услуги</a>
+                        </div>
+                        <div class="sidebar_list_item">
+                            <a asp-action="Saved" asp-controller="Dashboard" class="items-center"><i class="flaticon-like mr15"></i>Запазени</a>
+                        </div>
+                        <div class="sidebar_list_item ">
+                            <a asp-action="Index" asp-controller="Chats" class="items-center"><i class="flaticon-chat mr15"></i>Съобщения</a>
+                        </div>
+
+                        <p class="fz15 fw400 ff-heading pl30 mt30">Създаване и редактиране</p>
+                        <div class="sidebar_list_item ">
+                            <a asp-action="Create" asp-controller="Services" class="items-center"><i class="flaticon-content mr15"></i>Създаване на услуга</a>
+                        </div>
+                        <div class="sidebar_list_item ">
+                            <a asp-action="Details" asp-controller="Services" class="items-center"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
+                        </div>
+                        <div class="sidebar_list_item ">
+                            <a asp-action="Reviews" asp-controller="Dashboard" class="items-center"><i class="flaticon-review-1 mr15"></i>Ревюта</a>
+                        </div>
+                        <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                        <div class="sidebar_list_item">
+                            <a asp-action="Services" asp-controller="Admin" class="items-center"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
+                        </div>
+                        <div class="sidebar_list_item ">
+                            <a asp-action="Skillers" asp-controller="Admin" class="items-center"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
+                        </div>
+                        <p class="fz15 fw400 ff-heading pl30 mt30">Акаунт</p>
+                        <div class="sidebar_list_item ">
+                            <a class="items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr15"></i>Моят профил</a>
+                        </div>
+                        <div class="sidebar_list_item ">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="dropdown-item items-center px-4 py-3"><i class="flaticon-logout mr15"></i>Изход</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard__main pl0-md">
+                    @RenderBody()
+                    <!--Footer-->
+                    <footer class="dashboard_footer pt30 pb30">
+                        <div class="container">
+                            <div class="row align-items-center justify-content-center justify-content-md-between">
+                                <div class="col-auto">
+                                    <div class="copyright-widget">
+                                        <p class="mb-md-0">© Freeio. 2023 CreativeLayers. All rights reserved.</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="footer_bottom_right_btns at-home8 text-center text-lg-end">
+                                        <ul class="p-0 m-0">
+                                            <li class="list-inline-item bg-white">
+                                                <select class="selectpicker show-tick">
+                                                    <option>US$ USD</option>
+                                                    <option>Euro</option>
+                                                    <option>Pound</option>
+                                                </select>
+                                            </li>
+                                            <li class="list-inline-item bg-white">
+                                                <select class="selectpicker show-tick">
+                                                    <option>English</option>
+                                                    <option>Frenc</option>
+                                                    <option>Italian</option>
+                                                    <option>Spanish</option>
+                                                    <option>Turkey</option>
+                                                </select>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/all/jquery-3.6.4.min.js"></script>
+    <script src="~/js/all/jquery-migrate-3.0.0.min.js"></script>
+    <script src="~/js/all/popper.min.js"></script>
+    <script src="~/js/all/bootstrap.min.js"></script>
+    <script src="~/js/all/bootstrap-select.min.js"></script>
+    <script src="~/js/all/jquery.mmenu.all.js"></script>
+    <script src="~/js/all/ace-responsive-menu.js"></script>
+    <script src="~/js/all/jquery-scrolltofixed-min.js"></script>
+    <script src="~/js/all/wow.min.js"></script>
+    <script src="~/js/all/owl.js"></script>
+    <script src="~/js/all/jquery.counterup.js"></script>
+    <script src="~/js/all/pricing-table.js"></script>
+    <script src="~/js/all/dashboard-script.js"></script>
+    <!-- Custom script for all pages -->
+    <script src="~/js/all/script.js"></script>
+    @*  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script> *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

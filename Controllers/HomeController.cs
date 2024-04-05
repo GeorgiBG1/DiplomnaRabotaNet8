@@ -29,6 +29,8 @@ namespace Controllers
             //Menu - Nav
             var categoriesWithKids = categoryService.GetAllCategoryDTOs();
             ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
             var skillersCount = userService.GetSkillersCount();
             var servicesCount = offeringService.GetServicesCount();
@@ -71,6 +73,8 @@ namespace Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
