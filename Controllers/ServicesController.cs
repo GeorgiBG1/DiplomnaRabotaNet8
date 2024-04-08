@@ -117,5 +117,15 @@ namespace Controllers
             offeringService.CreateService(bindingModel);
             return RedirectToAction("MyServices");
         }
+        //Dynamic loading
+        public IActionResult LoadMoreServices(int currentServicesCount)
+        {
+            var services = offeringService.GetServiceCardDTOs(4, currentServicesCount).ToList();
+            if (services != null)
+            {
+                return Json(new { exists = true, services });
+            }
+            return Json(new { exists = false });
+        }
     }
 }

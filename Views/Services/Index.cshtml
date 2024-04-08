@@ -39,13 +39,13 @@
     <!-- Listings All Lists -->
     <section class="pt0 pb90">
         <div class="container">
-            <div class="row">
+            <div id="serviceContainer" class="row">
                 <div class="col-lg-12 mb15">
                     <h2>Най-новите услуги</h2>
                 </div>
                 @foreach (var service in Model.ServiceCardDTOs)
                 {
-                    <div class="col-md-6">
+                    <div class="col-md-6 serviceCard">
                         <div class="listing-style1 list-style d-block d-xl-flex align-items-center">
                             <div class="list-thumb flex-shrink-0">
                                 <img class="w-100" src="@service.MainImage" width="245" height="182" alt="Service image">
@@ -88,30 +88,51 @@
                     </div>
                 }
             </div>
-            <!--Pagination-->
-            <div class="row">
-                <div class="mbp_pagination mt30 text-center">
-                    <ul class="page_navigation">
-                        <li class="page-item">
-                            <a class="page-link" href="#"> <span class="fas fa-angle-left"></span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">20</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#"><span class="fas fa-angle-right"></span></a>
-                        </li>
-                    </ul>
-                    <p class="mt10 mb-0 pagination_page_count text-center">1 – 20 of 300+ property available</p>
+            <!--Load more services-->
+            <div class="col-lg-12">
+                <div class="text-center mt30">
+                    <a onclick="getSCountAndLoadMore()" class="btn ud-btn btn-light-thm bdrs60">Зареди още<i class="fal fa-arrow-right-long"></i></a>
                 </div>
             </div>
         </div>
     </section>
+    @section Scripts {
+        @* <script src="~/ajax/services.js"></script> *@
+        <script>
+            // Define a callback function to handle the returned data
+            function handleNewServices(services) {
+                let container = $("#serviceContainer");
+                services.forEach(service => {
+                    // Create a new service card element and append it to the container
+                    let serviceCard = $("<div>").addClass("col-md-6 serviceCard");
+                    serviceCard.append(`<img class="w-100" src="${service.MainImage}" width="245" height="182" alt="Service image">`);
+                    serviceCard.append(`<p class="list-text body-color fz14 mb-1">${service.CategoryName}</p>`);
+                    serviceCard.append(`<h5 class="list-title"><a asp-action="Service" asp-controller="Services" asp-route-id="${service.Id}">${service.Name}</a></h5>`);
+                    serviceCard.append(`<p class="mb-0 body-color fz14"><span class="dark-color me-2">${service.ReviewAvgCoef.toFixed(2)}</span>${service.ReviewsCount} ревюта</p>`);
+                    serviceCard.append(`<a asp-action="Skiller" asp-controller="Skillers" asp-route-id="${service.AuthorUsername}"><img class="rounded-circle" src="${service.AuthorProfilePhoto}" width="30" height="30" alt="Skiller profile photo"><span class="fz14">${service.AuthorName}</span></a>`);
+                    serviceCard.append(`<p class="mb-0 body-color"><span class="fz17 fw500 dark-color ms-1">${service.Price}</span></p>`);
+                    container.append(serviceCard);
+                });
+            }
+
+            // Pass the callback function to LoadMoreServices
+            function getSCountAndLoadMore() {
+                let services = $(".serviceCard");
+                let sCount = services.length;
+                debugger;
+                let a = loadMoreServices(sCount, handleNewServices);
+            }
+            function loadMoreServices(servicesCount, callback) {
+                debugger;
+                $.ajax({
+                    url: "/Services/LoadMoreServices",
+                    type: "GET",
+                    data: { currentServicesCount: servicesCount },
+                    success: callback, // Pass the callback function directly
+                    dataType: "html" // Specify the expected data type as HTML
+                });
+            }
+        </script>
+    }
     <a class="scrollToHome at-home2" href=""><i class="fas fa-angle-up"></i></a>
 </div>
