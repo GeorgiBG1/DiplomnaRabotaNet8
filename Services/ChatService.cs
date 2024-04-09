@@ -72,5 +72,15 @@ namespace Services
                 .ToListAsync();
             return chatUsers;
         }
+
+        public async Task<List<UserMessage>> GetLatestMessagesForUserAsync(string username)
+        {
+            var messages = await dbContext.UserMessages
+                .Where(m => m.Owner.UserName == username)  // Assuming there's a field named "Username" in your Message entity
+                .OrderByDescending(m => m.CreatedOn) // Assuming there's a field named "Timestamp" indicating when the message was sent
+                .Take(3)
+                .ToListAsync();
+            return messages;
+        }
     }
 }
