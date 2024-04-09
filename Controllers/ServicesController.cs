@@ -4,6 +4,7 @@ using DTOs.INPUT;
 using Contracts;
 using Services;
 using Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Controllers
 {
@@ -70,7 +71,22 @@ namespace Controllers
             };
             return View(model);
         }
-        public IActionResult Details(int id)
+        public IActionResult Details()
+        {
+            //Menu - Nav
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
+            var serviceStatuses = offeringService.GetAllServiceStatuses();
+            var services = offeringService.GetAllSkillerServicesByUsername(User.Identity?.Name!);
+            var model = new MyServicesViewModel
+            {
+                StatusesList = serviceStatuses,
+                Services = services
+            };
+            return View(model);
+        }
+        public IActionResult Edit(int id)
         {
             //Menu - Nav
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
@@ -78,14 +94,21 @@ namespace Controllers
             //
             return View();
         }
+        [Authorize(Roles = "Skiller, Admin")]
         public IActionResult MyServices()
         {
             //Menu - Nav
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
-            var services = offeringService.GetServiceCardDTOs(8, 8);
-            return View(services);
+            var serviceStatuses = offeringService.GetAllServiceStatuses();
+            var services = offeringService.GetAllSkillerServicesByUsername(User.Identity?.Name!);
+            var model = new MyServicesViewModel
+            {
+                StatusesList = serviceStatuses,
+                Services = services
+            };
+            return View(model);
         }
         [HttpGet]
         public IActionResult Create()

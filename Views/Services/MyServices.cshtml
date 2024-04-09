@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ServiceCardDTO>
+﻿@model MyServicesViewModel
 @{
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
@@ -7,217 +7,124 @@
     <div class="row pb40">
         <div class="col-lg-12">
             <div class="dashboard_title_area">
-                <h2>My Proposals</h2>
-                <p class="text">Lorem ipsum dolor sit amet, consectetur.</p>
+                <h2>Моите услуги</h2>
+                <p class="text">Всички ваши услуги на едно място.</p>
             </div>
         </div>
         <div class="row">
             <div class="col-xl-12">
-                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                    <div class="packages_table table-responsive">
-                        <table class="table-style3 table at-savesearch">
-                            <thead class="t-head">
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Cost / Delivery</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="t-body">
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-1.png" alt="">
-                                                    <span class="online-badge2"></span>
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">Food Delviery Mobile App</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
+                @if (Model.Services.Count() != 0)
+                {
+                    <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                        <div class="navtab-style1">
+                            <nav>
+                                <div class="nav nav-tabs mb30" id="nav-tab2" role="tablist">
+                                    <button class="nav-link active fw500 ps-0" id="nav-item-1-tab" data-bs-toggle="tab" data-bs-target="#nav-item-1" type="button" role="tab" aria-controls="nav-item-1" aria-selected="true">@Model.StatusesList.ElementAt(0).BGName</button>
+                                    @foreach (var service in Model.StatusesList.Skip(1))
+                                    {
+                                        <button class="nav-link fw500" id="nav-item-@service.Id-tab" data-bs-toggle="tab" data-bs-target="#nav-item-@service.Id" type="button" role="tab" aria-controls="nav-item-@service.Id" aria-selected="false">@service.BGName</button>
+                                    }
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                @foreach (var status in Model.StatusesList)
+                                {
+                                    if (status.Id == 1)
+                                    {
+                                        <div class="tab-pane fade show active" id="nav-item-@status.Id" role="tabpanel" aria-labelledby="nav-item-@status.Id-tab">
+                                            <div class="packages_table table-responsive">
+                                                <table class="table-style3 table at-savesearch">
+                                                    <thead class="t-head">
+                                                        <tr>
+                                                            <th scope="col"><b>Име</b></th>
+                                                            <th scope="col"><b>Цена</b></th>
+                                                            <th scope="col" class="text-center"><b>Управление</b></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="t-body">
+                                                        @foreach (var service in Model.Services.Where(s => s.StatusId == status.Id))
+                                                        {
+                                                            <tr>
+                                                                <th class="align-top ps-0" scope="row">
+                                                                    <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
+                                                                        <div class="d-lg-flex align-items-lg-center">
+                                                                            <div class="details ml15 ml0-md mb15-md">
+                                                                                <h5 class="title mb-2">@service.Name</h5>
+                                                                                <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> @service.Location</p>
+                                                                                <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> @service.CreatedOn</p>
+                                                                                <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> @service.OfferingsCount оферти</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                                <td class="vam"><h5 class="mb-0">@service.Price <span class="fz14 fw400">@service.UnitPrice</span></h5></td>
+                                                                <td class="align-top">
+                                                                    <div class="d-flex justify-content-around">
+                                                                        <a asp-action="Service" asp-controller="Services" asp-route-id="@service.Id" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e"></iconify-icon></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </th>
-                                    <td class="vam"><h5 class="mb-0">$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-2.png" alt="">
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">Video animator to bring some illustrations to life</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane fade show" id="nav-item-@status.Id" role="tabpanel" aria-labelledby="nav-item-@status.Id-tab">
+                                            <div class="packages_table table-responsive">
+                                                <table class="table-style3 table at-savesearch">
+                                                    <thead class="t-head">
+                                                        <tr>
+                                                            <th scope="col"><b>Име</b></th>
+                                                            <th scope="col"><b>Цена</b></th>
+                                                            <th scope="col" class="text-center"><b>Управление</b></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="t-body">
+                                                        @foreach (var service in Model.Services.Where(s => s.StatusId == status.Id))
+                                                        {
+                                                            <tr>
+                                                                <th class="align-top ps-0" scope="row">
+                                                                    <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
+                                                                        <div class="d-lg-flex align-items-lg-center">
+                                                                            <div class="details ml15 ml0-md mb15-md">
+                                                                                <h5 class="title mb-2">@service.Name</h5>
+                                                                                <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> @service.Location</p>
+                                                                                <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> @service.CreatedOn</p>
+                                                                                <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> @service.OfferingsCount оферти</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                                <td class="vam"><h5 class="mb-0">@service.Price <span class="fz14 fw400">@service.UnitPrice</span></h5></td>
+                                                                <td class="align-top">
+                                                                    <div class="d-flex justify-content-around">
+                                                                        <a asp-action="Service" asp-controller="Services" asp-route-id="@service.Id" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e"></iconify-icon></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </th>
-                                    <td><h5>$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-3.png" alt="">
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">Swift / SwiftUI Developer for B2B iOS apps</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <td><h5>$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-4.png" alt="">
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">English content writer for Fintech</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <td><h5>$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-5.png" alt="">
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">Full-stack Developer to help us to build our</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <td><h5>$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-6.png" alt="">
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">Looking for team members for web agency</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <td><h5>$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">
-                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
-                                            <div class="d-lg-flex align-items-lg-center">
-                                                <div class="thumb w60 position-relative rounded-circle mb15-md">
-                                                    <img class="rounded-circle mx-auto" src="images/team/client-7.png" alt="">
-                                                </div>
-                                                <div class="details ml15 ml0-md mb15-md">
-                                                    <h5 class="title mb-2">Food Delviery Mobile App</h5>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> April 01, 2023</p>
-                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <td><h5>$100 - $150 <span class="fz14 fw400">Hourly Rate</span></h5></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
-                                            <a href="" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="flaticon-delete"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="mbp_pagination text-center mt30">
-                            <ul class="page_navigation">
-                                <li class="page-item">
-                                    <a class="page-link" href="#"> <span class="fas fa-angle-left"></span></a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="#">20</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><span class="fas fa-angle-right"></span></a>
-                                </li>
-                            </ul>
-                            <p class="mt10 mb-0 pagination_page_count text-center">1 – 20 of 300+ property available</p>
+                                    }
+
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="d-flex justify-content-center" style="height: 300px;">
+                        <h2 class="d-inline mt50">Няма създадени услуги <a asp-action="Create" asp-controller="Services" class="login-info text-decoration-underline" style="font-size: 28px;">създайте нова услуга!</a></h2>
+                    </div>
+                }
             </div>
         </div>
     </div>
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
 </div>

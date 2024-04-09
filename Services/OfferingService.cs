@@ -5,6 +5,7 @@ using Data.Models;
 using DTOs.INPUT;
 using DTOs.OUTPUT;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Services
 {
@@ -72,6 +73,25 @@ namespace Services
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }
+        public ICollection<ServiceMiniDTO> GetAllSkillerServicesByUsername(string username)
+        {
+            var services = new List<SkillBoxService>();
+            var model = new List<ServiceMiniDTO>();
+            services = dbContext.Services
+               .Where(s => s.Owner.UserName == username)
+               .OrderByDescending(s => s.Id)
+               .Include(s => s.ServiceStatus)
+               .Include(s => s.City)
+               .Include(s => s.Owner)
+               .ThenInclude(o => o.Offerings)
+               .ToList();
+            if (services.Any(s => s.Name.Length > 50))
+            {
+                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+            }
+            model = services.Select(mapper.Map<ServiceMiniDTO>).ToList();
+            return model;
+        }
         public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1, int serviceId = 0)
         {
             var services = dbContext.Services
@@ -89,6 +109,10 @@ namespace Services
             }
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
+        }
+        public ICollection<ServiceStatus> GetAllServiceStatuses()
+        {
+            return dbContext.ServiceStatuses.ToList();
         }
         public void CreateService(ServiceInDTO serviceInDTO)
         {
@@ -115,9 +139,11 @@ namespace Services
             }
             return dbContext.Services.Count();
         }
+        
         public int GetPositiveReiewsCount()
         {
             return dbContext.Reviews.Where(r => r.RatingStars > 2).Count();
         }
+        
     }
 }

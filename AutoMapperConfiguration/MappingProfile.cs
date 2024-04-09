@@ -40,6 +40,16 @@ namespace SkillBox.App.AutoMapperConfiguration
             #endregion
 
             #region Services
+            CreateMap<SkillBoxService, ServiceMiniDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
+                .ForMember(d => d.Location, opt => opt.MapFrom(s => s.City.BGName))
+                .ForMember(d => d.CreatedOn, opt => opt.MapFrom(s => s.CreatedOn.ToString("MMMM dd, yyyy")))
+                .ForMember(d => d.OfferingsCount, opt => opt.MapFrom(s => s.Owner.Offerings.Count))
+                .ForMember(d => d.Price, opt => opt.MapFrom(s => $"{s.Price:F2}"))
+                .ForMember(d => d.UnitPrice, opt => opt.MapFrom(s => s.UnitPrice))
+                .ForMember(d => d.StatusId, opt => opt.MapFrom(s => s.ServiceStatus.Id));
+
             CreateMap<SkillBoxService, ServiceCardDTO>()
                  .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                  .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))

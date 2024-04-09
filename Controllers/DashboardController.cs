@@ -1,8 +1,10 @@
 ﻿using Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IUserService userService;
