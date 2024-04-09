@@ -31,6 +31,14 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.Messages, opt => opt.MapFrom(c => c.Messages));
             #endregion
 
+            #region Messages
+            CreateMap<UserMessage, MessageDTO>()
+                .ForMember(d => d.Content, opt => opt.MapFrom(m => m.Content))
+                .ForMember(d => d.CreatedOn, opt => opt.MapFrom(m => m.CreatedOn.ToString("dd.MM.yyyy г. HH:mm")))
+                .ForMember(d => d.UserFullName, opt => opt.MapFrom(m => $"{m.Owner.FirstName} {m.Owner.LastName}"))
+                .ForMember(d => d.UserProfilePhoto, opt => opt.MapFrom(m => m.Owner.ProfilePhoto));
+            #endregion
+
             #region Services
             CreateMap<SkillBoxService, ServiceCardDTO>()
                  .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))

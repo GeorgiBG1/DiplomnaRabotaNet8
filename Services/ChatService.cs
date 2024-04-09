@@ -73,13 +73,21 @@ namespace Services
             return chatUsers;
         }
 
-        public async Task<List<UserMessage>> GetLatestMessagesForUserAsync(string username)
+        public async Task<List<MessageDTO>> GetLatestMessagesForUserAsync(string username)
         {
-            var messages = await dbContext.UserMessages
-                .Where(m => m.Owner.UserName == username)  // Assuming there's a field named "Username" in your Message entity
-                .OrderByDescending(m => m.CreatedOn) // Assuming there's a field named "Timestamp" indicating when the message was sent
-                .Take(3)
-                .ToListAsync();
+            var chats = dbContext.Chats
+                .Include(c => c.ChatUsers)
+                .ThenInclude(cu => cu.User)
+                .Where(c => c.ChatUsers.Select(cu => cu.User.UserName).Contains(username))
+                .Include(c => c.Messages)
+                .ThenInclude(m => m.Owner);
+
+            var messagesFromDb = await chats
+                .SelectMany(c => c.Messages)
+                .Where(m => m.Owner.UserName != username)
+                .OrderByDescending(m => m.CreatedOn)
+                .Take(3).ToListAsync();
+            var messages = messagesFromDb.Select(mapper.Map<MessageDTO>).ToList();
             return messages;
         }
     }
