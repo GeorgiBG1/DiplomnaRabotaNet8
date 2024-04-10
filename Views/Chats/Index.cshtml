@@ -100,170 +100,82 @@
                             </form>
                         </div>
                     </div>
-                    <div class="chat-member-list pr20">
-                        <div class="list-item pt5">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms1.png" alt="ms1.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Darlene Robertson</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                        </div>
-                                    </div>
+                    <!--Tabs nav start-->
+                    <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
+                        <div class="navtab-style1">
+                            <nav>
+                                <div class="nav nav-tabs mb20" id="nav-tab2" role="tablist">
+                                    <button class="nav-link active fw500 ps-0" id="nav-item-1-tab" data-bs-toggle="tab" data-bs-target="#nav-item-1" type="button" role="tab" aria-controls="nav-item-1" aria-selected="true">Чатове</button>
+                                    <button class="nav-link fw500" id="nav-item-2-tab" data-bs-toggle="tab" data-bs-target="#nav-item-2" type="button" role="tab" aria-controls="nav-item-2" aria-selected="false">Чат групи</button>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Jane Cooper</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                            <div class="m_notif">2</div>
-                                        </div>
+                            </nav>
+
+                            <!--Tabs nav end-->
+                            <div class="chat-member-list pr20 tab-content" id="nav-tabContent">
+                                @if (!Model.Any(c => c.ParticipantsCount <= 2))
+                                {
+                                    <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                                        <span>Нямате чатове</span>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms3.png" alt="ms3.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Arlene McCoy</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                            <div class="m_notif online">2</div>
-                                        </div>
+                                }
+                                else
+                                {
+                                    <div class="tab-pane fade show active" id="nav-item-1" role="tabpanel" aria-labelledby="nav-item-1-tab">
+                                        @foreach (var chat in Model.Where(c => c.ParticipantsCount <= 2))
+                                        {
+                                            <div class="list-item">
+                                                <a href="#">
+                                                    <div class="d-flex align-items-center position-relative">
+                                                        <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms1.png" alt="ms1.png">
+                                                        <div class="d-sm-flex">
+                                                            <div class="d-inline-block">
+                                                                <div class="fz15 fw500 dark-color ff-heading mb-0">@chat.Name</div>
+                                                                <p class="preview">@chat.ServiceName</p>
+                                                            </div>
+                                                            <div class="iul_notific">
+                                                                <small>35 mins</small>
+                                                                <div class="m_notif online">2</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        }
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms4.png" alt="ms4.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Albert Flores</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                        </div>
+                                }
+
+                                @if (!Model.Any(c => c.ParticipantsCount > 2))
+                                {
+                                    <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                                        <span>Нямате чат групи</span>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms5.png" alt="ms5.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Cameron Williamson</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                            <div class="m_notif away">2</div>
-                                        </div>
+                                }
+                                else
+                                {
+                                    <div class="tab-pane fade show" id="nav-item-2" role="tabpanel" aria-labelledby="nav-item-2-tab">
+                                        @foreach (var chat in Model.Where(c => c.ParticipantsCount > 2))
+                                        {
+                                            <div class="list-item">
+                                                <a href="#">
+                                                    <div class="d-flex align-items-center position-relative">
+                                                        <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms1.png" alt="ms1.png">
+                                                        <div class="d-sm-flex">
+                                                            <div class="d-inline-block">
+                                                                <div class="fz15 fw500 dark-color ff-heading mb-0">@chat.Name</div>
+                                                                <p class="preview">@chat.ServiceName</p>
+                                                            </div>
+                                                            <div class="iul_notific">
+                                                                <small>35 mins</small>
+                                                                <div class="m_notif online">2</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>                                            
+                                        }
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms6.png" alt="ms6.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Kristin Watson</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms7.png" alt="ms7.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Annette Black</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                            <div class="m_notif busy">2</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms8.png" alt="ms8.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Jacob Jones</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms1.png" alt="ms1.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Vincent Porter</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="list-item">
-                            <a href="#">
-                                <div class="d-flex align-items-center position-relative">
-                                    <img class="img-fluid float-start rounded-circle mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                    <div class="d-sm-flex">
-                                        <div class="d-inline-block">
-                                            <div class="fz15 fw500 dark-color ff-heading mb-0">Jacob Brown</div>
-                                            <p class="preview">Head of Development</p>
-                                        </div>
-                                        <div class="iul_notific">
-                                            <small>35 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

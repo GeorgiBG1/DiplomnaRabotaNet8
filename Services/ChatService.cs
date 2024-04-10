@@ -36,6 +36,7 @@ namespace Services
         public ICollection<ChatMiniDTO> GetAllChatsMiniDTOsByUserId(string id)
         {
             var chats = dbContext.Chats
+                .Include(c => c.Service)
                 .Include(c => c.ChatUsers)
                 .Where(c => c.ChatUsers
                 .Select(cu => cu.UserId).Contains(id))
