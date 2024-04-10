@@ -38,6 +38,7 @@ namespace Services
             var chats = dbContext.Chats
                 .Include(c => c.Service)
                 .Include(c => c.ChatUsers)
+                .ThenInclude(cu => cu.User)
                 .Where(c => c.ChatUsers
                 .Select(cu => cu.UserId).Contains(id))
                 .OrderBy(c => c.CreatedOn)

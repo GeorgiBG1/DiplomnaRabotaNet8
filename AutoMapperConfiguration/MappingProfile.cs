@@ -22,6 +22,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name))
                 .ForMember(d => d.ServiceName, opt => opt.MapFrom(c => c.Service.Name))
+                .ForMember(d => d.Photo, opt => opt.MapFrom(c => c.ChatUsers.Select(c => c.User.ProfilePhoto).First()))
                 .ForMember(d => d.ParticipantsCount, opt => opt.MapFrom(c => c.ChatUsers.Count()));
 
             CreateMap<Chat, ChatDTO>()
