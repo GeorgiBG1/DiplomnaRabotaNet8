@@ -1,7 +1,5 @@
 ﻿@model ChatDTO
-@{
-    Layout = "~/Views/Shared/_ManageLayout.cshtml";
-}
+
 <div class="message_container mt30-md">
     <input id="chatId" value="@Model.Id" hidden/>
     <div class="user_heading px-0 mx30">
@@ -18,8 +16,8 @@
             </div>
         </div>
     </div>
-    <div id="my-inbox-chatting-box" class="inbox_chatting_box" style="">
-        <ul id="my-chatting-content" class="chatting_content">
+    <div class="inbox_chatting_box" style="">
+        <ul class="chatting_content">
             @foreach (var message in Model.Messages)
             {
                 if (message.Owner.UserName == User.Identity?.Name)
@@ -48,7 +46,7 @@
     <div class="mi_text">
         <div class="message_input">
             <div class="d-flex align-items-center">
-                <input class="form-control" type="search" id="messageInput" onkeydown="handleKeyPress(event)" placeholder="Аа..." aria-label="Search"/>
+                <input class="form-control" type="search" id="messageInput" placeholder="Аа..." aria-label="Search"/>
                 <button type="button" class="btn ud-btn btn-thm" id="sendButton">Изпрати<i class="fal fa-arrow-right-long"></i></button>
             </div>
         </div>
@@ -60,5 +58,5 @@
         var userName = '@User.Identity!.Name';
     </script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
+    <script src="~/js/partialchat.js"></script>
 }

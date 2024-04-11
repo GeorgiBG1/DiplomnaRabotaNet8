@@ -69,9 +69,7 @@ connection.start().then(function () {
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var message = document.getElementById("messageInput").value;
-    let url = window.location.href;
-    let urlParts = url.split('/');
-    let chatId = urlParts[urlParts.length - 1];
+    let chatId = document.getElementById("chatId").value;
 
     connection.invoke("SendMessage", chatId, message).catch(function (err) {
         return console.error(err.toString());

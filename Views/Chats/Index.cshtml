@@ -106,8 +106,10 @@
                             <div class="chat-member-list pr20 tab-content" id="nav-tabContent">
                                 @if (!Model.Any(c => c.ParticipantsCount <= 2))
                                 {
-                                    <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
-                                        <span>Нямате чатове</span>
+                                    <div class="tab-pane fade show active" id="nav-item-1" role="tabpanel" aria-labelledby="nav-item-1-tab">
+                                        <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                                            <span>Нямате чатове</span>
+                                        </div>
                                     </div>
                                 }
                                 else
@@ -116,7 +118,7 @@
                                         @foreach (var chat in Model.Where(c => c.ParticipantsCount <= 2))
                                         {
                                             <div class="list-item">
-                                                <a href="#">
+                                                <button id="@chat.Id" class="openChat btn w-100" onclick="getChatId('@chat.Id')">
                                                     <div class="d-flex align-items-center position-relative">
                                                         <img class="img-fluid float-start rounded-circle mr10" src="@chat.Photo" alt="Chat main photo">
                                                         <div class="d-sm-flex">
@@ -130,7 +132,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </a>
+                                                </button>
                                             </div>
                                         }
                                     </div>
@@ -138,8 +140,10 @@
 
                                 @if (!Model.Any(c => c.ParticipantsCount > 2))
                                 {
-                                    <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
-                                        <span>Нямате чат групи</span>
+                                    <div class="tab-pane fade show" id="nav-item-2" role="tabpanel" aria-labelledby="nav-item-2-tab">
+                                        <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                                            <span>Нямате чат групи</span>
+                                        </div>
                                     </div>
                                 }
                                 else
@@ -148,7 +152,7 @@
                                         @foreach (var chat in Model.Where(c => c.ParticipantsCount > 2))
                                         {
                                             <div class="list-item">
-                                                <a href="#">
+                                                <button id="@chat.Id" class="openChat btn w-100" onclick="getChatId('@chat.Id')">
                                                     <div class="d-flex align-items-center position-relative">
                                                         <img class="img-fluid float-start rounded-circle mr10" src="@chat.Photo" alt="Chat main photo">
                                                         <div class="d-sm-flex">
@@ -162,8 +166,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </a>
-                                            </div>                                            
+                                                </button>
+                                            </div>
                                         }
                                     </div>
                                 }
@@ -173,147 +177,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xl-7 col-xxl-8">
-            <div class="message_container mt30-md">
-                <div class="user_heading px-0 mx30">
-                    <div class="wrap">
-                        <img class="img-fluid mr10" src="images/inbox/ms3.png" alt="ms3.png">
-                        <div class="meta d-sm-flex justify-content-sm-between align-items-center">
-                            <div class="authors">
-                                <h6 class="name mb-0">Arlene McCoy</h6>
-                                <p class="preview">Active</p>
-                            </div>
-                            <div>
-                                <a class="text-decoration-underline fz14 fw500 text-red ff-heading" href="#">Delete Conversation</a>
-                            </div>
-                        </div>
-                    </div>
+        <div id="my-chatting-inbox" class="col-lg-6 col-xl-7 col-xxl-8" style="width: 584px; height: 750px;">
+            @if (!Model.Any())
+            {
+                <div class="text-center" style="background-color: white;">
+                    <div class="fz15 fw500 dark-color ff-heading">Нямате нито чатове, нито чат групи!</div>
                 </div>
-                <div class="inbox_chatting_box" style="">
-                    <ul class="chatting_content">
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms4.png" alt="ms4.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>How likely are you to recommend our company to your friends and family?</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms5.png" alt="ms5.png">
-                            </div>
-                            <p>Hey there, we’re just writing to let you know that you’ve been subscribed to a repository on GitHub.</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms5.png" alt="ms5.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>Ok, Understood!</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms5.png" alt="ms5.png">
-                            </div>
-                            <p>The project finally complete! Let's go to!.</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>Let's go!</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>Hello, John!</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms3.png" alt="ms3.png">
-                            </div>
-                            <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms3.png" alt="ms3.png">
-                            </div>
-                            <p>Are we meeting today?</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms3.png" alt="ms3.png">
-                            </div>
-                            <p>The project finally complete! Let's go to!</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>Let's go!</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms3.png" alt="ms3.png">
-                            </div>
-                            <p>Are we meeting today?</p>
-                        </li>
-                        <li class="reply float-end">
-                            <div class="d-flex align-items-center justify-content-end mb15">
-                                <div class="title fz15"><small class="mr10">35 mins</small> You</div>
-                                <img class="img-fluid rounded-circle align-self-end ml10" src="images/inbox/ms3.png" alt="ms3.png">
-                            </div>
-                            <p>The project finally complete! Let's go to!</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>Let's go!</p>
-                        </li>
-                        <li class="sent float-start">
-                            <div class="d-flex align-items-center mb15">
-                                <img class="img-fluid rounded-circle align-self-start mr10" src="images/inbox/ms2.png" alt="ms2.png">
-                                <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-                            </div>
-                            <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="mi_text">
-                    <div class="message_input">
-                        <form class="d-flex align-items-center">
-                            <input class="form-control" type="search" placeholder="Type a Message" aria-label="Search">
-                            <button class="btn ud-btn btn-thm">Send Message<i class="fal fa-arrow-right-long"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        window.onload = function () {
+            var chatBtns = document.querySelector(".openChat");
+            if (chatBtns !== undefined) {
+                getChatId(chatBtns[0].id);
+                console.log(chatBtns);
+            }
+        }
+        var chatId;
+        function getChatId(Id) {
+            debugger;
+            chatId = Id;
+            let url = '@Url.Action("DisplayChat", "Chats")';
+            $('#my-chatting-inbox').load(url, { chatId: chatId });
+        }
+    </script>
 </div>

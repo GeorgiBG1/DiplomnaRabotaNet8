@@ -56,5 +56,18 @@ namespace Controllers
             }
             return View("Error");
         }
+        public IActionResult DisplayChat(string chatId)
+        {
+            var userId = userManager.GetUserId(HttpContext.User);
+            var chat = chatService.GetChatDTOById(chatId);
+            if (userId != null && chat != null)
+            {
+                if (chat.ChatUsers.Select(cu => cu.UserId).Contains(userId))
+                {
+                    return PartialView("TinyChat", chat);
+                }
+            }
+            return View("Error");
+        }
     }
 }
