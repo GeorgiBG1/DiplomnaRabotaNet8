@@ -1,15 +1,11 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-function go() { /* code here */
-    var test = document.querySelector("*");
-    console.log(test);
+function go() {
     var container = document.querySelector("div.inbox_chatting_box");
     container.scrollTop = container.scrollHeight;
 
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
-
-    debugger;
 
     connection.on("ReceiveMessage", function (user, message) {
         var messageBody = document.createElement("li");

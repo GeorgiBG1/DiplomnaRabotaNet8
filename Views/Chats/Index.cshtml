@@ -193,7 +193,7 @@
         <script>
             window.onload = function () {
                 var chatBtns = [...document.querySelectorAll(".openChat")];
-                if (chatBtns !== undefined) {
+                if (chatBtns.length > 0) {
                     getChatId(chatBtns[0].id);
                     console.log(chatBtns);
                 }
@@ -208,8 +208,6 @@
         </script>
 
         <script>
-         
-            console.log("Ala bala!");
             var userName = '@User.Identity!.Name';
         </script>
         <script src="~/js/signalr/dist/browser/signalr.js"></script>
