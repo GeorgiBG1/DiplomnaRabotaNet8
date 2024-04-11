@@ -1,15 +1,36 @@
-﻿@{
-    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<!--TODO Scaffolding from Identity and paste this code in Account Section-->
-<h3>Scaffold from Identity for account!</h3>
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
 <div class="dashboard__content hover-bgc-color">
     <div class="row pb40">
         <div class="col-lg-9">
             <div class="dashboard_title_area">
-                <h2>My Profile</h2>
-                <p class="text">Lorem ipsum dolor sit amet, consectetur.</p>
+                <h2>Моят профил</h2>
+                <p class="text">За да станете Skiller въведете останалата информация за вас.</p>
             </div>
         </div>
     </div>
@@ -17,7 +38,7 @@
         <div class="col-xl-12">
             <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
                 <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Profile Details</h5>
+                    <h5 class="list-title">Детайли за профила</h5>
                 </div>
                 <div class="col-xl-7">
                     <div class="profile-box d-sm-flex align-items-center mb30">
@@ -209,7 +230,7 @@
             </div>
             <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
                 <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Skills</h5>
+                    <h5 class="list-title">Умения</h5>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -305,19 +326,28 @@
             </div>
             <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
                 <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Change password</h5>
+                    <h5 class="list-title">Настройки</h5>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
-                        <form class="form-style1">
+                        <form id="change-password-form" class="form-style1" method="post">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h6>Смяна на паролата</h6>
+                                    <p class="text">Warning: If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
+                                </div>
+                            </div>
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">Old Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
+                                        <label asp-for="Input.OldPassword" class="heading-color ff-heading fw500 mb10">Стара парола</label>
+                                        <input asp-for="Input.OldPassword" type="text" class="form-control" placeholder="********">
+                                        <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
+                            <!--TODO da se dovurshi-->
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="mb20">
@@ -333,7 +363,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Change Password<i class="fal fa-arrow-right-long"></i></a>
+                                        <button type="submit" class="ud-btn btn-thm">Смени паролата<i class="fal fa-arrow-right-long"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -345,12 +375,12 @@
                 <div class="col-lg-7">
                     <div class="row">
                         <div class="bdrb1 pb15 mb25">
-                            <h5 class="list-title">Change password</h5>
+                            <h5 class="list-title">Настройки</h5>
                         </div>
                         <form class="form-style1">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <h6>Close account</h6>
+                                    <h6>Замразяване на достъпа до акаунта</h6>
                                     <p class="text">Warning: If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
                                 </div>
                                 <div class="col-sm-6">
@@ -359,7 +389,7 @@
                                         <input type="text" class="form-control" placeholder="********">
                                     </div>
                                     <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Change Password<i class="fal fa-arrow-right-long"></i></a>
+                                        <a class="ud-btn btn-thm" href="page-contact.html">Замразяване<i class="fal fa-arrow-right-long"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -370,3 +400,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
