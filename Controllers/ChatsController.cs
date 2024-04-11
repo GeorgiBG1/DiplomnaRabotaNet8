@@ -69,5 +69,62 @@ namespace Controllers
             }
             return View("Error");
         }
+        [HttpPost]
+        public IActionResult CheckUserEmail(string email)
+        {
+            var user = userManager.FindByEmailAsync(email).Result;
+
+            if (user != null)
+            {
+                var userData = new
+                {
+                    user.FirstName,
+                    user.LastName,
+                    user.ProfilePhoto,
+                };
+
+                return Json(new { exists = true, user = userData });
+            }
+            else
+            {
+                return Json(new { exists = false });
+            }
+        }
+        [HttpPost]
+        public IActionResult AddParticipant(string email, string chatId)
+        {
+            var user = userManager.FindByEmailAsync(email).Result;
+
+            if (user != null)
+            {
+                var allChatUsers = chatService.GetChatUsersByChatIdAsync(chatId).Result.Select(cu => cu.User);
+                if (allChatUsers.Any(u => u.UserName == user.UserName)) 
+                {
+                    return Json(new { success = false, message = "Този потребител вече е в този разговор!" });
+                }
+                var chat = chatService.GetChatById(chatId);
+                if (chat == null)
+                {
+                    return Json(new { success = false, message = "Възникна грешка свързана с разговора!" });
+                }
+                chatService.AddNewChatUser(user, chat);
+                return Json(new { success = true, message = "Успешно добавен потребител!" });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Не е намерен потребител с такъв имейл адрес." });
+            }
+        }
+        public IActionResult RemoveParticipant(string id)
+        {
+            var chat = chatService.GetChatById(id);
+            var user = userManager.FindByNameAsync(User.Identity?.Name!).Result;
+            if (chat == null || user == null)
+            {
+                return View("Error");
+            }
+            chatService.RemoveChatUser(user, chat);
+            return RedirectToAction("Index", "Chats");
+        }
     }
 }

@@ -18,6 +18,14 @@ namespace Services
             this.mapper = mapper;
         }
 
+        public Chat GetChatById(string id)
+        {
+            var chat = dbContext.Chats
+                .Include(c => c.ChatUsers)
+                .ThenInclude(cu => cu.User)
+                .FirstOrDefault(c => c.Id == id);
+            return chat!;
+        }
         public ChatDTO GetChatDTOById(string id)
         {
             var chat = dbContext.Chats
@@ -93,6 +101,28 @@ namespace Services
                 .Take(3).ToListAsync();
             var messages = messagesFromDb.Select(mapper.Map<MessageDTO>).ToList();
             return messages;
+        }
+        public void AddNewChatUser(SkillBoxUser user, Chat chat)
+        {
+            var chatUser = new ChatUser
+            {
+                Chat = chat,
+                User = user
+            };
+            dbContext.ChatUsers.Add(chatUser);
+            dbContext.SaveChanges();
+        }
+        public void RemoveChatUser(SkillBoxUser user, Chat chat)
+        {
+            var chaUser = dbContext.ChatUsers.Where(cu => cu.Chat.Id == chat.Id)
+                .Where(cu => cu.User.UserName == user.UserName)
+                .FirstOrDefault();
+            if (chaUser != null)
+            {
+                dbContext.ChatUsers.Remove(chaUser);
+                dbContext.SaveChanges();
+            }
+
         }
     }
 }

@@ -1,30 +1,109 @@
 ﻿@model ChatDTO
 
 <div class="message_container mt30-md">
-    <input id="chatId" value="@Model.Id" hidden/>
+    <input id="chatId" value="@Model.Id" hidden />
     <div class="user_heading px-0 mx30">
         <div class="wrap">
-            <img class="img-fluid mr10" src="images/inbox/ms3.png" width="50" height="50" alt="ms3.png">
+            <img class="img-fluid mr10" src="@Model.ChatUsers.First().User.ProfilePhoto" width="50" height="50" alt="ms3.png">
             <div class="meta d-sm-flex justify-content-sm-between align-items-center">
                 <div class="authors">
-                    <h6 class="name mb-0">@Model.Name</h6>
+                    <div class="d-flex">
+                        <h6 class="name mb-0 d-inline">@Model.Name</h6> <div class="text-center text-white rounded-square bdrs16 d-inline ms-2" style="width: 20px; height: 20px; background-color: #54A853;">@Model.ChatUsers.Count</div>
+                    </div>
                     <p class="preview">@Model.ServiceName</p>
                 </div>
                 <div>
-                    <a class="text-decoration-underline fz14 fw500 text-red ff-heading" href="#">Изтрий разговора</a>
+                    Beta - Нестабилно
+                </div>
+                <div>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="title"><i class="fa-solid fa-bars"></i></span>
+                        </button>
+                        <ul class="dropdown-menu py-0">
+                            <li><a asp-action="Chat" asp-route-id="@Model.Id" class="dropdown-item btn btn-light btn-square border bdrs16">Отваряне на цял екран <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+
+                            <li>
+                                <button type="button" class="dropdown-item btn btn-light btn-square border bdrs16" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Добавя на участник <i class="fa-solid fa-person"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button type="button" class="dropdown-item btn btn-light btn-square border bdrs16" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                    Изтриване на разговора <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Добавяне на нов участник към разговора</h1>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="userName"></p>
+                    <img id="uProfilePhoto" style="display: none;" width="50" height="50" />
+                    <p id="noResults"></p>
+                    <div class="form-style1">
+                        <label class="form-label fw500 fz16 dark-color">Търсене по имейл</label>
+                        <input type="text" id="userEmail" class="form-control active" placeholder="e-mail...">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="ud-btn btn-dark" data-bs-dismiss="modal">Откажи <i class="fal fa-arrow-right-long"></i></button>
+                    <button type="button" id="addParticipantBtn" class="ud-btn btn-thm">Добави <i class="fal fa-arrow-right-long"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Изтриване на разговора</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Натискайки бутона потвърди, вие ще премахнете този разговор от вашия списък с кореспонденции, но другите участници ще могат да виждат все още съобщенията в него!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="ud-btn btn-dark" data-bs-dismiss="modal">Откажи <i class="fal fa-arrow-right-long"></i></button>
+                    <a asp-action="RemoveParticipant" asp-route-id="@Model.Id" class="ud-btn btn-thm">Премахни този чат <i class="fal fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Toast -->
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Добавяне на участник в разговора</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
     <div id="my-inbox-chatting-box" class="inbox_chatting_box" style="">
         <ul class="chatting_content">
+            <li class="pt-0 text-center fz15">Начало</li>
+            <li class="pt-0"><hr class="opacity-100 mb15 mt-0" style="height: 3px;" /></li>
             @foreach (var message in Model.Messages)
             {
                 if (message.Owner.UserName == User.Identity?.Name)
                 {
                     <li class="reply float-end">
                         <div class="d-flex align-items-center justify-content-end mb15">
-                            <div class="title fz15"><small class="mr10">35 mins</small> Ти</div>
+                            <div class="title fz15"><small class="mr10">@message.CreatedOn</small> Ти</div>
                             <img class="img-fluid rounded-circle align-self-end ml10" src="@message.Owner.ProfilePhoto" width="50" height="50" alt="User profile photo">
                         </div>
                         <p>@message.Content</p>
@@ -35,7 +114,7 @@
                     <li class="sent float-start">
                         <div class="d-flex align-items-center mb15">
                             <img class="img-fluid rounded-circle align-self-start mr10" src="@message.Owner.ProfilePhoto" width="50" height="50" alt="User profile photo">
-                            <div class="title fz15">@message.Owner.FirstName @message.Owner.LastName <small class="ml10">35 mins</small></div>
+                            <div class="title fz15">@message.Owner.FirstName @message.Owner.LastName <small class="ml10">@message.CreatedOn</small></div>
                         </div>
                         <p>@message.Content</p>
                     </li>
@@ -52,3 +131,65 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#userEmail").on("input", function () {
+                var userEmail = $(this).val();
+
+                $.ajax({
+                    url: "/Chats/CheckUserEmail",
+                    type: "POST",
+                    data: { email: userEmail },
+                    success: function (response) {
+                        if (response.exists) {
+                            $("#userName").text(response.user.firstName + " " + response.user.lastName);
+
+                            if (response.user.profilePhoto) {
+                                $("#uProfilePhoto").attr("src", response.user.profilePhoto).show();
+                            } else {
+                                $("#uProfilePhoto").hide();
+                            }
+
+                            $("#noResults").text("");
+                        } else {
+                            $("#userName").text("");
+                            $("#uProfilePhoto").attr("src", "").hide();
+                            $("#noResults").text("Няма намерен потребител с този имейл!");
+                        }
+                    },
+                    error: function () {
+                        console.error("Error checking user email");
+                    }
+                });
+            });
+
+            $("#addParticipantBtn").click(function () {
+                var userEmail = $("#userEmail").val();
+                $.ajax({
+                    url: "/Chats/AddParticipant",
+                    type: "POST",
+                    data: { email: userEmail, chatId: '@Model.Id' },
+                    success: function (response) {
+                        if (response.exists) {
+                            $("noResults").text("");
+                            $("#exampleModal2").modal("hide");
+                            // Show a Bootstrap toast with success message
+                            $(".toast-body").text("Успешно добавихте този потребител във вашия разговор!");
+                            $(".toast").toast("show");
+                            let currentCount = parseInt($("#participantsCounter").text());
+                            let newCount = currentCount + 1;
+                            // Update the count in the HTML
+                            $("#participantsCounter").text(newCount);
+                        } else {
+                            $("#noResults").text(response.message);
+                        }
+                    },
+                    error: function () {
+                        console.error("Error adding participant to chat");
+                    }
+                });
+            });
+        });
+    </script>
+}

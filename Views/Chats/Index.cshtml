@@ -2,89 +2,92 @@
 @{
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
-<div class="container my-5">
-    <div class="d-flex rounded-2" style="min-height: 500px; background-color: dimgrey;">
-        <div class="d-flex flex-column w-100 m-2 p-2 rounded-2" style="background-color: lightslategray;">
-            <h3 class="text-center">Чатове</h3>
-            @if (!Model.Any(c => c.ParticipantsCount <= 2))
-            {
-                <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
-                    <span>Нямате чатове</span>
-                </div>
-            }
-            else
-            {
-                foreach (var chat in Model.Where(c => c.ParticipantsCount <= 2))
+@if (User.IsInRole("Admin"))
+{
+    <!--Old chat design-->
+    <div class="container my-5">
+        <div class="d-flex rounded-2" style="min-height: 500px; background-color: dimgrey;">
+            <div class="d-flex flex-column w-100 m-2 p-2 rounded-2" style="background-color: lightslategray;">
+                <h3 class="text-center">Чатове</h3>
+                @if (!Model.Any(c => c.ParticipantsCount <= 2))
                 {
-                    <table class="table table-primary text-center">
-                        <thead>
-                            <tr>
-                                <th class="border-1">&#8470</th>
-                                <th class="border-1">Име на чата</th>
-                                <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="border-1">@chat.Id</td>
-                                <td class="border-1">@chat.Name</td>
-                                <td class="border-1">
-                                    <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                        <span>Нямате чатове</span>
+                    </div>
                 }
-                <button type="button" class="btn btn-primary w-25 mt-auto mx-auto">Търсене на чат</button>
-            }
-        </div>
-        <div id="separator" class="mh-100" style="width: 2px; background-color: white;">
-        </div>
-        <div class="d-flex flex-column w-100 m-2 p-2 rounded-2" style="background-color: lightslategray;">
-            <h3 class="text-center">Чат групи</h3>
-            @if (!Model.Any(c => c.ParticipantsCount > 2))
-            {
-                <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
-                    <span>Нямате чат групи</span>
-                </div>
-            }
-            else
-            {
-                foreach (var chat in Model.Where(c => c.ParticipantsCount > 2))
+                else
                 {
-                    <table class="table table-primary text-center">
-                        <thead>
-                            <tr>
-                                <th class="border-1">&#8470</th>
-                                <th class="border-1">Име на чат групата</th>
-                                <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="border-1">@chat.Id</td>
-                                <td class="border-1">@chat.Name</td>
-                                <td class="border-1">
-                                    <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    foreach (var chat in Model.Where(c => c.ParticipantsCount <= 2))
+                    {
+                        <table class="table table-primary text-center">
+                            <thead>
+                                <tr>
+                                    <th class="border-1">&#8470</th>
+                                    <th class="border-1">Име на чата</th>
+                                    <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border-1">@chat.Id</td>
+                                    <td class="border-1">@chat.Name</td>
+                                    <td class="border-1">
+                                        <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                    <button type="button" class="btn btn-primary w-25 mt-auto mx-auto">Търсене на чат</button>
                 }
-                <button type="button" class="btn btn-primary w-25 mt-auto mx-auto">Търсене на чат група</button>
-            }
+            </div>
+            <div id="separator" class="mh-100" style="width: 2px; background-color: white;">
+            </div>
+            <div class="d-flex flex-column w-100 m-2 p-2 rounded-2" style="background-color: lightslategray;">
+                <h3 class="text-center">Чат групи</h3>
+                @if (!Model.Any(c => c.ParticipantsCount > 2))
+                {
+                    <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                        <span>Нямате чат групи</span>
+                    </div>
+                }
+                else
+                {
+                    foreach (var chat in Model.Where(c => c.ParticipantsCount > 2))
+                    {
+                        <table class="table table-primary text-center">
+                            <thead>
+                                <tr>
+                                    <th class="border-1">&#8470</th>
+                                    <th class="border-1">Име на чат групата</th>
+                                    <th class="border-1"><i class="fa-solid fa-circle-info"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border-1">@chat.Id</td>
+                                    <td class="border-1">@chat.Name</td>
+                                    <td class="border-1">
+                                        <a asp-action="Chat" asp-route-id="@chat.Id" class="btn btn-light btn-square border rounded-circle nav-fill"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                    <button type="button" class="btn btn-primary w-25 mt-auto mx-auto">Търсене на чат група</button>
+                }
+            </div>
         </div>
     </div>
-</div>
-
+}
 
 <!--New Chat Design >-->
 <div class="dashboard__content hover-bgc-color">
     <div class="row pb40">
         <div class="col-lg-12">
             <div class="dashboard_title_area">
-                <h2>Dashboard</h2>
-                <p class="text">Lorem ipsum dolor sit amet, consectetur.</p>
+                <h2>Чатове/Чат групи</h2>
+                <p class="text">Нов начин за комуникация между skiller и неговите клиенти! Комуникирайте лесно и бързо чрез новите чатове или създадете чат група с ваши приятели.</p>
             </div>
         </div>
     </div>
@@ -186,7 +189,7 @@
             }
         </div>
     </div>
-    
+
     @section Scripts
     {
         <script src="~/js/signalr/dist/browser/signalr.js"></script>
@@ -200,7 +203,7 @@
             }
             var chatId;
             function getChatId(Id) {
-           
+
                 chatId = Id;
                 let url = '@Url.Action("DisplayChat", "Chats")';
                 $('#my-chatting-inbox').load(url, { chatId: chatId });
