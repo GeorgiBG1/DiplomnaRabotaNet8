@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="inbox_chatting_box" style="">
+    <div id="my-inbox-chatting-box" class="inbox_chatting_box" style="">
         <ul class="chatting_content">
             @foreach (var message in Model.Messages)
             {
@@ -46,17 +46,9 @@
     <div class="mi_text">
         <div class="message_input">
             <div class="d-flex align-items-center">
-                <input class="form-control" type="search" id="messageInput" placeholder="Аа..." aria-label="Search"/>
+                <input class="form-control" type="search" id="messageInput" placeholder="Аа..." aria-label="Search" />
                 <button type="button" class="btn ud-btn btn-thm" id="sendButton">Изпрати<i class="fal fa-arrow-right-long"></i></button>
             </div>
         </div>
     </div>
 </div>
-@section Scripts
-{
-    <script>
-        var userName = '@User.Identity!.Name';
-    </script>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/partialchat.js"></script>
-}

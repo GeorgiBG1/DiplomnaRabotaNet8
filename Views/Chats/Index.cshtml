@@ -186,21 +186,33 @@
             }
         </div>
     </div>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script>
-        window.onload = function () {
-            var chatBtns = document.querySelector(".openChat");
-            if (chatBtns !== undefined) {
-                getChatId(chatBtns[0].id);
-                console.log(chatBtns);
+    
+    @section Scripts
+    {
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script>
+            window.onload = function () {
+                var chatBtns = [...document.querySelectorAll(".openChat")];
+                if (chatBtns !== undefined) {
+                    getChatId(chatBtns[0].id);
+                    console.log(chatBtns);
+                }
             }
-        }
-        var chatId;
-        function getChatId(Id) {
-            debugger;
-            chatId = Id;
-            let url = '@Url.Action("DisplayChat", "Chats")';
-            $('#my-chatting-inbox').load(url, { chatId: chatId });
-        }
-    </script>
+            var chatId;
+            function getChatId(Id) {
+           
+                chatId = Id;
+                let url = '@Url.Action("DisplayChat", "Chats")';
+                $('#my-chatting-inbox').load(url, { chatId: chatId });
+            }
+        </script>
+
+        <script>
+         
+            console.log("Ala bala!");
+            var userName = '@User.Identity!.Name';
+        </script>
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/partialchat.js"></script>
+    }
 </div>
