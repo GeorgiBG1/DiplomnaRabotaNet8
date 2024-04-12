@@ -124,5 +124,9 @@ namespace Services
             }
 
         }
+        public int GetChatsCount()
+        {
+            return dbContext.Chats.Count();
+        }
     }
 }

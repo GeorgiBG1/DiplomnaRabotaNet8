@@ -42,6 +42,13 @@ namespace SkillBox.App.AutoMapperConfiguration
             #endregion
 
             #region Services
+            CreateMap<SkillBoxService, ServiceInfoDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
+                .ForMember(d => d.Price, opt => opt.MapFrom(s => $"{s.Price:F2}"))
+                .ForMember(d => d.Location, opt => opt.MapFrom(s => s.City.BGName))
+                .ForMember(d => d.Status, opt => opt.MapFrom(s => s.ServiceStatus.BGName));
+
             CreateMap<SkillBoxService, ServiceMiniDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
@@ -127,7 +134,7 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<Category, SelectListItem>()
                 .ForMember(d => d.Value, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Text, opt => opt.MapFrom(c => c.Name));
-            
+
             CreateMap<Category, CategoryCardDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name))
@@ -139,7 +146,8 @@ namespace SkillBox.App.AutoMapperConfiguration
                         return d.ServicesCount = c.Kids.Select(k => k.Services!.Count).Sum();
                     }
                     return d.ServicesCount = c.Services!.Count;
-                }));
+                }))
+                .ForMember(d => d.VisitsCount, opt => opt.MapFrom(c => c.Services!.Select(s => s.VisitsCount).Sum()));
 
             CreateMap<Category, CategoryDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
@@ -148,10 +156,17 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.ParentCategoryId, opt => opt.MapFrom(c => c.ParentCategoryId))
                 .ForMember(d => d.ParentCategory, opt => opt.MapFrom(c => c.ParentCategory))
                 .ForMember(d => d.Kids, opt => opt.MapFrom(c => c.Kids))
-                .ForMember(d => d.Services, opt => opt.MapFrom(c => c.Services));                                 
+                .ForMember(d => d.Services, opt => opt.MapFrom(c => c.Services));
             #endregion
 
             #region Users
+            CreateMap<SkillBoxUser, UserInfoDTO>()
+                .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))
+                .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
+                .ForMember(d => d.Location, opt => opt.MapFrom(u => u.City.BGName))
+                .ForMember(d => d.ServicesCount, opt => opt.MapFrom(u => u.Services.Count()))
+                .ForMember(d => d.ReviewsCount, opt => opt.MapFrom((u => u.Services.SelectMany(s => s.Reviews!).Count())));
+
             CreateMap<SkillBoxUser, UserCardDTO>()
                 .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))
                 .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))

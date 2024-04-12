@@ -139,7 +139,14 @@ namespace Services
             }
             return dbContext.Services.Count();
         }
-        
+        public int GetCompletedServicesCount()
+        {
+            return dbContext.Services.Where(s => s.ServiceStatus.Id == 1).Count();
+        }
+        public int GetReviewsCount()
+        {
+            return dbContext.Reviews.Count();
+        }
         public int GetPositiveReiewsCount()
         {
             return dbContext.Reviews.Where(r => r.RatingStars > 2).Count();

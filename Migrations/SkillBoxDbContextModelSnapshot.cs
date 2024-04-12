@@ -17,7 +17,7 @@ namespace SkillBox.App.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -341,6 +341,9 @@ namespace SkillBox.App.Migrations
 
                     b.Property<string>("UnitPrice")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VisitsCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("WebsiteName")
                         .HasColumnType("nvarchar(max)");
@@ -723,7 +726,7 @@ namespace SkillBox.App.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Models.SkillBoxUser", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -902,6 +905,8 @@ namespace SkillBox.App.Migrations
                     b.Navigation("ChatUsers");
 
                     b.Navigation("Offerings");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Services");
 

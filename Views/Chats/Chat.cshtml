@@ -10,8 +10,12 @@
             <div class="meta d-sm-flex justify-content-sm-between align-items-center">
                 <div class="authors">
                     <div class="d-flex">
-                        <h6 class="name mb-0 d-inline">@Model.Name</h6> <div id="participantsCounter" class="text-center text-white rounded-square bdrs16 d-inline ms-2" style="width: 20px; height: 20px; background-color: #54A853;">@Model.ChatUsers.Count</div>
+                        <h6 class="name mb-0 d-inline">@Model.Name</h6>
+                        <div class="text-center text-white rounded-square bdrs16 d-inline ms-2" style="width: 20px; height: 20px; background-color: #54A853; display: flex; justify-content: center; align-items: center;">
+                            <span id="participantsCounter">@Model.ChatUsers.Count</span>
+                        </div>
                     </div>
+
                     <p class="preview">@Model.ServiceName</p>
                 </div>
                 <div>
@@ -22,7 +26,7 @@
                         <ul class="dropdown-menu py-0">
                             <li>
                                 <button type="button" class="dropdown-item btn btn-light btn-square border bdrs16" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Добавя на участник <i class="fa-solid fa-person"></i>
+                                    Добавяне на участник <i class="fa-solid fa-person"></i>
                                 </button>
                             </li>
 
@@ -82,7 +86,7 @@
         </div>
     </div>
     <!-- Toast -->
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto">Добавяне на участник в разговора</strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -128,10 +132,26 @@
         </div>
     </div>
 </div>
+<style>
+    #participantsCounter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .rounded-square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.4;
+    }
+
+</style>
 @section Scripts
 {
     <script>
         var userName = '@User.Identity!.Name';
+
     </script>
 
     <script>
@@ -166,6 +186,8 @@
                 });
             });
 
+            const toastLiveExample = document.getElementById('liveToast');
+
             $("#addParticipantBtn").click(function () {
                 var userEmail = $("#userEmail").val();
                 $.ajax({
@@ -178,7 +200,7 @@
                             $("#exampleModal2").modal("hide");
                             // Show a Bootstrap toast with success message
                             $(".toast-body").text("Успешно добавихте този потребител във вашия разговор!");
-                            $(".toast").toast("show");
+                            toastLiveExample.show();
                             let currentCount = parseInt($("#participantsCounter").text());
                             let newCount = currentCount + 1;
                             // Update the count in the HTML

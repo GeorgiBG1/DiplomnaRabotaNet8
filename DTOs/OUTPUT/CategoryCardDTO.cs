@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public string MainImage { get; set; }
         public int ServicesCount { get; set; }
+        public int VisitsCount { get; set; }
     }
 }

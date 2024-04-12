@@ -1223,7 +1223,8 @@ namespace Services
                         MainImage = $"{urlStart}{mainImgIds[i]}{urlBetween}{mainImgIds[i]}{extension}{urlEnd}",
                         Images = $"{urlStart}{imgSet1[i]}{urlBetween}{imgSet1[i]}{extension}{urlEnd}|" +
                         $"{urlStart}{imgSet2[i]}{urlBetween}{imgSet2[i]}{extension}{urlEnd}|",
-                        ServiceStatus = serviceStatuses[rnd.Next(0, 3)]
+                        ServiceStatus = serviceStatuses[rnd.Next(0, 3)],
+                        VisitsCount = rnd.Next(1, 20000)
                     };
                     services.Add(service);
                 }

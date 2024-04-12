@@ -13,5 +13,6 @@ namespace Contracts
         public Task<List<MessageDTO>> GetLatestMessagesForUserAsync(string username);
         public void AddNewChatUser(SkillBoxUser user, Chat chat);
         public void RemoveChatUser(SkillBoxUser user, Chat chat);
+        public int GetChatsCount();
     }
 }

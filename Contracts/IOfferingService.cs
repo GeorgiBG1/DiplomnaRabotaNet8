@@ -13,6 +13,8 @@ namespace Contracts
         public void CreateService(ServiceInDTO serviceInDTO);
         public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1, int serviceId = 0);
         public int GetServicesCount(int categoryId = 0);
+        public int GetCompletedServicesCount();
+        public int GetReviewsCount();
         public int GetPositiveReiewsCount();
     }
 }

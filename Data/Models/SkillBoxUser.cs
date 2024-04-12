@@ -8,6 +8,7 @@ namespace Data.Models
         {
             ChatUsers = new HashSet<ChatUser>();
             Services = new HashSet<SkillBoxService>();
+            Reviews = new HashSet<Review>();
             Skills = new HashSet<Skill>();
             CreatedOn = DateTime.UtcNow;
         }
@@ -25,5 +26,6 @@ namespace Data.Models
         public virtual ICollection<SkillBoxService> Services { get; set; }
         public virtual ICollection<Skill> Skills { get; set; }
         public virtual ICollection<Offering> Offerings { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

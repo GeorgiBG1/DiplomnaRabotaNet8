@@ -8,7 +8,10 @@
             <div class="meta d-sm-flex justify-content-sm-between align-items-center">
                 <div class="authors">
                     <div class="d-flex">
-                        <h6 class="name mb-0 d-inline">@Model.Name</h6> <div class="text-center text-white rounded-square bdrs16 d-inline ms-2" style="width: 20px; height: 20px; background-color: #54A853;">@Model.ChatUsers.Count</div>
+                        <h6 class="name mb-0 d-inline">@Model.Name</h6>
+                        <div class="text-center text-white rounded-square bdrs16 d-inline ms-2" style="width: 20px; height: 20px; background-color: #54A853; display: flex; justify-content: center; align-items: center;">
+                            <span id="participantsCounter">@Model.ChatUsers.Count</span>
+                        </div>
                     </div>
                     <p class="preview">@Model.ServiceName</p>
                 </div>
@@ -24,12 +27,6 @@
                             <li><a asp-action="Chat" asp-route-id="@Model.Id" class="dropdown-item btn btn-light btn-square border bdrs16">Отваряне на цял екран <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
 
                             <li>
-                                <button type="button" class="dropdown-item btn btn-light btn-square border bdrs16" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Добавя на участник <i class="fa-solid fa-person"></i>
-                                </button>
-                            </li>
-
-                            <li>
                                 <button type="button" class="dropdown-item btn btn-light btn-square border bdrs16" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                                     Изтриване на разговора <i class="fa-solid fa-trash"></i>
                                 </button>
@@ -40,32 +37,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Добавяне на нов участник към разговора</h1>
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="userName"></p>
-                    <img id="uProfilePhoto" style="display: none;" width="50" height="50" />
-                    <p id="noResults"></p>
-                    <div class="form-style1">
-                        <label class="form-label fw500 fz16 dark-color">Търсене по имейл</label>
-                        <input type="text" id="userEmail" class="form-control active" placeholder="e-mail...">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="ud-btn btn-dark" data-bs-dismiss="modal">Откажи <i class="fal fa-arrow-right-long"></i></button>
-                    <button type="button" id="addParticipantBtn" class="ud-btn btn-thm">Добави <i class="fal fa-arrow-right-long"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog">
@@ -82,15 +53,6 @@
                     <a asp-action="RemoveParticipant" asp-route-id="@Model.Id" class="ud-btn btn-thm">Премахни този чат <i class="fal fa-arrow-right-long"></i></a>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Toast -->
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Добавяне на участник в разговора</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
         </div>
     </div>
     <div id="my-inbox-chatting-box" class="inbox_chatting_box" style="">
@@ -131,65 +93,19 @@
         </div>
     </div>
 </div>
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#userEmail").on("input", function () {
-                var userEmail = $(this).val();
+<style>
+    #participantsCounter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-                $.ajax({
-                    url: "/Chats/CheckUserEmail",
-                    type: "POST",
-                    data: { email: userEmail },
-                    success: function (response) {
-                        if (response.exists) {
-                            $("#userName").text(response.user.firstName + " " + response.user.lastName);
+    .rounded-square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.4;
+    }
 
-                            if (response.user.profilePhoto) {
-                                $("#uProfilePhoto").attr("src", response.user.profilePhoto).show();
-                            } else {
-                                $("#uProfilePhoto").hide();
-                            }
-
-                            $("#noResults").text("");
-                        } else {
-                            $("#userName").text("");
-                            $("#uProfilePhoto").attr("src", "").hide();
-                            $("#noResults").text("Няма намерен потребител с този имейл!");
-                        }
-                    },
-                    error: function () {
-                        console.error("Error checking user email");
-                    }
-                });
-            });
-
-            $("#addParticipantBtn").click(function () {
-                var userEmail = $("#userEmail").val();
-                $.ajax({
-                    url: "/Chats/AddParticipant",
-                    type: "POST",
-                    data: { email: userEmail, chatId: '@Model.Id' },
-                    success: function (response) {
-                        if (response.exists) {
-                            $("noResults").text("");
-                            $("#exampleModal2").modal("hide");
-                            // Show a Bootstrap toast with success message
-                            $(".toast-body").text("Успешно добавихте този потребител във вашия разговор!");
-                            $(".toast").toast("show");
-                            let currentCount = parseInt($("#participantsCounter").text());
-                            let newCount = currentCount + 1;
-                            // Update the count in the HTML
-                            $("#participantsCounter").text(newCount);
-                        } else {
-                            $("#noResults").text(response.message);
-                        }
-                    },
-                    error: function () {
-                        console.error("Error adding participant to chat");
-                    }
-                });
-            });
-        });
-    </script>
+</style>
 }

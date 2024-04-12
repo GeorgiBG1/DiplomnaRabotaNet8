@@ -269,6 +269,7 @@ namespace SkillBox.App.Migrations
                     MainImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Images = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    VisitsCount = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Schedule = table.Column<string>(type: "nvarchar(max)", nullable: true),

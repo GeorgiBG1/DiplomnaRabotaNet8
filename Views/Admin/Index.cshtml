@@ -1,371 +1,124 @@
-﻿@{
+﻿@model AdminViewModel
+@{
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
-
-<!--TODO Scaffolding from Identity and paste this code in Account Section-->
-<h3>Scaffold from Identity for account!</h3>
 <div class="dashboard__content hover-bgc-color">
     <div class="row pb40">
         <div class="col-lg-9">
             <div class="dashboard_title_area">
-                <h2>My Profile</h2>
-                <p class="text">Lorem ipsum dolor sit amet, consectetur.</p>
+                <h2>Администраторско табло</h2>
+                <p class="text">Категории, Услуги. Вижте броят на Skiller-ите, Потребителите, Ревютата, Кореспонденциите, Завършените услуги и Уменията.</p>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xl-12">
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Profile Details</h5>
-                </div>
-                <div class="col-xl-7">
-                    <div class="profile-box d-sm-flex align-items-center mb30">
-                        <div class="profile-img mb20-sm">
-                            <img class="w-100 rounded-circle wa-xs" src="images/team/fl-1.png" alt="">
-                        </div>
-                        <div class="profile-content ml20 ml0-xs">
-                            <div class="d-flex align-items-center my-3">
-                                <a href="" class="tag-delt text-thm2"><span class="flaticon-delete text-thm2"></span></a>
-                                <a href="" class="upload-btn ml10">Upload Images</a>
-                            </div>
-                            <p class="text mb-0">Max file size is 1MB, Minimum dimension: 330x300 And Suitable files are .jpg & .png</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <form class="form-style1">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Username</label>
-                                    <input type="text" class="form-control" placeholder="i will">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Email Address</label>
-                                    <input type="email" class="form-control" placeholder="i will">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="i will">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Tagline</label>
-                                    <input type="text" class="form-control" placeholder="i will">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Hourly Rate</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>$50</option>
-                                                <option>$60</option>
-                                                <option>$70</option>
-                                                <option>$80</option>
-                                                <option>$90</option>
-                                                <option>$100</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Gender</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Specialization</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Type</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Type One</option>
-                                                <option>Type Two</option>
-                                                <option>Type Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Country</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Turkey</option>
-                                                <option>United Kingdom</option>
-                                                <option>United State</option>
-                                                <option>Ukraine</option>
-                                                <option>Uruguay</option>
-                                                <option>UK</option>
-                                                <option>Uzbekistan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">City</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option data-tokens="California">California</option>
-                                                <option data-tokens="Chicago">Chicago</option>
-                                                <option data-tokens="LosAngeles">Los Angeles</option>
-                                                <option data-tokens="Manhattan">Manhattan</option>
-                                                <option data-tokens="NewJersey">New Jersey</option>
-                                                <option data-tokens="NewYork">New York</option>
-                                                <option data-tokens="SanDiego">San Diego</option>
-                                                <option data-tokens="SanFrancisco">San Francisco</option>
-                                                <option data-tokens="Texas">Texas</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Languages</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker" multiple>
-                                                <option>English</option>
-                                                <option>Spanish</option>
-                                                <option>Greek</option>
-                                                <option>Tarkish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Languages Level</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Fluent</option>
-                                                <option>Mid Level</option>
-                                                <option>Conversational</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb10">
-                                    <label class="heading-color ff-heading fw500 mb10">Introduce Yourself</label>
-                                    <textarea cols="30" rows="6" placeholder="Description"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="text-start">
-                                    <a class="ud-btn btn-thm" href="page-contact.html">Save<i class="fal fa-arrow-right-long"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="table-style1 table-responsive mb-4 mb-lg-5 shadow p-3 mb-5 bg-body-tertiary rounded-3">
+                <table class="table table-borderless">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="fz15 fw500" scope="col"><b>Категории</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Посещения</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Брой услуги</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <tr>
+                                <td>@category.Name</td>
+                                <td>@category.VisitsCount</td>
+                                <td>@category.ServicesCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Skills</h5>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <form class="form-style1">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Skills 1</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>Designer</option>
-                                                    <option>UI/UX</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Point</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>90</option>
-                                                    <option>80</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Skills 2</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>Developer</option>
-                                                    <option>Programmer</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Point</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>60</option>
-                                                    <option>70</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Skills 3</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>Video Editor</option>
-                                                    <option>Audio & Music</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Point</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>75</option>
-                                                    <option>80</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Save<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-style1 table-responsive mb-4 mb-lg-5 shadow p-3 mb-5 bg-body-tertiary rounded-3">
+                <table class="table table-borderless">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="fz15 fw500" scope="col"><b>10-те популярни услуги</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Цена</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Местоположение</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Статус</b></th>
+                            <th class="fz15 fw500" scope="col"><i class="fa-solid fa-circle-info"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var service in Model.Services)
+                        {
+                            <tr>
+                                <td>@service.Name</td>
+                                <td>@service.Price</td>
+                                <td>@service.Location</td>
+                                <td>@service.Status</td>
+                                <td><a asp-action="Services" asp-route-id="@service.Id" class="btn"><i class="fa-solid fa-square-pen"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Change password</h5>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <form class="form-style1">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">Old Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">New Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">Confirm New Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Change Password<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-style1 table-responsive mb-4 mb-lg-5 shadow p-3 mb-5 bg-body-tertiary rounded-3">
+                <table class="table table-borderless">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="fz15 fw500" scope="col"><b>10-те популярни skiller-и</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Местоположение</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Услуги</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Ревюта</b></th>
+                            <th class="fz15 fw500" scope="col"><i class="fa-solid fa-circle-info"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var skiller in Model.Skillers)
+                        {
+                            <tr>
+                                <td>@skiller.Name</td>
+                                <td>@skiller.Location</td>
+                                <td>@skiller.ServicesCount</td>
+                                <td>@skiller.ReviewsCount</td>
+                                <td><a asp-action="Skillers" asp-route-id="@skiller.Username" class="btn"><i class="fa-solid fa-user-pen"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="bdrb1 pb15 mb25">
-                            <h5 class="list-title">Change password</h5>
-                        </div>
-                        <form class="form-style1">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h6>Close account</h6>
-                                    <p class="text">Warning: If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">Enter Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
-                                    </div>
-                                    <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Change Password<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-style1 table-responsive mb-4 mb-lg-5 shadow p-3 mb-5 bg-body-tertiary rounded-3">
+                <table class="table table-borderless">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="fz15 fw500" scope="col"><b>Потребители</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Skiller-и</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Ревюта</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Кореспонденции</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Завършени услуги</b></th>
+                            <th class="fz15 fw500" scope="col"><b>Умения</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.UsersCount</td>
+                            <td>@Model.SkillersCount</td>
+                            <td>@Model.ReviewsCount</td>
+                            <td>@Model.ChatsCount</td>
+                            <td>@Model.CompletedServicesCount</td>
+                            <td>@Model.SkillsCount</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
