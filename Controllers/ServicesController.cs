@@ -5,6 +5,7 @@ using Contracts;
 using Services;
 using Models;
 using Microsoft.AspNetCore.Authorization;
+using Data.Models;
 
 namespace Controllers
 {
@@ -117,7 +118,13 @@ namespace Controllers
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
-            return View();
+            var model = new ServiceInDTO
+            {
+                Skills = userService.GetAllMySkills(User.Identity?.Name!).ToList(),
+                Categories = categoryService.GetAllCategories().ToList(),
+                Cities = offeringService.GetAllCities().ToList()
+            };
+            return View(model);
         }
         [HttpPost]
         public IActionResult Create(ServiceInDTO bindingModel)
@@ -127,18 +134,25 @@ namespace Controllers
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
 
-            //TODO Validations
-
-            var images = string.Empty;
-            foreach (var img in bindingModel.ImageFiles)
+            if (ModelState.IsValid)
             {
-                var imgURL = cloudinaryService.UploadFileAndGetURL(img, "ServiceImgs");
-                if (imgURL != "none")
-                    images += $"{imgURL}|";
+                var a = bindingModel;
+                if (bindingModel.Days.Count == 0)
+                {
+                    bindingModel.Days.Add(0);
+                }
+                var images = string.Empty;
+                foreach (var img in bindingModel.ImageFiles)
+                {
+                    var imgURL = cloudinaryService.UploadFileAndGetURL(img, "ServiceImgs");
+                    if (imgURL != "none")
+                        images += $"{imgURL}|";
+                }
+                bindingModel.Images = images;
+                offeringService.CreateService(bindingModel);
+                return RedirectToAction("MyServices");
             }
-            bindingModel.Images = images;
-            offeringService.CreateService(bindingModel);
-            return RedirectToAction("MyServices");
+            return View(bindingModel);
         }
         //Dynamic loading
         public IActionResult LoadMoreServices(int currentServicesCount)

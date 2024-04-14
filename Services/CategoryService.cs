@@ -57,6 +57,7 @@ namespace Services
             model = categories.Select(mapper.Map<CategoryCardDTO>).ToList();
             return model;
         }
+        public ICollection<Category> GetAllCategories() => dbContext.Categories.ToList();
         public ICollection<CategoryCardDTO> GetAllCategoryCardDTOs()
         {
             var categories = new List<Category>();

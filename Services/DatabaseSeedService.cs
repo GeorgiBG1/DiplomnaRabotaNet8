@@ -539,8 +539,7 @@ namespace Services
                     PhoneNumberConfirmed = true,
                     Gender = genders[0],
                     City = cities[9],
-                    ProfilePhoto = userDefaultProfilePhoto,
-
+                    ProfilePhoto = userDefaultProfilePhoto
                 };
                 await userManager.CreateAsync(skiller1, "123456");
                 await userManager.AddToRoleAsync(skiller1, skillerRole.Name);
@@ -815,6 +814,32 @@ namespace Services
                 };
                 await userManager.CreateAsync(skiller16, "123456");
                 await userManager.AddToRoleAsync(skiller16, skillerRole.Name);
+                #endregion
+
+                #region Skills
+                var skill1 = new Skill();
+                skill1.Name = "Преподавам езици на частни уроци"; //Иван
+                skill1.Level = skillLevels[4];
+                skill1.User = skiller1;
+                await dbContext.Skills.AddAsync(skill1);
+
+                var skill2 = new Skill();
+                skill2.Name = "Гледам на всякакви домашни любимци"; //Иван
+                skill2.Level = skillLevels[9];
+                skill2.User = skiller1;
+                await dbContext.Skills.AddAsync(skill2);
+
+                var skill3 = new Skill();
+                skill3.Name = "Преподавам професионални танци"; //Димитър
+                skill3.Level = skillLevels[6];
+                skill3.User = skiller7;
+                await dbContext.Skills.AddAsync(skill3);
+
+                var skill4 = new Skill();
+                skill4.Name = "Помагам с йога упражнения"; //Димитър
+                skill4.Level = skillLevels[5];
+                skill4.User = skiller7;
+                await dbContext.Skills.AddAsync(skill4);
                 #endregion
 
                 #region Categories

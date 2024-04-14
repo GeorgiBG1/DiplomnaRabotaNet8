@@ -23,11 +23,14 @@ namespace Data.Models
         public string? PhoneNumber { get; set; }
         public string? WebsiteURL { get; set; }
         public string? WebsiteName { get; set; }
+        public string? MainSkill { get; set; }
         public string? OwnerName { get; set; }
         [Unique]
         public string OwnerId { get; set; }
         public virtual SkillBoxUser Owner { get; set; }
+        public int CityId { get; set; }
         public virtual City City { get; set; }
+        public int ServiceStatusId { get; set; }
         public virtual ServiceStatus ServiceStatus { get; set; }
         public virtual ICollection<Review>? Reviews { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }

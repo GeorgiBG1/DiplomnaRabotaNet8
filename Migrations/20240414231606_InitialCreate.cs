@@ -276,6 +276,7 @@ namespace SkillBox.App.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WebsiteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainSkill = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),

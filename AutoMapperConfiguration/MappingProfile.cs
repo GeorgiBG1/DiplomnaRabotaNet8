@@ -13,8 +13,53 @@ namespace SkillBox.App.AutoMapperConfiguration
         {
             //IN
             CreateMap<ServiceInDTO, SkillBoxService>()
+                .ForMember(s => s.Name, opt => opt.MapFrom(d => d.Title))
+                .ForMember(s => s.Description, opt => opt.MapFrom(d => d.Description))
+                .ForMember(s => s.PhoneNumber, opt => opt.MapFrom(d => d.PhoneNumber))
+                .ForMember(s => s.WebsiteName, opt => opt.MapFrom(d => d.WebsiteName))
+                .ForMember(s => s.Price, opt => opt.MapFrom(d => d.Price))
+                .ForMember(s => s.UnitPrice, opt => opt.MapFrom(d => d.UnitPrice))
+                .ForMember(s => s.CategoryId, opt => opt.MapFrom(d => d.Category))
+                .ForMember(s => s.CityId, opt => opt.MapFrom(d => d.City))
+                .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.Skill].Name))
+                .ForMember(s => s.Schedule, opt => opt.MapFrom((d, s) =>
+                {
+                    if (d.Days.Contains(0))
+                    {
+                        s.Schedule = "Без график";
+                        return s.Schedule;
+                    }
+                    else if (d.Days.Contains(1))
+                    {
+                        s.Schedule = string.Join(", ", "Понеделник");
+                    }
+                    else if (d.Days.Contains(2))
+                    {
+                        s.Schedule = string.Join(", ", "Вторник");
+                    }
+                    else if (d.Days.Contains(3))
+                    {
+                        s.Schedule = string.Join(", ", "Сряда");
+                    }
+                    else if (d.Days.Contains(4))
+                    {
+                        s.Schedule = string.Join(", ", "Четвъртък");
+                    }
+                    else if (d.Days.Contains(5))
+                    {
+                        s.Schedule = string.Join(", ", "Петък");
+                    }
+                    else if (d.Days.Contains(6))
+                    {
+                        s.Schedule = string.Join(", ", "Събота");
+                    }
+                    else if (d.Days.Contains(7))
+                    {
+                        s.Schedule = string.Join(", ", "Неделя");
+                    }
+                    return s.Schedule;
+                }))
                 .ForMember(s => s.Images, opt => opt.MapFrom(d => d.Images));
-            //TODO add more members
 
             //OUT
             #region Chats

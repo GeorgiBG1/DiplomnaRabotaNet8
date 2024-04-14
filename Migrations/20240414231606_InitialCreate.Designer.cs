@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SkillBox.App.Migrations
 {
     [DbContext(typeof(SkillBoxDbContext))]
-    [Migration("20240412185035_InitialCreate")]
+    [Migration("20240414231606_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -317,6 +317,9 @@ namespace SkillBox.App.Migrations
 
                     b.Property<string>("MainImage")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainSkill")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

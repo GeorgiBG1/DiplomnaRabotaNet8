@@ -110,10 +110,8 @@ namespace Services
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
         }
-        public ICollection<ServiceStatus> GetAllServiceStatuses()
-        {
-            return dbContext.ServiceStatuses.ToList();
-        }
+        public ICollection<ServiceStatus> GetAllServiceStatuses() => dbContext.ServiceStatuses.ToList();
+        public ICollection<City> GetAllCities() => dbContext.Cities.ToList();
         public void CreateService(ServiceInDTO serviceInDTO)
         {
             var service = mapper.Map<SkillBoxService>(serviceInDTO);

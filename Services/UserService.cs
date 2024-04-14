@@ -75,6 +75,10 @@ namespace Services
             var model = skillers.Select(mapper.Map<UserCardDTO>).ToList();
             return model;
         }
+        public ICollection<Skill> GetAllMySkills(string username)
+        {
+            return dbContext.Skills.Where(s => s.User.UserName == username).ToList();
+        }
         public int GetUsersCount()
         {
             return dbContext.Users.Count();

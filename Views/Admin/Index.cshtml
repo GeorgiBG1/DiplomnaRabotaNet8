@@ -46,7 +46,7 @@
                             <th class="fz15 fw500" scope="col"><b>Цена</b></th>
                             <th class="fz15 fw500" scope="col"><b>Местоположение</b></th>
                             <th class="fz15 fw500" scope="col"><b>Статус</b></th>
-                            <th class="fz15 fw500" scope="col"><i class="fa-solid fa-circle-info"></i></th>
+                            <th class="fz15 fw500 ps-5" scope="col"><i class="fa-solid fa-circle-info"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@
                                 <td>@service.Price</td>
                                 <td>@service.Location</td>
                                 <td>@service.Status</td>
-                                <td><a asp-action="Services" asp-route-id="@service.Id" class="btn"><i class="fa-solid fa-square-pen"></i></a></td>
+                                <td class="ps-5"><a asp-action="Services" asp-route-id="@service.Id" class="btn px-0"><i class="fa-solid fa-square-pen"></i></a></td>
                             </tr>
                         }
                     </tbody>
@@ -75,7 +75,7 @@
                             <th class="fz15 fw500" scope="col"><b>Местоположение</b></th>
                             <th class="fz15 fw500" scope="col"><b>Услуги</b></th>
                             <th class="fz15 fw500" scope="col"><b>Ревюта</b></th>
-                            <th class="fz15 fw500" scope="col"><i class="fa-solid fa-circle-info"></i></th>
+                            <th class="fz15 fw500 ps-5" scope="col"><i class="fa-solid fa-circle-info"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,7 +86,7 @@
                                 <td>@skiller.Location</td>
                                 <td>@skiller.ServicesCount</td>
                                 <td>@skiller.ReviewsCount</td>
-                                <td><a asp-action="Skillers" asp-route-id="@skiller.Username" class="btn"><i class="fa-solid fa-user-pen"></i></a></td>
+                                <td class="ps-5"><a asp-action="Skillers" asp-route-id="@skiller.Username" class="btn px-0"><i class="fa-solid fa-user-pen"></i></a></td>
                             </tr>
                         }
                     </tbody>
