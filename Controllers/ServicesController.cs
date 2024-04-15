@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using DTOs.INPUT;
 using Contracts;
-using Services;
 using Models;
 using Microsoft.AspNetCore.Authorization;
-using Data.Models;
+using CacheConfiguration;
 
 namespace Controllers
 {
@@ -118,12 +117,13 @@ namespace Controllers
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
-            var model = new ServiceInDTO
-            {
-                Skills = userService.GetAllMySkills(User.Identity?.Name!).ToList(),
-                Categories = categoryService.GetAllCategories().ToList(),
-                Cities = offeringService.GetAllCities().ToList()
-            };
+
+            //View - Collection
+            CacheData.Skills = userService.GetAllMySkills(User.Identity?.Name!).ToList();
+            CacheData.Categories = categoryService.GetAllCategories().ToList();
+            CacheData.Cities = offeringService.GetAllCities().ToList();
+            //
+            var model = new ServiceInDTO();
             return View(model);
         }
         [HttpPost]
@@ -134,13 +134,20 @@ namespace Controllers
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
 
+            var skills = CacheData.Skills;
+            var categories = CacheData.Categories;
+            var cities = CacheData.Cities;
+            var days = CacheData.Days;
+           
             if (ModelState.IsValid)
             {
-                var a = bindingModel;
-                if (bindingModel.Days.Count == 0)
-                {
-                    bindingModel.Days.Add(0);
-                }
+                bindingModel.Skills = skills;
+                bindingModel.Categories = categories;
+                bindingModel.Cities = cities;
+                bindingModel.Skills.Add(skills[bindingModel.Skill]);
+
+                var test = bindingModel.DaysAsString();
+
                 var images = string.Empty;
                 foreach (var img in bindingModel.ImageFiles)
                 {

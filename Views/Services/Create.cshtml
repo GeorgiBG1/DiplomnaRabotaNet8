@@ -62,82 +62,98 @@
                                 <div class="col-sm-6">
                                     <div class="mb20">
                                         <div class="form-style1">
-                                            <label asp-for="@Model.Category" class="form-label fw500 fz16 dark-color">Категория</label>
-                                            <div class="bootselect-multiselect">
-                                                <div class="dropdown bootstrap-select dropup" style="width: 100%;">
-                                                    <select asp-for="@Model.Category" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
-                                                        <option disabled>Избери</option>
-                                                        @foreach (var city in Model.Categories)
-                                                        {
-                                                            <option value="@city.Id" data-tokens="@city.Name">@city.Name</option>
-                                                        }
-                                                    </select>
-                                                    <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
-                                                        <div class="bs-searchbox">
-                                                            <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                            @{
+                                                var categories = CacheData.Categories;
+                                                if (categories != null)
+                                                {
+                                                    if (categories.Count != 0)
+                                                    {
+                                                        <label asp-for="@Model.Category" class="form-label fw500 fz16 dark-color">Категория</label>
+                                                        <div class="bootselect-multiselect">
+                                                            <div class="dropdown bootstrap-select dropup" style="width: 100%;">
+                                                                <select asp-for="@Model.Category" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                                    <option disabled>Избери</option>
+                                                                    @foreach (var city in categories)
+                                                                    {
+                                                                        <option value="@city.Id" data-tokens="@city.Name">@city.Name</option>
+                                                                    }
+                                                                </select>
+                                                                <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
+                                                                    <div class="bs-searchbox">
+                                                                        <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                                                    </div>
+                                                                    <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
+                                                                        <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                                            <li class="selected active">
+                                                                                <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
+                                                                                    <span class="text">@categories[0].Name</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            @for (int i = 0; i < categories.Count(); i++)
+                                                                            {
+                                                                                <li>
+                                                                                    <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
+                                                                                        <span class="text">@categories[i].Name</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
-                                                            <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
-                                                                <li class="selected active">
-                                                                    <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
-                                                                        <span class="text">@Model.Categories[0].Name</span>
-                                                                    </a>
-                                                                </li>
-                                                                @for (int i = 0; i < Model.Categories.Count(); i++)
-                                                                {
-                                                                    <li>
-                                                                        <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
-                                                                            <span class="text">@Model.Categories[i].Name</span>
-                                                                        </a>
-                                                                    </li>
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <input asp-for="@Model.Categories" value="@Model.Categories" style="display: none;"/>
-                                                </div>
-                                            </div>
+                                                    }
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="mb20">
                                         <div class="form-style1">
-                                            <label asp-for="@Model.City" class="form-label fw500 fz16 dark-color">Град</label>
-                                            <div class="bootselect-multiselect">
-                                                <div class="dropdown bootstrap-select dropup" style="width: 100%;">
-                                                    <select asp-for="@Model.City" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
-                                                        <option disabled>Избери</option>
-                                                        @foreach (var city in Model.Cities)
-                                                        {
-                                                            <option value="@city.Id" data-tokens="@city.BGName">@city.BGName</option>
-                                                        }
-                                                    </select>
-                                                    <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
-                                                        <div class="bs-searchbox">
-                                                            <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                            @{
+                                                var cities = CacheData.Cities;
+                                                if (cities != null)
+                                                {
+                                                    if (cities.Count != 0)
+                                                    {
+                                                        <label asp-for="@Model.City" class="form-label fw500 fz16 dark-color">Град</label>
+                                                        <div class="bootselect-multiselect">
+                                                            <div class="dropdown bootstrap-select dropup" style="width: 100%;">
+                                                                <select asp-for="@Model.City" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                                    <option disabled>Избери</option>
+                                                                    @foreach (var city in cities)
+                                                                    {
+                                                                        <option value="@city.Id" data-tokens="@city.BGName">@city.BGName</option>
+                                                                    }
+                                                                </select>
+                                                                <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
+                                                                    <div class="bs-searchbox">
+                                                                        <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                                                    </div>
+                                                                    <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
+                                                                        <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                                            <li class="selected active">
+                                                                                <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
+                                                                                    <span class="text">@cities[0].BGName</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            @for (int i = 0; i < cities.Count(); i++)
+                                                                            {
+                                                                                <li>
+                                                                                    <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
+                                                                                        <span class="text">@cities[i].BGName</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
-                                                            <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
-                                                                <li class="selected active">
-                                                                    <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
-                                                                        <span class="text">@Model.Cities[0].BGName</span>
-                                                                    </a>
-                                                                </li>
-                                                                @for (int i = 0; i < Model.Cities.Count(); i++)
-                                                                {
-                                                                    <li>
-                                                                        <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
-                                                                            <span class="text">@Model.Cities[i].BGName</span>
-                                                                        </a>
-                                                                    </li>
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <input asp-for="Cities" value="@Model.Cities"/>
-                                                </div>
-                                            </div>
+                                                    }
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -145,24 +161,30 @@
                                     <div class="ui-content mb20">
                                         <div class="form-style1">
                                             <label class="form-label fw500 fz16 dark-color">Основно умение за услугата</label>
-                                            @if (Model.Skills.Count == 0)
-                                            {
-                                                <p>Не сте добавили лични умения, които да могат да се прикачат към услугата!</p>
-                                            }
-                                            else
-                                            {
-                                                <div class="bootselect-multiselect">
-                                                    <div class="dropdown bootstrap-select show-tick dropup">
-                                                        <select asp-for="@Model.Skill" class="selectpicker" tabindex="null">
-                                                            <option disabled>Избери</option>
-                                                            @foreach (var skill in Model.Skills)
-                                                            {
-                                                                <option value="@skill.Id">@skill.Name</option>
-                                                            }
-                                                        </select>
-                                                        <input asp-for="Skills" value="@Model.Skills"/>
-                                                    </div>
-                                                </div>
+                                            @{
+                                                var skills = CacheData.Skills;
+                                                if (skills != null)
+                                                {
+                                                    if (skills.Count == 0)
+                                                    {
+                                                        <p>Не сте добавили лични умения, които да могат да се прикачат към услугата!</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="bootselect-multiselect">
+                                                            <div class="dropdown bootstrap-select show-tick dropup">
+                                                                <select asp-for="@Model.Skill" class="selectpicker" tabindex="null">
+                                                                    <option disabled>Избери</option>
+                                                                    @for (int i = 0; i < skills.Count; i++)
+                                                                    {
+                                                                        <option value="@i">@skills[i].Name</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+
                                             }
                                         </div>
                                     </div>
@@ -185,20 +207,32 @@
                     <div class="col-xl-8" style="height: 350px;">
                         <div class="bootselect-multiselect">
                             <div class="dropdown bootstrap-select show-tick dropup">
-                                <select id="selectDays" class="selectpicker" multiple="" tabindex="1">
-                                    <option value="0" selected>Без график</option>
-                                    <option value="1">Понеделник</option>
-                                    <option value="2">Вторник</option>
+                                @* <select class="selectpicker" multiple="" tabindex="1" data-none-selected-text="Без график"> *@
+                                    @* <option value="0" disabled>Без график</option> *@
+                                <label>Понеделник</label>
+                                    <input type="checkbox" asp-for="@Model.Days[0]">
+                                <label>Вторник</label>
+                                <input type="checkbox" asp-for="@Model.Days[1]">
+                                <label>Сряда</label>
+                                <input type="checkbox" asp-for="@Model.Days[2]">
+                                <label>Четвъртък</label>
+                                <input type="checkbox" asp-for="@Model.Days[3]">
+                                <label>Петък</label>
+                                <input type="checkbox" asp-for="@Model.Days[4]">
+                                <label>Събота</label>
+                                <input type="checkbox" asp-for="@Model.Days[5]">
+                                <label>Неделя</label>
+                                <input type="checkbox" asp-for="@Model.Days[6]">
+                                    @* <option value="2">Вторник</option>
                                     <option value="3">Сряда</option>
                                     <option value="4">Четвъртък</option>
                                     <option value="5">Петък</option>
                                     <option value="6">Събота</option>
-                                    <option value="7">Неделя</option>
-                                </select>
+                                    <option value="7">Неделя</option> *@
+                               @*  </select> *@
                             </div>
                         </div>
                     </div>
-                    <input asp-for="Days" id="hiddenDays" hidden />
                 </div>
                 <div class="ps-widget bgc-white bdrs12 p30 mb30 overflow-hidden position-relative">
                     <div class="bdrb1 pb15 mb30">
@@ -223,30 +257,6 @@
         </div>
     </form>
 </div>
-
-<script>
-    function handleSelectChange() {
-        const selectElement = document.getElementById('selectDays');
-        const hiddenInput = document.getElementById('hiddenDays');
-
-        // Get selected options and map them to their integer values
-        const selectedDays = Array.from(selectElement.selectedOptions).map(option => parseInt(option.value));
-
-        // If "Без график" (value 0) is selected along with other values, remove it
-        if (selectedDays.length > 1 && selectedDays.includes(0)) {
-            const filteredDays = selectedDays.filter(day => day !== 0);
-            selectElement.value = filteredDays;
-        } else if (selectedDays.length === 1 && selectedDays[0] === 0) { // If only "Без график" is selected, deselect other values
-            selectElement.value = 0;
-        }
-
-        // Update the value of the hidden input field with the selected day values
-        hiddenInput.value = JSON.stringify(Array.from(selectElement.selectedOptions).map(option => parseInt(option.value)));
-    }
-
-    // Add event listener to select element to call handleSelectChange function when selection changes
-    document.getElementById('selectDays').addEventListener('change', handleSelectChange);
-</script>
 
 <script>
     function openFileExplorer() {

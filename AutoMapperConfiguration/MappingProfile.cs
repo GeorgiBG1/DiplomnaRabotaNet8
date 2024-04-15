@@ -22,43 +22,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(s => s.CategoryId, opt => opt.MapFrom(d => d.Category))
                 .ForMember(s => s.CityId, opt => opt.MapFrom(d => d.City))
                 .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.Skill].Name))
-                .ForMember(s => s.Schedule, opt => opt.MapFrom((d, s) =>
-                {
-                    if (d.Days.Contains(0))
-                    {
-                        s.Schedule = "Без график";
-                        return s.Schedule;
-                    }
-                    else if (d.Days.Contains(1))
-                    {
-                        s.Schedule = string.Join(", ", "Понеделник");
-                    }
-                    else if (d.Days.Contains(2))
-                    {
-                        s.Schedule = string.Join(", ", "Вторник");
-                    }
-                    else if (d.Days.Contains(3))
-                    {
-                        s.Schedule = string.Join(", ", "Сряда");
-                    }
-                    else if (d.Days.Contains(4))
-                    {
-                        s.Schedule = string.Join(", ", "Четвъртък");
-                    }
-                    else if (d.Days.Contains(5))
-                    {
-                        s.Schedule = string.Join(", ", "Петък");
-                    }
-                    else if (d.Days.Contains(6))
-                    {
-                        s.Schedule = string.Join(", ", "Събота");
-                    }
-                    else if (d.Days.Contains(7))
-                    {
-                        s.Schedule = string.Join(", ", "Неделя");
-                    }
-                    return s.Schedule;
-                }))
+                .ForMember(s => s.Schedule, opt => opt.MapFrom(d => d.DaysAsString()))
                 .ForMember(s => s.Images, opt => opt.MapFrom(d => d.Images));
 
             //OUT
@@ -175,7 +139,7 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<Category, CategoryMiniDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Name));
-            
+
             CreateMap<Category, SelectListItem>()
                 .ForMember(d => d.Value, opt => opt.MapFrom(c => c.Id))
                 .ForMember(d => d.Text, opt => opt.MapFrom(c => c.Name));
