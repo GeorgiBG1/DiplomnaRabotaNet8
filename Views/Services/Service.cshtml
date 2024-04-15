@@ -75,8 +75,15 @@
                                 <div class="iconbox-style1 contact-style d-flex align-items-start mb30">
                                     <div class="icon flex-shrink-0"><span class="flaticon-goal"></span></div>
                                     <div class="details">
-                                        <h5 class="title">English Level</h5>
-                                        <p class="mb-0 text">Professional TODO</p>
+                                        <h5 class="title">Основно умение</h5>
+                                        @if (Model.Service.MainSkill != null)
+                                        {
+                                            <p class="mb-0 text">@Model.Service.MainSkill</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0 text">Не е посочено</p>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -233,77 +240,30 @@
                     <div class="column">
                         <div class="blog-sidebar ms-lg-auto">
                             <div class="price-widget">
-                                <div class="navtab-style1">
-                                    <nav>
-                                        <div class="nav nav-tabs mb20" id="nav-tab2p" role="tablist">
-                                            <button class="nav-link fw500" id="nav-item1p-tab" data-bs-toggle="tab" data-bs-target="#nav-item1p" type="button" role="tab" aria-controls="nav-item1p" aria-selected="true">Basic</button>
-                                            <button class="nav-link active fw500" id="nav-item2p-tab" data-bs-toggle="tab" data-bs-target="#nav-item2p" type="button" role="tab" aria-controls="nav-item2p" aria-selected="false">Standart</button>
-                                            <button class="nav-link fw500" id="nav-item3-tab" data-bs-toggle="tab" data-bs-target="#nav-item3p" type="button" role="tab" aria-controls="nav-item3p" aria-selected="false">Premium</button>
+                                <div class="wrapper align-items-center">
+                                    <div class="price-content pt-3">
+                                        <div class="price">@Model.Service.Price</div>
+                                        @if (Model.Service.Discount != 0)
+                                        {
+                                            <div class="price">Предложено намаление: @Model.Service.Discount</div>
+                                        }
+                                        <div class="h5 mb-2">@Model.Service.Name</div>
+                                        <p class="text fz14">@Model.Service.CategoryName</p>
+                                        <hr class="opacity-100 mb20">
+                                        <div class="list-style1">
+                                            <ul class="">
+                                                @if (Model.Service.WebsiteName != null)
+                                                {
+                                                    <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>Уебсайт: @Model.Service.WebsiteName</li>
+                                                }
+                                                @if (Model.Service.PhoneNumber != null)
+                                                {
+                                                    <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Телефон: @Model.Service.PhoneNumber</li>
+                                                }         
+                                            </ul>
                                         </div>
-                                    </nav>
-                                    <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade" id="nav-item1p" role="tabpanel" aria-labelledby="nav-item1p-tab">
-                                            <div class="price-content">
-                                                <div class="price">$50</div>
-                                                <div class="h5 mb-2">High-converting Landing Pages</div>
-                                                <p class="text fz14">I will redesign your current landing page or create one for you (upto 4 sections)</p>
-                                                <hr class="opacity-100 mb20">
-                                                <ul class="p-0 mb15 d-sm-flex align-items-center">
-                                                    <li class="fz14 fw500 dark-color"><i class="flaticon-sandclock fz20 text-thm2 me-2 vam"></i>3 Days Delivery</li>
-                                                    <li class="fz14 fw500 dark-color ml20 ml0-xs"><i class="flaticon-recycle fz20 text-thm2 me-2 vam"></i>2 Revisions</li>
-                                                </ul>
-                                                <div class="list-style1">
-                                                    <ul class="">
-                                                        <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
-                                                        <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="d-grid">
-                                                    <a href="" class="ud-btn btn-thm">Continue $50<i class="fal fa-arrow-right-long"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show active" id="nav-item2p" role="tabpanel" aria-labelledby="nav-item2p-tab">
-                                            <div class="price-content">
-                                                <div class="price">$29</div>
-                                                <div class="h5 mb-2">High-converting Landing Pages</div>
-                                                <p class="text fz14">I will redesign your current landing page or create one for you (upto 4 sections)</p>
-                                                <hr class="opacity-100 mb20">
-                                                <ul class="p-0 mb15 d-sm-flex align-items-center">
-                                                    <li class="fz14 fw500 dark-color"><i class="flaticon-sandclock fz20 text-thm2 me-2 vam"></i>3 Days Delivery</li>
-                                                    <li class="fz14 fw500 dark-color ml20 ml0-xs"><i class="flaticon-recycle fz20 text-thm2 me-2 vam"></i>2 Revisions</li>
-                                                </ul>
-                                                <div class="list-style1">
-                                                    <ul class="">
-                                                        <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
-                                                        <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="d-grid">
-                                                    <a href="" class="ud-btn btn-thm">Continue $29<i class="fal fa-arrow-right-long"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="nav-item3p" role="tabpanel" aria-labelledby="nav-item3p-tab">
-                                            <div class="price-content">
-                                                <div class="price">$250</div>
-                                                <div class="h5 mb-2">High-converting Landing Pages</div>
-                                                <p class="text fz14">I will redesign your current landing page or create one for you (upto 4 sections)</p>
-                                                <hr class="opacity-100 mb20">
-                                                <ul class="p-0 mb15 d-sm-flex align-items-center">
-                                                    <li class="fz14 fw500 dark-color"><i class="flaticon-sandclock fz20 text-thm2 me-2 vam"></i>3 Days Delivery</li>
-                                                    <li class="fz14 fw500 dark-color ml20 ml0-xs"><i class="flaticon-recycle fz20 text-thm2 me-2 vam"></i>2 Revisions</li>
-                                                </ul>
-                                                <div class="list-style1">
-                                                    <ul class="">
-                                                        <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
-                                                        <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="d-grid">
-                                                    <a href="" class="ud-btn btn-thm">Continue $250<i class="fal fa-arrow-right-long"></i></a>
-                                                </div>
-                                            </div>
+                                        <div class="d-grid">
+                                            <a href="" class="ud-btn btn-thm">Продължи @Model.Service.Price<i class="fal fa-arrow-right-long"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -318,7 +278,14 @@
                                         <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@Model.Service.OwnerUsername">
                                             <h5 class="title mb-1">@Model.Service.OwnerName</h5>
                                         </a>
-                                        <p class="mb-0">Career Ex.Nursing Assistant TODO</p>
+                                        @if (Model.Service.OwnerCareer != null)
+                                        {
+                                            <p class="mb-0">@Model.Service.OwnerCareer</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0">@Model.Service.OwnerUsername</p>
+                                        }
                                     </div>
                                 </div>
                                 <hr class="opacity-100">
@@ -328,7 +295,7 @@
                                     </div>
                                 </div>
                                 <div class="d-grid mt30">
-                                    <a href="page-freelancer-single.html" class="ud-btn btn-thm-border">Свържи се с мен<i class="fal fa-arrow-right-long"></i></a>
+                                    <a asp-action="ConnectToChat" asp-controller="Chats" asp-route-id="@Model.Service.OwnerUsername" class="ud-btn btn-thm-border">Свържи се с мен<i class="fal fa-arrow-right-long"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -13,14 +13,17 @@ namespace Controllers
         private readonly UserManager<SkillBoxUser> userManager;
         private readonly IChatService chatService;
         private readonly IUserService userService;
+        private readonly IOfferingService offeringService;
 
         public ChatsController(UserManager<SkillBoxUser> userManager,
             IChatService chatService,
-            IUserService userService)
+            IUserService userService,
+            IOfferingService offeringService)
         {
             this.userManager = userManager;
             this.chatService = chatService;
             this.userService = userService;
+            this.offeringService = offeringService;
         }
         public IActionResult Index()
         {
@@ -98,7 +101,7 @@ namespace Controllers
             if (user != null)
             {
                 var allChatUsers = chatService.GetChatUsersByChatIdAsync(chatId).Result.Select(cu => cu.User);
-                if (allChatUsers.Any(u => u.UserName == user.UserName)) 
+                if (allChatUsers.Any(u => u.UserName == user.UserName))
                 {
                     return Json(new { success = false, message = "Този потребител вече е в този разговор!" });
                 }
@@ -125,6 +128,16 @@ namespace Controllers
             }
             chatService.RemoveChatUser(user, chat);
             return RedirectToAction("Index", "Chats");
+        }
+        public IActionResult ConnectToChat(string id)
+        {
+            //TODO Add getServiceById() with string id and get the username to skiller from the service
+            var chat = chatService.FindChatByUsers(User.Identity?.Name!, id);
+            if (chat == null)
+            {
+                chat = chatService.CreateNewChat(User.Identity?.Name!, id);
+            }
+            return RedirectToAction("Chat", new { id = chat.Id} );
         }
     }
 }

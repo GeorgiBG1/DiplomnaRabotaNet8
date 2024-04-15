@@ -23,6 +23,10 @@ namespace Services
             this.userManager = userManager;
             this.mapper = mapper;
         }
+        public SkillBoxUser GetUserByUsername(string username)
+        {
+            return dbContext.Users.FirstOrDefault(u => u.UserName == username)!;
+        }
         public UserDTO GetSkillerDTO(string username)
         {
             var skiller = dbContext.Users.Where(u => u.UserName == username)
@@ -78,6 +82,10 @@ namespace Services
         public ICollection<Skill> GetAllMySkills(string username)
         {
             return dbContext.Skills.Where(s => s.User.UserName == username).ToList();
+        }
+        public City GetCityById(int id)
+        {
+            return dbContext.Cities.FirstOrDefault(c => c.Id == id)!;
         }
         public int GetUsersCount()
         {

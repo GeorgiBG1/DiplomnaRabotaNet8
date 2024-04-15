@@ -5,6 +5,8 @@ using Contracts;
 using Models;
 using Microsoft.AspNetCore.Authorization;
 using CacheConfiguration;
+using Microsoft.AspNetCore.Identity;
+using Data.Models;
 
 namespace Controllers
 {
@@ -14,10 +16,12 @@ namespace Controllers
         private readonly ICloudinaryService cloudinaryService;
         private readonly ICategoryService categoryService;
         private readonly IOfferingService offeringService;
+        private readonly UserManager<SkillBoxUser> userManager;
         private readonly IUserService userService;
         private readonly IImageService imageService;
 
         public ServicesController(SkillBoxDbContext dbContext,
+            UserManager<SkillBoxUser> userManager,
             ICloudinaryService cloudinaryService,
             ICategoryService categoryService,
             IOfferingService offeringService,
@@ -28,6 +32,7 @@ namespace Controllers
             this.cloudinaryService = cloudinaryService;
             this.categoryService = categoryService;
             this.offeringService = offeringService;
+            this.userManager = userManager;
             this.userService = userService;
             this.imageService = imageService;
         }
@@ -135,28 +140,40 @@ namespace Controllers
             //
 
             var skills = CacheData.Skills;
-            var categories = CacheData.Categories;
-            var cities = CacheData.Cities;
-            var days = CacheData.Days;
-           
+
             if (ModelState.IsValid)
             {
                 bindingModel.Skills = skills;
-                bindingModel.Categories = categories;
-                bindingModel.Cities = cities;
-                bindingModel.Skills.Add(skills[bindingModel.Skill]);
-
-                var test = bindingModel.DaysAsString();
+                bindingModel.Category = categoryService.GetCategoryById(bindingModel.CategoryId);
+                bindingModel.City = userService.GetCityById(bindingModel.CityId);
+                bindingModel.User = userManager.GetUserAsync(User).GetAwaiter().GetResult();
+                bindingModel.Status = offeringService.GetServiceStatusById(1);
 
                 var images = string.Empty;
                 foreach (var img in bindingModel.ImageFiles)
                 {
                     var imgURL = cloudinaryService.UploadFileAndGetURL(img, "ServiceImgs");
                     if (imgURL != "none")
-                        images += $"{imgURL}|";
+                    {
+                        if (img != bindingModel.ImageFiles.ElementAt(0))
+                        {
+                            images += $"{imgURL}|";
+                        }
+                        else
+                        {
+                            bindingModel.MainImage = imgURL;
+                        }
+                    }
+                    else
+                    {
+                        return View(bindingModel);
+                    }
                 }
                 bindingModel.Images = images;
                 offeringService.CreateService(bindingModel);
+                CacheData.Categories = null!;
+                CacheData.Cities = null!;
+                CacheData.Skills = null!;
                 return RedirectToAction("MyServices");
             }
             return View(bindingModel);

@@ -19,6 +19,11 @@ namespace Services
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+        public Category GetCategoryById(int id)
+        {
+            var category = dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            return category!;
+        }
         public CategoryDTO GetCategoryDTO(int id)
         {
             var category = dbContext.Categories

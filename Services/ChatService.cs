@@ -128,5 +128,26 @@ namespace Services
         {
             return dbContext.Chats.Count();
         }
+
+        public Chat FindChatByUsers(string currentUsername, string usernameToConnect)
+        {
+            Chat chat;
+            chat = dbContext.Chats
+                .Where(c => c.ChatUsers.Any(c => c.User.UserName == currentUsername)
+                    && c.ChatUsers.Any(c => c.User.UserName == usernameToConnect))
+                .FirstOrDefault()!;
+            return chat;
+        }
+
+        public Chat CreateNewChat(string currentUsername, string usernameToConnect)
+        {
+            var chat = new Chat
+            {
+
+            };
+            dbContext.Chats.Add(chat);
+            dbContext.SaveChanges();
+            return chat;
+        }
     }
 }

@@ -68,10 +68,10 @@
                                                 {
                                                     if (categories.Count != 0)
                                                     {
-                                                        <label asp-for="@Model.Category" class="form-label fw500 fz16 dark-color">Категория</label>
+                                                        <label asp-for="@Model.CategoryId" class="form-label fw500 fz16 dark-color">Категория</label>
                                                         <div class="bootselect-multiselect">
                                                             <div class="dropdown bootstrap-select dropup" style="width: 100%;">
-                                                                <select asp-for="@Model.Category" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                                <select asp-for="@Model.CategoryId" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
                                                                     <option disabled>Избери</option>
                                                                     @foreach (var city in categories)
                                                                     {
@@ -117,10 +117,10 @@
                                                 {
                                                     if (cities.Count != 0)
                                                     {
-                                                        <label asp-for="@Model.City" class="form-label fw500 fz16 dark-color">Град</label>
+                                                        <label asp-for="@Model.CityId" class="form-label fw500 fz16 dark-color">Град</label>
                                                         <div class="bootselect-multiselect">
                                                             <div class="dropdown bootstrap-select dropup" style="width: 100%;">
-                                                                <select asp-for="@Model.City" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                                <select asp-for="@Model.CityId" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
                                                                     <option disabled>Избери</option>
                                                                     @foreach (var city in cities)
                                                                     {
@@ -173,7 +173,7 @@
                                                     {
                                                         <div class="bootselect-multiselect">
                                                             <div class="dropdown bootstrap-select show-tick dropup">
-                                                                <select asp-for="@Model.Skill" class="selectpicker" tabindex="null">
+                                                                <select asp-for="@Model.SkillId" class="selectpicker" tabindex="null">
                                                                     <option disabled>Избери</option>
                                                                     @for (int i = 0; i < skills.Count; i++)
                                                                     {
@@ -204,32 +204,50 @@
                     <div class="bdrb1 pb15 mb25">
                         <h5 class="list-title fw-bold">График</h5>
                     </div>
-                    <div class="col-xl-8" style="height: 350px;">
+                    <div class="col-xl-8" style="height: 360px;">
                         <div class="bootselect-multiselect">
                             <div class="dropdown bootstrap-select show-tick dropup">
-                                @* <select class="selectpicker" multiple="" tabindex="1" data-none-selected-text="Без график"> *@
-                                    @* <option value="0" disabled>Без график</option> *@
-                                <label>Понеделник</label>
-                                    <input type="checkbox" asp-for="@Model.Days[0]">
-                                <label>Вторник</label>
-                                <input type="checkbox" asp-for="@Model.Days[1]">
-                                <label>Сряда</label>
-                                <input type="checkbox" asp-for="@Model.Days[2]">
-                                <label>Четвъртък</label>
-                                <input type="checkbox" asp-for="@Model.Days[3]">
-                                <label>Петък</label>
-                                <input type="checkbox" asp-for="@Model.Days[4]">
-                                <label>Събота</label>
-                                <input type="checkbox" asp-for="@Model.Days[5]">
-                                <label>Неделя</label>
-                                <input type="checkbox" asp-for="@Model.Days[6]">
-                                    @* <option value="2">Вторник</option>
-                                    <option value="3">Сряда</option>
-                                    <option value="4">Четвъртък</option>
-                                    <option value="5">Петък</option>
-                                    <option value="6">Събота</option>
-                                    <option value="7">Неделя</option> *@
-                               @*  </select> *@
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[0]" id="cbtest-19-1" />
+                                    <label for="cbtest-19-1" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Пон</h2>
+                                </div>
+
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[1]" id="cbtest-19-2" />
+                                    <label for="cbtest-19-2" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Вт</h2>
+                                </div>
+
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[2]" id="cbtest-19-3" />
+                                    <label for="cbtest-19-3" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Ср</h2>
+                                </div>
+
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[3]" id="cbtest-19-4" />
+                                    <label for="cbtest-19-4" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Чт</h2>
+                                </div>
+
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[4]" id="cbtest-19-5" />
+                                    <label for="cbtest-19-5" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Пт</h2>
+                                </div>
+
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[5]" id="cbtest-19-6" />
+                                    <label for="cbtest-19-6" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Съб</h2>
+                                </div>
+
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" asp-for="@Model.Days[6]" id="cbtest-19-7" />
+                                    <label for="cbtest-19-7" class="check-box"></label>
+                                    <h2 class="list-title fw-bold">Нед</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -317,3 +335,4 @@
         cursor: pointer;
     }
 </style>
+<link rel="stylesheet" href="~/css/checkbox-style.css" asp-append-version="true"/>

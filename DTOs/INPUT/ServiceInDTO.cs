@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.INPUT
 {
@@ -14,12 +15,16 @@ namespace DTOs.INPUT
         public string? WebsiteName { get; set; }
         public decimal Price { get; set; }
         public string? UnitPrice { get; set; }
-        public int Category { get; set; }
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
         public List<Category>? Categories { get; set; }
-        public int City { get; set; }
+        public int CityId { get; set; }
+        public City? City { get; set; }
         public List<City>? Cities { get; set; }
-        public int Skill { get; set; }
+        public int SkillId { get; set; }
         public List<Skill>? Skills { get; set; }
+        public SkillBoxUser? User { get; set; }
+        public ServiceStatus? Status { get; set; }
         public bool[] Days { get; set; } //schedule
 
         public string DaysAsString()
@@ -64,9 +69,9 @@ namespace DTOs.INPUT
 
             return schedule.TrimStart(',').TrimStart();
         }
-
-
+        public string? MainImage { get; set; }
         public string Images { get; set; } = "none";
+        [MinLength(2, ErrorMessage = "Сложете поне две снимки на вашата услуга!")]
         public virtual IEnumerable<IFormFile> ImageFiles { get; set; }
     }
 }

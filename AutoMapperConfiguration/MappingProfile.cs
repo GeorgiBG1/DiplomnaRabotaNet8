@@ -19,10 +19,14 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(s => s.WebsiteName, opt => opt.MapFrom(d => d.WebsiteName))
                 .ForMember(s => s.Price, opt => opt.MapFrom(d => d.Price))
                 .ForMember(s => s.UnitPrice, opt => opt.MapFrom(d => d.UnitPrice))
-                .ForMember(s => s.CategoryId, opt => opt.MapFrom(d => d.Category))
-                .ForMember(s => s.CityId, opt => opt.MapFrom(d => d.City))
-                .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.Skill].Name))
+                .ForMember(s => s.Category, opt => opt.MapFrom(d => d.Category))
+                .ForMember(s => s.City, opt => opt.MapFrom(d => d.City))
+                .ForMember(s => s.Owner, opt => opt.MapFrom(d => d.User))
+                .ForMember(s => s.OwnerName, opt => opt.MapFrom(d => $"{d.User.FirstName} {d.User.LastName}"))
+                .ForMember(s => s.ServiceStatus, opt => opt.MapFrom(d => d.Status))
+                .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.SkillId].Name))
                 .ForMember(s => s.Schedule, opt => opt.MapFrom(d => d.DaysAsString()))
+                .ForMember(s => s.MainImage, opt => opt.MapFrom(d => d.MainImage))
                 .ForMember(s => s.Images, opt => opt.MapFrom(d => d.Images));
 
             //OUT
@@ -92,7 +96,7 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<SkillBoxService, ServiceDTO>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
                 .ForMember(d => d.Schedule, opt => opt.MapFrom(s => s.Schedule))
-                //TODO add Skill or Career
+                .ForMember(d => d.MainSkill, opt => opt.MapFrom(s => s.MainSkill))   
                 .ForMember(d => d.Location, opt => opt.MapFrom(s => s.City.BGName))
                 .ForMember(d => d.Images, opt => opt.MapFrom((s, d) =>
                 {
@@ -131,6 +135,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 }))
                 .ForMember(d => d.OwnerUsername, opt => opt.MapFrom(s => s.Owner.UserName))
                 .ForMember(d => d.OwnerName, opt => opt.MapFrom(s => s.OwnerName))
+                .ForMember(d => d.OwnerCareer, opt => opt.MapFrom(s => s.Owner.Career))
                 .ForMember(d => d.OwnerProfilePhoto, opt => opt.MapFrom(s => s.Owner.ProfilePhoto))
                 .ForMember(d => d.OwnerCurrentLocation, opt => opt.MapFrom(s => s.Owner.City.BGName));
             #endregion

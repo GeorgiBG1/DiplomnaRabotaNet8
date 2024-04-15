@@ -20,6 +20,10 @@ namespace Services
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+        public SkillBoxService GetServiceById(int id)
+        {
+            return dbContext.Services.FirstOrDefault(s => s.Id == id)!;
+        }
         public ServiceDTO GetServiceDTO(int id)
         {
             var service = dbContext.Services.Where(s => s.Id == id)
@@ -109,6 +113,10 @@ namespace Services
             }
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
+        }
+        public ServiceStatus GetServiceStatusById(int id)
+        {
+            return dbContext.ServiceStatuses.FirstOrDefault(ss => ss.Id == id)!;
         }
         public ICollection<ServiceStatus> GetAllServiceStatuses() => dbContext.ServiceStatuses.ToList();
         public ICollection<City> GetAllCities() => dbContext.Cities.ToList();

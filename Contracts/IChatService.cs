@@ -14,5 +14,7 @@ namespace Contracts
         public void AddNewChatUser(SkillBoxUser user, Chat chat);
         public void RemoveChatUser(SkillBoxUser user, Chat chat);
         public int GetChatsCount();
+        public Chat FindChatByUsers(string currentUsername, string usernameToConnect);
+        public Chat CreateNewChat(string currentUsername, string usernameToConnect);
     }
 }
