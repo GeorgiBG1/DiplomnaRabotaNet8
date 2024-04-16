@@ -129,13 +129,17 @@ namespace Controllers
             chatService.RemoveChatUser(user, chat);
             return RedirectToAction("Index", "Chats");
         }
-        public IActionResult ConnectToChat(string id)
+        public IActionResult ConnectToChat(int id)
         {
-            //TODO Add getServiceById() with string id and get the username to skiller from the service
-            var chat = chatService.FindChatByUsers(User.Identity?.Name!, id);
+            var service = offeringService.GetServiceById(id);
+            if (service == null)
+            {
+                return View("Error");
+            }
+            var chat = chatService.FindChatByUsers(User.Identity?.Name!, service.Owner.UserName!, service);
             if (chat == null)
             {
-                chat = chatService.CreateNewChat(User.Identity?.Name!, id);
+                chat = chatService.CreateNewChat(User.Identity?.Name!, service.Owner.UserName!, service);
             }
             return RedirectToAction("Chat", new { id = chat.Id} );
         }

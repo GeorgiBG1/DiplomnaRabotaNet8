@@ -10,11 +10,13 @@ namespace Services
     public class ChatService : IChatService
     {
         private readonly SkillBoxDbContext dbContext;
+        private readonly IUserService userService;
         private readonly IMapper mapper;
 
-        public ChatService(SkillBoxDbContext dbContext, IMapper mapper)
+        public ChatService(SkillBoxDbContext dbContext, IUserService userService, IMapper mapper)
         {
             this.dbContext = dbContext;
+            this.userService = userService;
             this.mapper = mapper;
         }
 
@@ -129,23 +131,43 @@ namespace Services
             return dbContext.Chats.Count();
         }
 
-        public Chat FindChatByUsers(string currentUsername, string usernameToConnect)
+        public Chat FindChatByUsers(string currentUsername, string usernameToConnect,  SkillBoxService service)
         {
             Chat chat;
             chat = dbContext.Chats
+                .Where(c => c.ServiceId == service.Id)
                 .Where(c => c.ChatUsers.Any(c => c.User.UserName == currentUsername)
                     && c.ChatUsers.Any(c => c.User.UserName == usernameToConnect))
                 .FirstOrDefault()!;
             return chat;
         }
 
-        public Chat CreateNewChat(string currentUsername, string usernameToConnect)
+        public Chat CreateNewChat(string currentUsername, string usernameToConnect, SkillBoxService service)
         {
+            var currentUser = userService.GetUserByUsername(currentUsername);
+            var userToConnect = userService.GetUserByUsername(usernameToConnect);
+
             var chat = new Chat
             {
-
+                Name = $"{currentUser.FirstName}, {userToConnect.FirstName}",
+                Service = service
             };
             dbContext.Chats.Add(chat);
+
+            var chatUser1 = new ChatUser
+            {
+                Chat = chat,
+                User = currentUser
+            };
+            dbContext.ChatUsers.Add(chatUser1);
+            
+            var chatUser2 = new ChatUser
+            {
+                Chat = chat,
+                User = userToConnect
+            };
+            dbContext.ChatUsers.Add(chatUser2);
+
             dbContext.SaveChanges();
             return chat;
         }

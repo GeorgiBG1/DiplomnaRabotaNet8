@@ -22,7 +22,8 @@ namespace Services
         }
         public SkillBoxService GetServiceById(int id)
         {
-            return dbContext.Services.FirstOrDefault(s => s.Id == id)!;
+            return dbContext.Services.Include(s => s.Owner)
+                .FirstOrDefault(s => s.Id == id)!;
         }
         public ServiceDTO GetServiceDTO(int id)
         {

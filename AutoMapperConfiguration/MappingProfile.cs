@@ -94,6 +94,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                  }));
 
             CreateMap<SkillBoxService, ServiceDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
                 .ForMember(d => d.Schedule, opt => opt.MapFrom(s => s.Schedule))
                 .ForMember(d => d.MainSkill, opt => opt.MapFrom(s => s.MainSkill))   
