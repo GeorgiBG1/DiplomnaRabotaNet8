@@ -275,9 +275,10 @@
                                                     <div class="skill-tags d-flex align-items-center justify-content-lg-center mb-0">
                                                         @if (skiller.Skills.Count() != 0)
                                                         {
+                                                            <span>Умения:</span>
                                                             foreach (var skill in skiller.Skills)
                                                             {
-                                                                <a>@skill</a>
+                                                                <a class="px-2">@skill</a>
                                                             }
                                                         }
                                                     </div>

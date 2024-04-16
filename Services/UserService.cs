@@ -52,6 +52,18 @@ namespace Services
             var model = skillers.Select(mapper.Map<UserCardDTO>).ToList();
             return model;
         }
+        public ICollection<UserCardDTO> GetAllSkillerAsUserCardDTOs()
+        {
+            var skillers = dbContext.Users
+                .Where(u => u.Services.Count != 0)
+                .Include(u => u.City)
+                .Include(u => u.Services)
+                .ThenInclude(s => s.Reviews)
+                .OrderByDescending(u => u.CreatedOn)
+                .ToList();
+            var model = skillers.Select(mapper.Map<UserCardDTO>).ToList();
+            return model;
+        }
         public ICollection<ServiceCardDTO> GetSkillerServicesAsServiceCardDTOs(string username, int count = 1)
         {
             var services = dbContext.Services

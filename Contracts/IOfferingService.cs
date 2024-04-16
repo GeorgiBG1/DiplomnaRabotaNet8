@@ -12,6 +12,7 @@ namespace Contracts
         public ICollection<ServiceMiniDTO> GetAllSkillerServicesByUsername(string username);
         public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1, int serviceId = 0);
         public ServiceStatus GetServiceStatusById(int id);
+        public ICollection<ServiceMiniDTO> GetAllServicesAsServiceMiniDTOs();
         public ICollection<ServiceStatus> GetAllServiceStatuses();
         public ICollection<City> GetAllCities();
         public void CreateService(ServiceInDTO serviceInDTO);

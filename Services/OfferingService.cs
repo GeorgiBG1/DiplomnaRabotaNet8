@@ -119,6 +119,21 @@ namespace Services
         {
             return dbContext.ServiceStatuses.FirstOrDefault(ss => ss.Id == id)!;
         }
+        public ICollection<ServiceMiniDTO> GetAllServicesAsServiceMiniDTOs()
+        {
+            var services = dbContext.Services.Where(s => !s.IsDeleted)
+               .OrderByDescending(s => s.Id)
+               .Include(s => s.ServiceStatus)
+               .Include(s => s.City)
+               .Include(s => s.Owner)
+               .ThenInclude(o => o.Offerings)
+               .ToList();
+            if (services.Any(s => s.Name.Length > 50))
+            {
+                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+            }
+            return services.Select(mapper.Map<ServiceMiniDTO>).ToList();
+        }
         public ICollection<ServiceStatus> GetAllServiceStatuses() => dbContext.ServiceStatuses.ToList();
         public ICollection<City> GetAllCities() => dbContext.Cities.ToList();
         public void CreateService(ServiceInDTO serviceInDTO)

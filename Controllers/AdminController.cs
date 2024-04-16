@@ -53,10 +53,21 @@ namespace Controllers
         }
         public IActionResult Services()
         {
-            return View();
-        }public IActionResult Skillers()
+            var model = offeringService.GetAllServicesAsServiceMiniDTOs();
+            return View(model);
+        }
+        public IActionResult Skillers()
         {
-            return View();
+            var model = userService.GetAllSkillerAsUserCardDTOs();
+            return View(model);
+        }
+        public IActionResult DeleteService(int id)
+        {
+            return RedirectToAction("Services", "Admin");
+        }
+        public IActionResult BlockUser(string username)
+        {
+            return RedirectToAction("Skillers", "Admin");
         }
     }
 }

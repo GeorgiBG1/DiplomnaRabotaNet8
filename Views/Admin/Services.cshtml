@@ -1,3 +1,67 @@
-﻿@{
+﻿@model ICollection<ServiceMiniDTO>
+@{
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
+
+<div class="dashboard__content hover-bgc-color">
+    <div class="row pb40">
+        <div class="col-lg-9">
+            <div class="dashboard_title_area">
+                <h2>Управление на всички услуги</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            @if (Model != null)
+            {
+                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                    <div class="packages_table table-responsive">
+                        <table class="table-style3 table at-savesearch">
+                            <thead class="t-head">
+                                <tr>
+                                    <th scope="col"><b>Име</b></th>
+                                    <th scope="col"><b>Цена</b></th>
+                                    <th scope="col" class="text-center"><b>Управление</b></th>
+                                </tr>
+                            </thead>
+                            <tbody class="t-body">
+                                @foreach (var service in Model)
+                                {
+                                    <tr>
+                                        <td class="ps-0" scope="row">
+                                            <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
+                                                <div class="d-lg-flex align-items-lg-center">
+                                                    <div class="details ml15 ml0-md mb15-md">
+                                                        <h5 class="title mb-2">@service.Name</h5>
+                                                        <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> @service.Location</p>
+                                                        <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> @service.CreatedOn</p>
+                                                        <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> @service.OfferingsCount оферти</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="vam"><h5 class="mb-0">@service.Price <span class="fz14 fw400">@service.UnitPrice</span></h5></td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <a asp-action="Service" asp-controller="Services" asp-route-id="@service.Id" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e"></iconify-icon></a>
+                                                <a asp-action="DeleteService" asp-controller="Admin" asp-route-id="@service.Id" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Изтрий"><span class="flaticon-delete"></span></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-center" style="height: 300px;">
+                    <h2 class="d-inline mt50">Няма услуги</h2>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
+</div>
