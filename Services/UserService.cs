@@ -83,6 +83,13 @@ namespace Services
         {
             return dbContext.Skills.Where(s => s.User.UserName == username).ToList();
         }
+        public ICollection<Review> GetAllMyReviews(string username)
+        {
+            var reviews = dbContext.Reviews
+                .Where(r => r.User.UserName == username)
+                .ToList();
+            return reviews;
+        }
         public City GetCityById(int id)
         {
             return dbContext.Cities.FirstOrDefault(c => c.Id == id)!;

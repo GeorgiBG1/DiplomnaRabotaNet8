@@ -11,6 +11,7 @@ namespace Contracts
         public ICollection<ServiceCardDTO> GetSkillerServicesAsServiceCardDTOs(string username, int count = 1);
         public ICollection<UserCardDTO> GetTopSkillersAsUserCardDTOs(int count = 1);
         public ICollection<Skill> GetAllMySkills(string username);
+        public ICollection<Review> GetAllMyReviews(string username);
         public City GetCityById(int id);
         public int GetUsersCount();
         public int GetSkillersCount();
