@@ -272,14 +272,18 @@
                         <div class="sidebar_list_item ">
                             <a asp-action="Details" asp-controller="Services" class="items-center"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
                         </div>
-                        
-                        <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
-                        <div class="sidebar_list_item">
-                            <a asp-action="Services" asp-controller="Admin" class="items-center"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
-                        </div>
-                        <div class="sidebar_list_item ">
-                            <a asp-action="Skillers" asp-controller="Admin" class="items-center"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
-                        </div>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                            <div class="sidebar_list_item">
+                                <a asp-action="Services" asp-controller="Admin" class="items-center"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
+                            </div>
+                            <div class="sidebar_list_item ">
+                                <a asp-action="Skillers" asp-controller="Admin" class="items-center"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
+                            </div>
+                        }
+
                         <p class="fz15 fw400 ff-heading pl30 mt30">Акаунт</p>
                         <div class="sidebar_list_item ">
                             <a class="items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr15"></i>Моят профил</a>
