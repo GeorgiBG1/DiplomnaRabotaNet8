@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SkillBox.App.Migrations
 {
     [DbContext(typeof(SkillBoxDbContext))]
-    [Migration("20240414231606_InitialCreate")]
+    [Migration("20240417191345_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -124,6 +124,44 @@ namespace SkillBox.App.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("Data.Models.Favorite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsService")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsSkiller")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("SkillerId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("Data.Models.Gender", b =>
                 {
                     b.Property<int>("Id")
@@ -143,6 +181,43 @@ namespace SkillBox.App.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
+                });
+
+            modelBuilder.Entity("Data.Models.Notification", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Data.Models.Offering", b =>
@@ -702,6 +777,32 @@ namespace SkillBox.App.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.Favorite", b =>
+                {
+                    b.HasOne("Data.Models.SkillBoxService", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+
+                    b.HasOne("Data.Models.SkillBoxUser", "Skiller")
+                        .WithMany()
+                        .HasForeignKey("SkillerId");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Skiller");
+                });
+
+            modelBuilder.Entity("Data.Models.Notification", b =>
+                {
+                    b.HasOne("Data.Models.SkillBoxUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Data.Models.Offering", b =>

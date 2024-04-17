@@ -258,6 +258,30 @@ namespace SkillBox.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Services",
                 columns: table => new
                 {
@@ -363,6 +387,35 @@ namespace SkillBox.App.Migrations
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favorites",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsSkiller = table.Column<bool>(type: "bit", nullable: true),
+                    SkillerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsService = table.Column<bool>(type: "bit", nullable: true),
+                    ServiceId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorites", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Favorites_AspNetUsers_SkillerId",
+                        column: x => x.SkillerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Favorites_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -546,6 +599,21 @@ namespace SkillBox.App.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Favorites_ServiceId",
+                table: "Favorites",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_SkillerId",
+                table: "Favorites",
+                column: "SkillerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_OwnerId",
+                table: "Notifications",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offerings_ServiceId",
                 table: "Offerings",
                 column: "ServiceId");
@@ -626,6 +694,12 @@ namespace SkillBox.App.Migrations
 
             migrationBuilder.DropTable(
                 name: "ChatUsers");
+
+            migrationBuilder.DropTable(
+                name: "Favorites");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Offerings");

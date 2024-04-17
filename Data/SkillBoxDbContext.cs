@@ -23,5 +23,7 @@ namespace Data
         public DbSet<Gender> Genders { get; set; }
         public DbSet<ServiceStatus> ServiceStatuses { get; set; }
         public DbSet<SkillLevel> SkillLevels { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

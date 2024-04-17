@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using CacheConfiguration;
 using Microsoft.AspNetCore.Identity;
 using Data.Models;
+using Global_Constants;
 
 namespace Controllers
 {
@@ -19,6 +20,7 @@ namespace Controllers
         private readonly UserManager<SkillBoxUser> userManager;
         private readonly IUserService userService;
         private readonly IImageService imageService;
+        private readonly INotificationService notificationService;
 
         public ServicesController(SkillBoxDbContext dbContext,
             UserManager<SkillBoxUser> userManager,
@@ -26,7 +28,8 @@ namespace Controllers
             ICategoryService categoryService,
             IOfferingService offeringService,
             IUserService userService,
-            IImageService imageService)
+            IImageService imageService,
+            INotificationService notificationService)
         {
             this.dbContext = dbContext;
             this.cloudinaryService = cloudinaryService;
@@ -35,6 +38,7 @@ namespace Controllers
             this.userManager = userManager;
             this.userService = userService;
             this.imageService = imageService;
+            this.notificationService = notificationService;
         }
         public IActionResult Index()
         {
@@ -143,10 +147,12 @@ namespace Controllers
 
             if (ModelState.IsValid)
             {
+                var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
+
                 bindingModel.Skills = skills;
                 bindingModel.Category = categoryService.GetCategoryById(bindingModel.CategoryId);
                 bindingModel.City = userService.GetCityById(bindingModel.CityId);
-                bindingModel.User = userManager.GetUserAsync(User).GetAwaiter().GetResult();
+                bindingModel.User = user;
                 bindingModel.Status = offeringService.GetServiceStatusById(1);
 
                 var images = string.Empty;
@@ -171,6 +177,7 @@ namespace Controllers
                 }
                 bindingModel.Images = images;
                 offeringService.CreateService(bindingModel);
+                notificationService.CreateNotification(GlobalConstant.CreateServiceNotificationType, user!);
                 CacheData.Categories = null!;
                 CacheData.Cities = null!;
                 CacheData.Skills = null!;

@@ -27,6 +27,7 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddTransient<IChatService, ChatService>();
             builder.Services.AddTransient<IImageService, ImageService>();
             builder.Services.AddTransient<IAdminService, AdminService>();
+            builder.Services.AddTransient<INotificationService, NotificationService>();
 
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
