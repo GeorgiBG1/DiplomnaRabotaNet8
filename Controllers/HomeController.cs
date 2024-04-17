@@ -3,22 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Contracts;
 using Services;
+using System.Configuration;
 
 namespace Controllers
 {
     public class HomeController : Controller
     {
         private readonly DatabaseSeedService dbSeedService;
+        private readonly IConfiguration configuration;
         private readonly ICategoryService categoryService;
         private readonly IOfferingService offeringService;
         private readonly IUserService userService;
 
         public HomeController(DatabaseSeedService dbSeedService,
+            IConfiguration configuration,
             ICategoryService categoryService,
             IOfferingService offeringService,
             IUserService userService)
         {
             this.dbSeedService = dbSeedService;
+            this.configuration = configuration;
             this.categoryService = categoryService;
             this.offeringService = offeringService;
             this.userService = userService;
@@ -57,7 +61,9 @@ namespace Controllers
         [HttpGet]
         public async Task<IActionResult> DbSeedData(string id)
         {
-            var secret = "123456";
+            var subsection = configuration
+                .GetRequiredSection("DatabaseSeed");
+            var secret = subsection["Secret"];
             if (id == secret)
             {
                 await dbSeedService.SeedAsync();

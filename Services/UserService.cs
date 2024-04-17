@@ -5,7 +5,6 @@ using Data.Models;
 using DTOs.OUTPUT;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ServiceStack;
 
 namespace Services
 {
@@ -44,7 +43,7 @@ namespace Services
                 .Where(u => u.Services.Count != 0)
                 .Include(u => u.City)
                 .Include(u => u.Skills)
-                .Include(u => u.Services)
+                .Include(u => u.Services.Where(s => !s.IsDeleted))
                 .ThenInclude(s => s.Reviews)
                 .OrderByDescending(u => u.Services.SelectMany(s => s.Reviews!).Count())
                 .Skip(skipCount)
@@ -57,7 +56,7 @@ namespace Services
             var skillers = dbContext.Users
                 .Where(u => u.Services.Count != 0)
                 .Include(u => u.City)
-                .Include(u => u.Services)
+                .Include(u => u.Services.Where(s => !s.IsDeleted))
                 .ThenInclude(s => s.Reviews)
                 .OrderByDescending(u => u.CreatedOn)
                 .ToList();
@@ -67,6 +66,7 @@ namespace Services
         public ICollection<ServiceCardDTO> GetSkillerServicesAsServiceCardDTOs(string username, int count = 1)
         {
             var services = dbContext.Services
+                .Where(s => !s.IsDeleted)
                 .Where(s => s.Owner.UserName == username)
                 .OrderByDescending(s => s.Id)
                 .Include(s => s.Category)
@@ -84,7 +84,7 @@ namespace Services
                 .Where(u => u.Services.Count != 0)
                 .Include(u => u.City)
                 .Include(u => u.Skills)
-                .Include(u => u.Services)
+                .Include(u => u.Services.Where(s => !s.IsDeleted))
                 .ThenInclude(s => s.Reviews)
                 .OrderByDescending(u => u.Services.SelectMany(s => s.Reviews!).Count())
                 .Take(count).ToList();

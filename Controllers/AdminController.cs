@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Services;
 
 namespace Controllers
 {
@@ -65,6 +64,11 @@ namespace Controllers
         }
         public IActionResult DeleteService(int id)
         {
+            var isDeleted = offeringService.DeleteService(id);
+            if (!isDeleted)
+            {
+                return View("Error");
+            }
             return RedirectToAction("Services", "Admin");
         }
         public IActionResult BlockUser(string username)

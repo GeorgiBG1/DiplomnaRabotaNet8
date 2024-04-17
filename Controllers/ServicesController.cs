@@ -13,31 +13,26 @@ namespace Controllers
 {
     public class ServicesController : Controller
     {
-        private readonly SkillBoxDbContext dbContext;
         private readonly ICloudinaryService cloudinaryService;
         private readonly ICategoryService categoryService;
         private readonly IOfferingService offeringService;
         private readonly UserManager<SkillBoxUser> userManager;
         private readonly IUserService userService;
-        private readonly IImageService imageService;
         private readonly INotificationService notificationService;
 
-        public ServicesController(SkillBoxDbContext dbContext,
+        public ServicesController(
             UserManager<SkillBoxUser> userManager,
             ICloudinaryService cloudinaryService,
             ICategoryService categoryService,
             IOfferingService offeringService,
             IUserService userService,
-            IImageService imageService,
             INotificationService notificationService)
         {
-            this.dbContext = dbContext;
             this.cloudinaryService = cloudinaryService;
             this.categoryService = categoryService;
             this.offeringService = offeringService;
             this.userManager = userManager;
             this.userService = userService;
-            this.imageService = imageService;
             this.notificationService = notificationService;
         }
         public IActionResult Index()
@@ -80,6 +75,7 @@ namespace Controllers
             };
             return View(model);
         }
+        [Authorize(Roles = "Skiller")]
         public IActionResult Details()
         {
             //Menu - Nav
@@ -95,6 +91,7 @@ namespace Controllers
             };
             return View(model);
         }
+        [Authorize(Roles = "Skiller")]
         public IActionResult Edit(int id)
         {
             //Menu - Nav
@@ -103,22 +100,14 @@ namespace Controllers
             //
             return View();
         }
-        [Authorize(Roles = "Skiller, Admin")]
-        public IActionResult MyServices()
+        [Authorize(Roles = "Skiller")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ServiceInDTO bindingModel)
         {
-            //Menu - Nav
-            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
-            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
-            //
-            var serviceStatuses = offeringService.GetAllServiceStatuses();
-            var services = offeringService.GetAllSkillerServicesByUsername(User.Identity?.Name!);
-            var model = new MyServicesViewModel
-            {
-                StatusesList = serviceStatuses,
-                Services = services
-            };
-            return View(model);
+            return RedirectToAction("Details");
         }
+        [Authorize(Roles = "Skiller")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -135,7 +124,9 @@ namespace Controllers
             var model = new ServiceInDTO();
             return View(model);
         }
+        [Authorize(Roles = "Skiller")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(ServiceInDTO bindingModel)
         {
             //Menu - Nav
@@ -184,6 +175,32 @@ namespace Controllers
                 return RedirectToAction("MyServices");
             }
             return View(bindingModel);
+        }
+        [Authorize(Roles = "Skiller")]
+        public IActionResult Delete(int id)
+        {
+            var isDeleted = offeringService.DeleteService(id);
+            if (!isDeleted)
+            {
+                return View("Error");
+            }
+            return RedirectToAction("Details");
+        }
+        [Authorize(Roles = "Skiller")]
+        public IActionResult MyServices()
+        {
+            //Menu - Nav
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
+            var serviceStatuses = offeringService.GetAllServiceStatuses();
+            var services = offeringService.GetAllSkillerServicesByUsername(User.Identity?.Name!);
+            var model = new MyServicesViewModel
+            {
+                StatusesList = serviceStatuses,
+                Services = services
+            };
+            return View(model);
         }
         //Dynamic loading
         public IActionResult LoadMoreServices(int currentServicesCount)

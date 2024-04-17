@@ -16,6 +16,8 @@ namespace Contracts
         public ICollection<ServiceStatus> GetAllServiceStatuses();
         public ICollection<City> GetAllCities();
         public void CreateService(ServiceInDTO serviceInDTO);
+        //public void UpdateService(ServiceInDTO serviceInDTO);
+        public bool DeleteService(int id);
         public int GetServicesCount(int categoryId = 0);
         public int GetCompletedServicesCount();
         public int GetReviewsCount();

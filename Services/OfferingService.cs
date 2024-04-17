@@ -22,12 +22,16 @@ namespace Services
         }
         public SkillBoxService GetServiceById(int id)
         {
-            return dbContext.Services.Include(s => s.Owner)
+            return dbContext.Services
+                .Where(s => !s.IsDeleted)
+                .Include(s => s.Owner)
                 .FirstOrDefault(s => s.Id == id)!;
         }
         public ServiceDTO GetServiceDTO(int id)
         {
-            var service = dbContext.Services.Where(s => s.Id == id)
+            var service = dbContext.Services
+                .Where(s => s.Id == id)
+                .Where(s => !s.IsDeleted)
                 .Include(s => s.Owner)
                 .Include(s => s.City)
                 .Include(s => s.Reviews!)
@@ -44,12 +48,13 @@ namespace Services
             if (categoryId != 0)
             {
                 services = dbContext.Services
-                  .Include(s => s.Category)
-                  .Where(s => s.CategoryId == categoryId)
-                  .OrderByDescending(s => s.Id)
-                  .Include(s => s.Owner)
-                  .Skip(skipCount)
-                  .Take(count).ToList();
+                    .Where(s => !s.IsDeleted)
+                    .Include(s => s.Category)
+                    .Where(s => s.CategoryId == categoryId)
+                    .OrderByDescending(s => s.Id)
+                    .Include(s => s.Owner)
+                    .Skip(skipCount)
+                    .Take(count).ToList();
                 if (services.Count == 0)
                 {
                     services = dbContext.Categories
@@ -57,6 +62,7 @@ namespace Services
                       .Include(c => c.Services!)
                       .ThenInclude(s => s.Owner)
                       .SelectMany(c => c.Services!)
+                      .Where(s => !s.IsDeleted)
                       .OrderByDescending(s => s.Id)
                       .Skip(skipCount)
                       .Take(count).ToList();
@@ -65,11 +71,12 @@ namespace Services
             else
             {
                 services = dbContext.Services
-                  .OrderByDescending(s => s.Id)
-                  .Include(s => s.Category)
-                  .Include(s => s.Owner)
-                  .Skip(skipCount)
-                  .Take(count).ToList();
+                    .Where(s => !s.IsDeleted)
+                    .OrderByDescending(s => s.Id)
+                    .Include(s => s.Category)
+                    .Include(s => s.Owner)
+                    .Skip(skipCount)
+                    .Take(count).ToList();
             }
             if (services.Any(s => s.Name.Length > 50))
             {
@@ -100,6 +107,7 @@ namespace Services
         public ICollection<ServiceCardDTO> GetTopServicesAsServiceCardDTOs(int count = 1, int serviceId = 0)
         {
             var services = dbContext.Services
+                .Where(s => !s.IsDeleted)
                 .Include(s => s.Category)
                 .Include(s => s.Owner)
                 .Include(s => s.Reviews)
@@ -121,13 +129,14 @@ namespace Services
         }
         public ICollection<ServiceMiniDTO> GetAllServicesAsServiceMiniDTOs()
         {
-            var services = dbContext.Services.Where(s => !s.IsDeleted)
-               .OrderByDescending(s => s.Id)
-               .Include(s => s.ServiceStatus)
-               .Include(s => s.City)
-               .Include(s => s.Owner)
-               .ThenInclude(o => o.Offerings)
-               .ToList();
+            var services = dbContext.Services
+                .Where(s => !s.IsDeleted)
+                .OrderByDescending(s => s.Id)
+                .Include(s => s.ServiceStatus)
+                .Include(s => s.City)
+                .Include(s => s.Owner)
+                .ThenInclude(o => o.Offerings)
+                .ToList();
             if (services.Any(s => s.Name.Length > 50))
             {
                 services.ForEach(s => s.Name = $"{s.Name![..47]}...");
@@ -142,18 +151,30 @@ namespace Services
             dbContext.Services.Add(service);
             dbContext.SaveChanges();
         }
+        public bool DeleteService(int id)
+        {
+            var service = dbContext.Services.FirstOrDefault(s => s.Id == id);
+            if (service != null)
+            {
+                service.IsDeleted = true;
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public int GetServicesCount(int categoryId = 0)
         {
             if (categoryId != 0)
             {
                 var servicesCount = dbContext.Services
+                    .Where(s => !s.IsDeleted)
                     .Where(s => s.CategoryId == categoryId)
                     .Count();
                 if (servicesCount == 0)
                 {
                     servicesCount = dbContext.Categories
                         .Where(c => c.ParentCategoryId == categoryId)
-                        .Include(c => c.Services)
+                        .Include(c => c.Services!.Where(s => !s.IsDeleted))
                         .SelectMany(c => c.Services!)
                         .Count();
                 }

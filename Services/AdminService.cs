@@ -20,6 +20,7 @@ namespace Services
         public IEnumerable<CategoryCardDTO> GetAllCategoriesWithDetails()
         {
             var categories = dbContext.Categories
+                .Where(c => !c.IsDeleted)
                 .OrderByDescending(c => c.Id)
                 .Include(s => s.Kids)
                 .Include(c => c.Services)
@@ -29,6 +30,7 @@ namespace Services
         public IEnumerable<ServiceInfoDTO> GetTop10ServicesAsServiceInfoDTOs()
         {
             var services = dbContext.Services
+                .Where(s => !s.IsDeleted)
                 .Include(s => s.City)
                 .Include(s => s.ServiceStatus)
                 .Take(10)
@@ -40,8 +42,8 @@ namespace Services
         }
         public IEnumerable<UserInfoDTO> GetTop10SkillersAsUserInfoDTOs()
         {
-            var skillers = dbContext.Users.
-                Include(u => u.City)
+            var skillers = dbContext.Users
+                .Include(u => u.City)
                 .Include(u => u.Services)
                 .ThenInclude(s => s.Reviews)
                 .OrderByDescending(u => u.Services.SelectMany(s => s.Reviews!).Count())
