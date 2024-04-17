@@ -237,9 +237,12 @@
                         <div class="sidebar_list_item">
                             <a asp-action="Index" asp-controller="Dashboard" class="items-center -is-active"><i class="flaticon-home mr15"></i>Табло</a>
                         </div>
-                        <div class="sidebar_list_item">
-                            <a asp-action="MyServices" asp-controller="Services" class="items-center"><i class="flaticon-document mr15"></i>Моите услуги</a>
-                        </div>
+                        @if (User.IsInRole("Skiller"))
+                        {
+                            <div class="sidebar_list_item">
+                                <a asp-action="MyServices" asp-controller="Services" class="items-center"><i class="flaticon-document mr15"></i>Моите услуги</a>
+                            </div>
+                        }
                         <div class="sidebar_list_item">
                             <a asp-action="Saved" asp-controller="Dashboard" class="items-center"><i class="flaticon-like mr15"></i>Запазени</a>
                         </div>
@@ -249,14 +252,16 @@
                         <div class="sidebar_list_item ">
                             <a asp-action="Reviews" asp-controller="Dashboard" class="items-center"><i class="flaticon-review-1 mr15"></i>Ревюта</a>
                         </div>
-
-                        <p class="fz15 fw400 ff-heading pl30 mt30">Създаване и редактиране</p>
+                        @if (User.IsInRole("Skiller"))
+                        {
+                            <p class="fz15 fw400 ff-heading pl30 mt30">Създаване и редактиране</p>
                         <div class="sidebar_list_item ">
                             <a asp-action="Create" asp-controller="Services" class="items-center"><i class="flaticon-content mr15"></i>Създаване на услуга</a>
                         </div>
                         <div class="sidebar_list_item ">
                             <a asp-action="Details" asp-controller="Services" class="items-center"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
                         </div>
+                        }                     
 
                         @if (User.IsInRole("Admin"))
                         {
