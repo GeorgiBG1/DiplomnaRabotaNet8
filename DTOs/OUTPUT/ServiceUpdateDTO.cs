@@ -9,6 +9,7 @@ namespace DTOs.OUTPUT
         {
             Days = new bool[7];
         }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }
@@ -16,11 +17,15 @@ namespace DTOs.OUTPUT
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
         public string? UnitPrice { get; set; }
+        public int CategoryId { get; set; }
         public Category? Category { get; set; }
+        public int CityId { get; set; }
         public City? City { get; set; }
         public string MainSkill { get; set; }
+        public int SkillId { get; set; }
         public List<Skill>? Skills { get; set; }
         public SkillBoxUser? User { get; set; }
+        public int StatusId { get; set; }
         public ServiceStatus? Status { get; set; }
         public bool[] Days { get; set; } //schedule
 

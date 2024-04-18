@@ -3,16 +3,16 @@
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 <div class="dashboard__content hover-bgc-color">
-    <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
         <div class="row pb40">
             <div class="col-lg-9">
                 <div class="dashboard_title_area">
-                    <h2>Добавяне на услуга</h2>
+                    <h2>Запазване на</h2>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="text-lg-end">
-                    <button type="submit" class="ud-btn btn-dark">Създаване<i class="fal fa-arrow-right-long"></i></button>
+                    <button type="submit" class="ud-btn btn-dark">промените<i class="fal fa-arrow-right-long"></i></button>
                 </div>
             </div>
         </div>
@@ -52,11 +52,53 @@
                                         <input asp-for="Price" type="number" class="form-control" placeholder="0">
                                         <span asp-validation-for="Price" class="text-danger"></span>
                                     </div>
-                                </div><div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
                                     <div class="mb20">
                                         <label asp-for="UnitPrice" class="heading-color ff-heading fw500 mb10">Мерна единица</label>
                                         <input asp-for="UnitPrice" type="text" class="form-control" placeholder="на час">
                                         <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb20">
+                                        <label asp-for="Discount" class="heading-color ff-heading fw500 mb10">Намаление</label>
+                                        <input asp-for="Discount" type="number" class="form-control" placeholder="0">
+                                        <span asp-validation-for="Discount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="ui-content mb20">
+                                        <div class="form-style1">
+                                            <label class="form-label fw500 fz16 dark-color">Статус на услугата</label>
+                                            @{
+                                                var statuses = CacheData.ServiceStatuses;
+                                                if (statuses != null)
+                                                {
+                                                    if (statuses.Count != 0)
+                                                    {
+                                                        <div class="bootselect-multiselect">
+                                                            <div class="dropdown bootstrap-select show-tick dropup">
+                                                                <select asp-for="@Model.StatusId" class="selectpicker" tabindex="null">
+                                                                    <option disabled>Посочи</option>
+                                                                    @for (int i = 0; i < statuses.Count; i++)
+                                                                    {
+                                                                        if (statuses[i].Id == Model.Status!.Id)
+                                                                        {
+                                                                            <option value="@i" selected>@statuses[i].BGName</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@i">@statuses[i].BGName</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -177,14 +219,20 @@
                                                                     <option disabled>Избери</option>
                                                                     @for (int i = 0; i < skills.Count; i++)
                                                                     {
-                                                                        <option value="@i">@skills[i].Name</option>
+                                                                        if (skills[i].Name == Model.MainSkill)
+                                                                        {
+                                                                            <option value="@i" selected>@skills[i].Name</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@i">@skills[i].Name</option>
+                                                                        }
                                                                     }
                                                                 </select>
                                                             </div>
                                                         </div>
                                                     }
                                                 }
-
                                             }
                                         </div>
                                     </div>
@@ -208,43 +256,92 @@
                         <div class="bootselect-multiselect">
                             <div class="dropdown bootstrap-select show-tick dropup">
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[0]" id="cbtest-19-1" />
+                                    @if (Model.Days[0])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[0]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[0]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-1" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Пон</h2>
                                 </div>
 
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[1]" id="cbtest-19-2" />
+                                    @if (Model.Days[1])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[1]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[1]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-2" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Вт</h2>
                                 </div>
 
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[2]" id="cbtest-19-3" />
+                                    @if (Model.Days[2])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[2]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[2]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-3" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Ср</h2>
                                 </div>
 
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[3]" id="cbtest-19-4" />
+                                    @if (Model.Days[3])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[3]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[3]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-4" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Чт</h2>
                                 </div>
 
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[4]" id="cbtest-19-5" />
+                                    @if (Model.Days[4])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[4]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[4]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-5" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Пт</h2>
                                 </div>
 
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[5]" id="cbtest-19-6" />
+                                    @if (Model.Days[5])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[5]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[5]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-6" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Съб</h2>
                                 </div>
 
                                 <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" asp-for="@Model.Days[6]" id="cbtest-19-7" />
+                                    @if (Model.Days[6])
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[6]" checked id="cbtest-19-1" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" asp-for="@Model.Days[6]" id="cbtest-19-1" />
+                                    }
                                     <label for="cbtest-19-7" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Нед</h2>
                                 </div>
@@ -260,6 +357,9 @@
                         <div class="d-flex mb30">
                             <div id="imageCollection" class="d-flex flex-wrap">
                             </div>
+                            @{
+                                CacheData.Images = Model.Images;
+                            }
                             <div class="gallery-item bdrs4 overflow-hidden">
                                 <input type="file" asp-for="ImageFiles" id="fileInput" style="display: none;" onchange="displaySelectedImages(event)" multiple />
                                 <button type="button" onclick="openFileExplorer()" class="btn"><img class="w-100" src="~/images/gallery/g-1.png" alt="Upload photo"></button>
@@ -317,6 +417,61 @@
             newImageContainer.appendChild(deleteButton);
             imageCollection.appendChild(newImageContainer);
         }
+    }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        displayOnLoadImages();
+    });
+    function displayOnLoadImages() {
+        const imageString = "@Model.Images";
+        var imagesArray = imageString.split("|");
+        if (imagesArray.length > 0) {
+            imagesArray[imagesArray.length - 1] = imagesArray[imagesArray.length - 1].replace(/\|+$/, '');
+        }
+
+        const imageCollection = document.getElementById('imageCollection');
+
+        // Clear existing images in the collection
+        imageCollection.innerHTML = '';
+
+        // Loop through each image URL
+        imagesArray.forEach(function (imageUrl) {
+            // Create image element
+            const newImage = new Image();
+            newImage.width = "131";
+            newImage.height = "115";
+            newImage.classList.add('bdrs12');
+            newImage.alt = 'Uploaded Image';
+
+            // Set source
+            newImage.onload = function () {
+                console.log("Image loaded successfully:", imageUrl);
+            };
+            newImage.onerror = function () {
+                console.error("Error loading image:", imageUrl);
+            };
+            newImage.src = imageUrl;
+
+            // Create container for image and delete button
+            const newImageContainer = document.createElement('div');
+            newImageContainer.classList.add('gallery-item', 'me-3', 'bdrs4', 'overflow-hidden', 'position-relative', 'd-flex', 'align-items-center');
+
+            // Create delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('icon', 'delete-button', 'bdrs12');
+            deleteButton.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+            deleteButton.innerHTML = '<span class="flaticon-delete"></span>';
+            deleteButton.onclick = function () {
+                deleteImage(newImageContainer);
+            };
+
+            // Append image and delete button to container
+            newImageContainer.appendChild(newImage);
+            newImageContainer.appendChild(deleteButton);
+
+            // Append container to image collection
+            imageCollection.appendChild(newImageContainer);
+        });
     }
 
     function deleteImage(imageContainer) {

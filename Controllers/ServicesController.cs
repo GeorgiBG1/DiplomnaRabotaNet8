@@ -1,5 +1,4 @@
-﻿using Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using DTOs.INPUT;
 using Contracts;
 using Models;
@@ -8,6 +7,7 @@ using CacheConfiguration;
 using Microsoft.AspNetCore.Identity;
 using Data.Models;
 using Global_Constants;
+using DTOs.OUTPUT;
 
 namespace Controllers
 {
@@ -168,14 +168,22 @@ namespace Controllers
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
+
+            //View - Collection
+            CacheData.Skills = userService.GetAllMySkills(User.Identity?.Name!).ToList();
+            CacheData.Categories = categoryService.GetAllCategories().ToList();
+            CacheData.Cities = offeringService.GetAllCities().ToList();
+            CacheData.ServiceStatuses = offeringService.GetAllServiceStatuses().ToList();
+            //
             var model = offeringService.GetServiceAsServiceUpdateDTO(id);
             return View(model);
         }
         [Authorize(Roles = "Skiller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(ServiceUpdateInDTO bindingModel)
+        public IActionResult Edit(ServiceUpdateDTO bindingModel)
         {
+            offeringService.UpdateService(bindingModel);
             return RedirectToAction("Details");
         }
         [Authorize(Roles = "Skiller")]

@@ -1,4 +1,5 @@
-﻿using ServiceStack.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using ServiceStack.DataAnnotations;
 namespace Data.Models
 {
     public class SkillBoxService : BaseEntity<int>
@@ -34,5 +35,45 @@ namespace Data.Models
         public virtual ServiceStatus ServiceStatus { get; set; }
         public virtual ICollection<Review>? Reviews { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }
+        public bool[] DaysFromString(string schedule)
+        {
+            bool[] days = new bool[7];
+            if (schedule != null)
+            {
+                var dayOptions = schedule.Split(", ").ToList();
+                foreach (var day in dayOptions)
+                {
+                    if (day == "Понеделник")
+                    {
+                        days[0] = true;
+                    }
+                    else if (day == "Вторник")
+                    {
+                        days[1] = true;
+                    }
+                    else if (day == "Сряда")
+                    {
+                        days[2] = true;
+                    }
+                    else if (day == "Четвъртък")
+                    {
+                        days[3] = true;
+                    }
+                    else if (day == "Петък")
+                    {
+                        days[4] = true;
+                    }
+                    else if (day == "Събота")
+                    {
+                        days[5] = true;
+                    }
+                    else if (day == "Неделя")
+                    {
+                        days[6] = true;
+                    }
+                }
+            }
+            return days;
+        }
     }
 }

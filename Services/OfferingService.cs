@@ -168,6 +168,12 @@ namespace Services
             dbContext.Services.Add(service);
             dbContext.SaveChanges();
         }
+        public void UpdateService(ServiceUpdateDTO serviceUpdateDTO)
+        {
+            var service = dbContext.Services.FirstOrDefault(s => s.Id == serviceUpdateDTO.Id);
+            service = mapper.Map<SkillBoxService>(serviceUpdateDTO);
+            dbContext.SaveChanges();
+        }
         public bool DeleteService(int id)
         {
             var service = dbContext.Services.FirstOrDefault(s => s.Id == id);

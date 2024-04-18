@@ -15,7 +15,7 @@ namespace SkillBox.App.AutoMapperConfiguration
         {
             //IN
             #region Services
-            CreateMap<ServiceInDTO, SkillBoxService>()
+            CreateMap<ServiceUpdateDTO, SkillBoxService>()
                 .ForMember(s => s.Name, opt => opt.MapFrom(d => d.Title))
                 .ForMember(s => s.Description, opt => opt.MapFrom(d => d.Description))
                 .ForMember(s => s.PhoneNumber, opt => opt.MapFrom(d => d.PhoneNumber))
@@ -24,8 +24,6 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(s => s.UnitPrice, opt => opt.MapFrom(d => d.UnitPrice))
                 .ForMember(s => s.Category, opt => opt.MapFrom(d => d.Category))
                 .ForMember(s => s.City, opt => opt.MapFrom(d => d.City))
-                .ForMember(s => s.Owner, opt => opt.MapFrom(d => d.User))
-                .ForMember(s => s.OwnerName, opt => opt.MapFrom(d => $"{d.User.FirstName} {d.User.LastName}"))
                 .ForMember(s => s.ServiceStatus, opt => opt.MapFrom(d => d.Status))
                 .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.SkillId].Name))
                 .ForMember(s => s.Schedule, opt => opt.MapFrom(d => d.DaysAsString()))
@@ -177,6 +175,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.OwnerCurrentLocation, opt => opt.MapFrom(s => s.Owner.City.BGName));
 
             CreateMap<SkillBoxService, ServiceUpdateDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Title, opt => opt.MapFrom(s => s.Name))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
                 .ForMember(d => d.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
@@ -187,8 +186,12 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.Category, opt => opt.MapFrom(s => s.Category))
                 .ForMember(d => d.City, opt => opt.MapFrom(s => s.City))
                 .ForMember(d => d.User, opt => opt.MapFrom(s => s.Owner))
-                .ForMember(d => $"{d.User.FirstName} {d.User.LastName}", opt => opt.MapFrom(s => s.OwnerName))
                 .ForMember(d => d.Status, opt => opt.MapFrom(s => s.ServiceStatus))
+                .ForMember(d => d.Days, opt => opt.MapFrom((s, d) =>
+                {
+                    d.Days = s.DaysFromString(s.Schedule!);
+                    return d.Days;
+                }))
                 .ForMember(d => d.MainSkill, opt => opt.MapFrom(s => s.MainSkill))
                 .ForMember(d => d.Skills, opt => opt.MapFrom(s => s.Owner.Skills))
                 .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
