@@ -41,6 +41,22 @@ namespace Services
             var model = mapper.Map<ServiceDTO>(service);
             return model;
         }
+        public ServiceUpdateDTO GetServiceAsServiceUpdateDTO(int id)
+        {
+            var service = dbContext.Services
+                .Where(s => s.Id == id)
+                .Where(s => !s.IsDeleted)
+                .Include(s => s.Owner)
+                .Include(s => s.City)
+                .Include(s => s.ServiceStatus)
+                .Include(s => s.Reviews!)
+                .ThenInclude(r => r.User)
+                .ThenInclude(u => u.City)
+                .FirstOrDefault();
+            var model = mapper.Map<ServiceUpdateDTO>(service);
+            return model;
+
+        }
         public ICollection<ServiceCardDTO> GetServiceCardDTOs(int count = 1, int skipCount = 0, int categoryId = 0)
         {
             var services = new List<SkillBoxService>();
@@ -90,13 +106,14 @@ namespace Services
             var services = new List<SkillBoxService>();
             var model = new List<ServiceMiniDTO>();
             services = dbContext.Services
-               .Where(s => s.Owner.UserName == username)
-               .OrderByDescending(s => s.Id)
-               .Include(s => s.ServiceStatus)
-               .Include(s => s.City)
-               .Include(s => s.Owner)
-               .ThenInclude(o => o.Offerings)
-               .ToList();
+                .Where(s => !s.IsDeleted)
+                .Where(s => s.Owner.UserName == username)
+                .OrderByDescending(s => s.Id)
+                .Include(s => s.ServiceStatus)
+                .Include(s => s.City)
+                .Include(s => s.Owner)
+                .ThenInclude(o => o.Offerings)
+                .ToList();
             if (services.Any(s => s.Name.Length > 50))
             {
                 services.ForEach(s => s.Name = $"{s.Name![..47]}...");

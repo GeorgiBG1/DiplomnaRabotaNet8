@@ -1,11 +1,11 @@
 ﻿using Data.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTOs.INPUT
+namespace DTOs.OUTPUT
 {
-    public class ServiceInDTO
+    public class ServiceUpdateDTO
     {
-        public ServiceInDTO()
+        public ServiceUpdateDTO()
         {
             Days = new bool[7];
         }
@@ -14,13 +14,11 @@ namespace DTOs.INPUT
         public string PhoneNumber { get; set; }
         public string? WebsiteName { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         public string? UnitPrice { get; set; }
-        public int CategoryId { get; set; }
         public Category? Category { get; set; }
-        public List<Category>? Categories { get; set; }
-        public int CityId { get; set; }
         public City? City { get; set; }
-        public int SkillId { get; set; }
+        public string MainSkill { get; set; }
         public List<Skill>? Skills { get; set; }
         public SkillBoxUser? User { get; set; }
         public ServiceStatus? Status { get; set; }

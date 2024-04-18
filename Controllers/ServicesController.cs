@@ -91,22 +91,7 @@ namespace Controllers
             };
             return View(model);
         }
-        [Authorize(Roles = "Skiller")]
-        public IActionResult Edit(int id)
-        {
-            //Menu - Nav
-            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
-            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
-            //
-            return View();
-        }
-        [Authorize(Roles = "Skiller")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(ServiceInDTO bindingModel)
-        {
-            return RedirectToAction("Details");
-        }
+        
         [Authorize(Roles = "Skiller")]
         [HttpGet]
         public IActionResult Create()
@@ -175,6 +160,23 @@ namespace Controllers
                 return RedirectToAction("MyServices");
             }
             return View(bindingModel);
+        }
+        [Authorize(Roles = "Skiller")]
+        public IActionResult Edit(int id)
+        {
+            //Menu - Nav
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
+            var model = offeringService.GetServiceAsServiceUpdateDTO(id);
+            return View(model);
+        }
+        [Authorize(Roles = "Skiller")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ServiceUpdateInDTO bindingModel)
+        {
+            return RedirectToAction("Details");
         }
         [Authorize(Roles = "Skiller")]
         public IActionResult Delete(int id)

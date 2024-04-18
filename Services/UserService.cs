@@ -107,13 +107,13 @@ namespace Services
             var user = dbContext.Users.FirstOrDefault(u => u.UserName == username);
             if (user != null)
             {
-                if (user.LockoutEnd != null && user.LockoutEnd < DateTime.Now)
+                if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
                 {
                     user.LockoutEnd = null;
                 }
                 else
                 {
-                    user.LockoutEnd = DateTime.Now.Add(TimeSpan.FromDays(2));
+                    user.LockoutEnd = DateTime.Now.Add(TimeSpan.FromDays(1));
                 }
                 userManager.UpdateAsync(user).GetAwaiter().GetResult();
                 return true;

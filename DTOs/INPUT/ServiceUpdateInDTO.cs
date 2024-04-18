@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.INPUT
 {
-    public class ServiceInDTO
+    public class ServiceUpdateInDTO
     {
-        public ServiceInDTO()
+        public ServiceUpdateInDTO()
         {
             Days = new bool[7];
         }
@@ -14,6 +14,7 @@ namespace DTOs.INPUT
         public string PhoneNumber { get; set; }
         public string? WebsiteName { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         public string? UnitPrice { get; set; }
         public int CategoryId { get; set; }
         public Category? Category { get; set; }

@@ -20,7 +20,7 @@
         <div class="col-xl-12">
             @if (Model.Services.Count() != 0)
             {
-                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative" style="min-height: 570px;">
                     <div class="packages_table table-responsive">
                         <table class="table-style3 table at-savesearch">
                             <thead class="t-head">
@@ -57,6 +57,11 @@
                                 }
                             </tbody>
                         </table>
+                    </div>
+                    <div class="tab-pane fade show" id="nav-item-2" role="tabpanel" aria-labelledby="nav-item-2-tab">
+                        <div class="d-inline m-auto p-2 rounded-2 text-light" style="background-color: #0d6efd;">
+                            <span>(@Model.Services.Count()) услуги</span>
+                        </div>
                     </div>
                 </div>
             }

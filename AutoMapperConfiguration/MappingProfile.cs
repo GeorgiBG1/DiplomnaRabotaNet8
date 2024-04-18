@@ -10,12 +10,7 @@ namespace SkillBox.App.AutoMapperConfiguration
 {
     public class MappingProfile : Profile
     {
-        private readonly UserManager<SkillBoxUser> userManager;
 
-        public MappingProfile(UserManager<SkillBoxUser> userManager)
-        {
-            this.userManager = userManager;
-        }
         public MappingProfile()
         {
             //IN
@@ -26,6 +21,24 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(s => s.PhoneNumber, opt => opt.MapFrom(d => d.PhoneNumber))
                 .ForMember(s => s.WebsiteName, opt => opt.MapFrom(d => d.WebsiteName))
                 .ForMember(s => s.Price, opt => opt.MapFrom(d => d.Price))
+                .ForMember(s => s.UnitPrice, opt => opt.MapFrom(d => d.UnitPrice))
+                .ForMember(s => s.Category, opt => opt.MapFrom(d => d.Category))
+                .ForMember(s => s.City, opt => opt.MapFrom(d => d.City))
+                .ForMember(s => s.Owner, opt => opt.MapFrom(d => d.User))
+                .ForMember(s => s.OwnerName, opt => opt.MapFrom(d => $"{d.User.FirstName} {d.User.LastName}"))
+                .ForMember(s => s.ServiceStatus, opt => opt.MapFrom(d => d.Status))
+                .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.SkillId].Name))
+                .ForMember(s => s.Schedule, opt => opt.MapFrom(d => d.DaysAsString()))
+                .ForMember(s => s.MainImage, opt => opt.MapFrom(d => d.MainImage))
+                .ForMember(s => s.Images, opt => opt.MapFrom(d => d.Images));
+
+            CreateMap<ServiceUpdateInDTO, SkillBoxService>()
+                .ForMember(s => s.Name, opt => opt.MapFrom(d => d.Title))
+                .ForMember(s => s.Description, opt => opt.MapFrom(d => d.Description))
+                .ForMember(s => s.PhoneNumber, opt => opt.MapFrom(d => d.PhoneNumber))
+                .ForMember(s => s.WebsiteName, opt => opt.MapFrom(d => d.WebsiteName))
+                .ForMember(s => s.Price, opt => opt.MapFrom(d => d.Price))
+                .ForMember(s => s.Discount, opt => opt.MapFrom(d => d.Discount))
                 .ForMember(s => s.UnitPrice, opt => opt.MapFrom(d => d.UnitPrice))
                 .ForMember(s => s.Category, opt => opt.MapFrom(d => d.Category))
                 .ForMember(s => s.City, opt => opt.MapFrom(d => d.City))
@@ -162,6 +175,24 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.OwnerCareer, opt => opt.MapFrom(s => s.Owner.Career))
                 .ForMember(d => d.OwnerProfilePhoto, opt => opt.MapFrom(s => s.Owner.ProfilePhoto))
                 .ForMember(d => d.OwnerCurrentLocation, opt => opt.MapFrom(s => s.Owner.City.BGName));
+
+            CreateMap<SkillBoxService, ServiceUpdateDTO>()
+                .ForMember(d => d.Title, opt => opt.MapFrom(s => s.Name))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
+                .ForMember(d => d.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
+                .ForMember(d => d.WebsiteName, opt => opt.MapFrom(s => s.WebsiteName))
+                .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
+                .ForMember(d => d.Discount, opt => opt.MapFrom(s => s.Discount))
+                .ForMember(d => d.UnitPrice, opt => opt.MapFrom(s => s.UnitPrice))
+                .ForMember(d => d.Category, opt => opt.MapFrom(s => s.Category))
+                .ForMember(d => d.City, opt => opt.MapFrom(s => s.City))
+                .ForMember(d => d.User, opt => opt.MapFrom(s => s.Owner))
+                .ForMember(d => $"{d.User.FirstName} {d.User.LastName}", opt => opt.MapFrom(s => s.OwnerName))
+                .ForMember(d => d.Status, opt => opt.MapFrom(s => s.ServiceStatus))
+                .ForMember(d => d.MainSkill, opt => opt.MapFrom(s => s.MainSkill))
+                .ForMember(d => d.Skills, opt => opt.MapFrom(s => s.Owner.Skills))
+                .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
+                .ForMember(d => d.Images, opt => opt.MapFrom(d => d.Images));
             #endregion
 
             #region Categories
@@ -226,7 +257,14 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.Career, opt => opt.MapFrom(u => u.Career))
                 .ForMember(d => d.Skills, opt => opt.MapFrom(u => u.Skills!.Select(s => s.Name)))
                 .ForMember(d => d.City, opt => opt.MapFrom(u => u.City!.BGName))
-                .ForMember(d => d.IsBlocked, opt => opt.MapFrom(u => userManager!.IsLockedOutAsync(u).GetAwaiter().GetResult()));
+                .ForMember(d => d.IsBlocked, opt => opt.MapFrom((u, d) =>
+                {
+                    if (u.LockoutEnd != null && u.LockoutEnd > DateTime.Now)
+                    {
+                        d.IsBlocked = true;
+                    }
+                    return d.IsBlocked;
+                }));
 
             CreateMap<SkillBoxUser, UserDTO>()
                 .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))
