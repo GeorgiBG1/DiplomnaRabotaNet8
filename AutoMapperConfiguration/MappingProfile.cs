@@ -2,6 +2,7 @@
 using Data.Models;
 using DTOs.INPUT;
 using DTOs.OUTPUT;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
 
@@ -9,6 +10,12 @@ namespace SkillBox.App.AutoMapperConfiguration
 {
     public class MappingProfile : Profile
     {
+        private readonly UserManager<SkillBoxUser> userManager;
+
+        public MappingProfile(UserManager<SkillBoxUser> userManager)
+        {
+            this.userManager = userManager;
+        }
         public MappingProfile()
         {
             //IN
@@ -218,7 +225,8 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(d => d.ServicesCount, opt => opt.MapFrom(u => u.Services.Count))
                 .ForMember(d => d.Career, opt => opt.MapFrom(u => u.Career))
                 .ForMember(d => d.Skills, opt => opt.MapFrom(u => u.Skills!.Select(s => s.Name)))
-                .ForMember(d => d.City, opt => opt.MapFrom(u => u.City!.BGName));
+                .ForMember(d => d.City, opt => opt.MapFrom(u => u.City!.BGName))
+                .ForMember(d => d.IsBlocked, opt => opt.MapFrom(u => userManager!.IsLockedOutAsync(u).GetAwaiter().GetResult()));
 
             CreateMap<SkillBoxUser, UserDTO>()
                 .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))

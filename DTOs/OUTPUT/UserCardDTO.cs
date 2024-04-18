@@ -11,5 +11,6 @@
         public string? Career { get; set; }
         public IEnumerable<string> Skills { get; set; }
         public string City { get; set; }
+        public bool IsBlocked { get; set; }
     }
 }

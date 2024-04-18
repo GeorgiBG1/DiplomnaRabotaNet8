@@ -102,6 +102,24 @@ namespace Services
                 .ToList();
             return reviews;
         }
+        public bool BlockUser(string username)
+        {
+            var user = dbContext.Users.FirstOrDefault(u => u.UserName == username);
+            if (user != null)
+            {
+                if (user.LockoutEnd != null && user.LockoutEnd < DateTime.Now)
+                {
+                    user.LockoutEnd = null;
+                }
+                else
+                {
+                    user.LockoutEnd = DateTime.Now.Add(TimeSpan.FromDays(2));
+                }
+                userManager.UpdateAsync(user).GetAwaiter().GetResult();
+                return true;
+            }
+            return false;
+        }
         public City GetCityById(int id)
         {
             return dbContext.Cities.FirstOrDefault(c => c.Id == id)!;

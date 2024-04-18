@@ -71,8 +71,13 @@ namespace Controllers
             }
             return RedirectToAction("Services", "Admin");
         }
-        public IActionResult BlockUser(string username)
+        public IActionResult BlockUser(string id)
         {
+            var isBlocked = userService.BlockUser(id);
+            if (!isBlocked)
+            {
+                return View("Error");
+            }
             return RedirectToAction("Skillers", "Admin");
         }
     }

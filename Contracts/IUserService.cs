@@ -13,6 +13,7 @@ namespace Contracts
         public ICollection<UserCardDTO> GetTopSkillersAsUserCardDTOs(int count = 1);
         public ICollection<Skill> GetAllMySkills(string username);
         public ICollection<Review> GetAllMyReviews(string username);
+        public bool BlockUser(string username);
         public City GetCityById(int id);
         public int GetUsersCount();
         public int GetSkillersCount();

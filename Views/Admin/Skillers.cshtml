@@ -61,7 +61,10 @@
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <a asp-action="Skiller" asp-controller="Skillers" asp-route-id="@skiller.Username" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e"></iconify-icon></a>
-                                                <a asp-action="BlockUser" asp-controller="Admin" asp-route-id="@skiller.Username" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Блокирай"><i class="fa-solid fa-ban"></i></a>
+                                                @if (!skiller.IsBlocked)
+                                                {
+                                                    <a asp-action="BlockUser" asp-controller="Admin" asp-route-id="@skiller.Username" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Блокирай"><i class="fa-solid fa-ban"></i></a>
+                                                }
                                             </div>
                                         </td>
                                     </tr>
