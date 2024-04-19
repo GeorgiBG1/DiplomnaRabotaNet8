@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using ServiceStack.DataAnnotations;
+﻿using ServiceStack.DataAnnotations;
 namespace Data.Models
 {
     public class SkillBoxService : BaseEntity<int>
