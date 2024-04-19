@@ -1,6 +1,4 @@
 ﻿using Data.Models;
-using System.ComponentModel.DataAnnotations;
-
 namespace DTOs.OUTPUT
 {
     public class ServiceUpdateDTO
@@ -21,7 +19,7 @@ namespace DTOs.OUTPUT
         public Category? Category { get; set; }
         public int CityId { get; set; }
         public City? City { get; set; }
-        public string MainSkill { get; set; }
+        public string? MainSkill { get; set; }
         public int SkillId { get; set; }
         public List<Skill>? Skills { get; set; }
         public SkillBoxUser? User { get; set; }
@@ -72,8 +70,6 @@ namespace DTOs.OUTPUT
             return schedule.TrimStart(',').TrimStart();
         }
         public string? MainImage { get; set; }
-        public string Images { get; set; } = "none";
-        [MinLength(2, ErrorMessage = "Сложете поне две снимки на вашата услуга!")]
-        public virtual IEnumerable<IFormFile> ImageFiles { get; set; }
+        public string? Images { get; set; }
     }
 }

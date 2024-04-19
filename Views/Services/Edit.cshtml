@@ -7,12 +7,12 @@
         <div class="row pb40">
             <div class="col-lg-9">
                 <div class="dashboard_title_area">
-                    <h2>Запазване на</h2>
+                    <h2>Редактиране на услугата </h2>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="text-lg-end">
-                    <button type="submit" class="ud-btn btn-dark">промените<i class="fal fa-arrow-right-long"></i></button>
+                    <button type="submit" class="ud-btn btn-dark">Редактиране<i class="fal fa-arrow-right-long"></i></button>
                 </div>
             </div>
         </div>
@@ -73,6 +73,7 @@
                                             <label class="form-label fw500 fz16 dark-color">Статус на услугата</label>
                                             @{
                                                 var statuses = CacheData.ServiceStatuses;
+                                                CacheData.SelectedStatus = Model.Status!;
                                                 if (statuses != null)
                                                 {
                                                     if (statuses.Count != 0)
@@ -271,11 +272,11 @@
                                 <div class="checkbox-wrapper-19">
                                     @if (Model.Days[1])
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[1]" checked id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[1]" checked id="cbtest-19-2" />
                                     }
                                     else
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[1]" id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[1]" id="cbtest-19-2" />
                                     }
                                     <label for="cbtest-19-2" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Вт</h2>
@@ -284,11 +285,11 @@
                                 <div class="checkbox-wrapper-19">
                                     @if (Model.Days[2])
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[2]" checked id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[2]" checked id="cbtest-19-3" />
                                     }
                                     else
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[2]" id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[2]" id="cbtest-19-3" />
                                     }
                                     <label for="cbtest-19-3" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Ср</h2>
@@ -297,11 +298,11 @@
                                 <div class="checkbox-wrapper-19">
                                     @if (Model.Days[3])
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[3]" checked id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[3]" checked id="cbtest-19-4" />
                                     }
                                     else
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[3]" id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[3]" id="cbtest-19-4" />
                                     }
                                     <label for="cbtest-19-4" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Чт</h2>
@@ -310,11 +311,11 @@
                                 <div class="checkbox-wrapper-19">
                                     @if (Model.Days[4])
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[4]" checked id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[4]" checked id="cbtest-19-5" />
                                     }
                                     else
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[4]" id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[4]" id="cbtest-19-5" />
                                     }
                                     <label for="cbtest-19-5" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Пт</h2>
@@ -323,11 +324,11 @@
                                 <div class="checkbox-wrapper-19">
                                     @if (Model.Days[5])
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[5]" checked id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[5]" checked id="cbtest-19-6" />
                                     }
                                     else
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[5]" id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[5]" id="cbtest-19-6" />
                                     }
                                     <label for="cbtest-19-6" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Съб</h2>
@@ -336,11 +337,11 @@
                                 <div class="checkbox-wrapper-19">
                                     @if (Model.Days[6])
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[6]" checked id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[6]" checked id="cbtest-19-7" />
                                     }
                                     else
                                     {
-                                        <input type="checkbox" asp-for="@Model.Days[6]" id="cbtest-19-1" />
+                                        <input type="checkbox" asp-for="@Model.Days[6]" id="cbtest-19-7" />
                                     }
                                     <label for="cbtest-19-7" class="check-box"></label>
                                     <h2 class="list-title fw-bold">Нед</h2>
@@ -355,20 +356,12 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="d-flex mb30">
+                            @{
+                                CacheData.Images = Model.Images!;
+                            }
                             <div id="imageCollection" class="d-flex flex-wrap">
                             </div>
-                            @{
-                                CacheData.Images = Model.Images;
-                            }
-                            <div class="gallery-item bdrs4 overflow-hidden">
-                                <input type="file" asp-for="ImageFiles" id="fileInput" style="display: none;" onchange="displaySelectedImages(event)" multiple />
-                                <button type="button" onclick="openFileExplorer()" class="btn"><img class="w-100" src="~/images/gallery/g-1.png" alt="Upload photo"></button>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-9">
-                        <span asp-validation-for="ImageFiles" class="text-danger"></span>
-                        <p class="text">Размерът на изображението трябва да бъде до 1MB, препоръчително съотношение: 640x420 и подходящи формати: .jpg и .png</p>
                     </div>
                 </div>
             </div>
@@ -377,48 +370,6 @@
 </div>
 
 <script>
-    function openFileExplorer() {
-        document.getElementById('fileInput').click();
-    }
-
-    function displaySelectedImages(event) {
-        const selectedFiles = event.target.files;
-        const imageCollection = document.getElementById('imageCollection');
-
-        // Clear existing images in the collection
-        imageCollection.innerHTML = '';
-
-        // Loop through each selected file
-        for (let i = 0; i < selectedFiles.length; i++) {
-            const reader = new FileReader();
-            const newImageContainer = document.createElement('div');
-            newImageContainer.classList.add('gallery-item', 'me-3', 'bdrs4', 'overflow-hidden', 'position-relative', 'd-flex', 'align-items-center');
-            const newImage = document.createElement('img');
-            newImage.width = "131";
-            newImage.height = "115";
-            newImage.classList.add('bdrs12');
-            newImage.alt = 'Uploaded Image';
-
-            reader.onload = function (event) {
-                newImage.src = event.target.result;
-            }
-
-            reader.readAsDataURL(selectedFiles[i]);
-
-            const deleteButton = document.createElement('button');
-            deleteButton.classList.add('icon', 'delete-button', 'bdrs12');
-            deleteButton.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-            deleteButton.innerHTML = '<span class="flaticon-delete"></span>';
-            deleteButton.onclick = function () {
-                deleteImage(newImageContainer);
-            };
-
-            newImageContainer.appendChild(newImage);
-            newImageContainer.appendChild(deleteButton);
-            imageCollection.appendChild(newImageContainer);
-        }
-    }
-
     document.addEventListener("DOMContentLoaded", function (event) {
         displayOnLoadImages();
     });
@@ -428,11 +379,10 @@
         if (imagesArray.length > 0) {
             imagesArray[imagesArray.length - 1] = imagesArray[imagesArray.length - 1].replace(/\|+$/, '');
         }
-        debugger;
+        imagesArray = imagesArray.filter(function (element) {
+            return element !== "";
+        });
         const imageCollection = document.getElementById('imageCollection');
-
-        // Clear existing images in the collection
-        imageCollection.innerHTML = '';
 
         // Loop through each image URL
         imagesArray.forEach(function (imageUrl) {
@@ -443,51 +393,18 @@
             newImage.classList.add('bdrs12');
             newImage.alt = 'Uploaded Image';
 
-            // Set source
-            newImage.onload = function () {
-                console.log("Image loaded successfully:", imageUrl);
-            };
-            newImage.onerror = function () {
-                console.error("Error loading image:", imageUrl);
-            };
             newImage.src = imageUrl;
 
             // Create container for image and delete button
             const newImageContainer = document.createElement('div');
-            newImageContainer.classList.add('gallery-item', 'me-3', 'bdrs4', 'overflow-hidden', 'position-relative', 'd-flex', 'align-items-center');
+            newImageContainer.classList.add('gallery-item', 'me-3', 'bdrs4');
 
-            // Create delete button
-            const deleteButton = document.createElement('button');
-            deleteButton.classList.add('icon', 'delete-button', 'bdrs12');
-            deleteButton.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-            deleteButton.innerHTML = '<span class="flaticon-delete"></span>';
-            deleteButton.onclick = function () {
-                deleteImage(newImageContainer);
-            };
-
-            // Append image and delete button to container
+            // Append image to container
             newImageContainer.appendChild(newImage);
-            newImageContainer.appendChild(deleteButton);
 
             // Append container to image collection
             imageCollection.appendChild(newImageContainer);
         });
     }
-
-    function deleteImage(imageContainer) {
-        imageContainer.remove();
-    }
 </script>
-<style>
-    .delete-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: transparent;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-    }
-</style>
 <link rel="stylesheet" href="~/css/checkbox-style.css" asp-append-version="true" />

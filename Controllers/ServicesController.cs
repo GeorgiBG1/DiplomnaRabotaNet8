@@ -91,7 +91,7 @@ namespace Controllers
             };
             return View(model);
         }
-        
+
         [Authorize(Roles = "Skiller")]
         [HttpGet]
         public IActionResult Create()
@@ -183,8 +183,27 @@ namespace Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ServiceUpdateDTO bindingModel)
         {
-            offeringService.UpdateService(bindingModel);
-            return RedirectToAction("Details");
+            if (ModelState.IsValid)
+            {
+                var category = categoryService.GetCategoryById(bindingModel.CategoryId);
+                var city = userService.GetCityById(bindingModel.CityId);
+                var status = offeringService.GetServiceStatusById(bindingModel.StatusId+1);
+                bindingModel.Category = category;
+                bindingModel.City = city;
+                bindingModel.Status = status;
+                bindingModel.Skills = CacheData.Skills;
+                offeringService.UpdateService(bindingModel);
+                CacheData.Categories = null!;
+                CacheData.Cities = null!;
+                CacheData.Skills = null!;
+                CacheData.Images = null!;
+                CacheData.ServiceStatuses = null!;
+                CacheData.SelectedStatus = null!;
+                return RedirectToAction("Details");
+            }
+            bindingModel.Status = CacheData.SelectedStatus;
+            bindingModel.Images = CacheData.Images;
+            return View(bindingModel);
         }
         [Authorize(Roles = "Skiller")]
         public IActionResult Delete(int id)

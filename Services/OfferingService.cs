@@ -4,6 +4,7 @@ using Data;
 using Data.Models;
 using DTOs.INPUT;
 using DTOs.OUTPUT;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
@@ -94,9 +95,15 @@ namespace Services
                     .Skip(skipCount)
                     .Take(count).ToList();
             }
-            if (services.Any(s => s.Name.Length > 50))
+            var servicesWithLongNameServices = services.Where(s => s.Name.Length > 50).ToList();
+            if (servicesWithLongNameServices.Count != 0)
             {
-                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                servicesWithLongNameServices.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                foreach (var service in services.Where(s => s.Name.Length > 50))
+                {
+                    service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
+                }
+                
             }
             model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
@@ -114,9 +121,15 @@ namespace Services
                 .Include(s => s.Owner)
                 .ThenInclude(o => o.Offerings)
                 .ToList();
-            if (services.Any(s => s.Name.Length > 50))
+            var servicesWithLongNameServices = services.Where(s => s.Name.Length > 50).ToList();
+            if (servicesWithLongNameServices.Count != 0)
             {
-                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                servicesWithLongNameServices.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                foreach (var service in services.Where(s => s.Name.Length > 50))
+                {
+                    service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
+                }
+
             }
             model = services.Select(mapper.Map<ServiceMiniDTO>).ToList();
             return model;
@@ -133,9 +146,15 @@ namespace Services
                 .OrderByDescending(s => s.Id)
                 .ThenByDescending(s => s.Reviews!.Count())
                 .ToList();
-            if (services.Any(s => s.Name.Length > 50))
+            var servicesWithLongNameServices = services.Where(s => s.Name.Length > 50).ToList();
+            if (servicesWithLongNameServices.Count != 0)
             {
-                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                servicesWithLongNameServices.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                foreach (var service in services.Where(s => s.Name.Length > 50))
+                {
+                    service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
+                }
+                
             }
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;
@@ -154,9 +173,15 @@ namespace Services
                 .Include(s => s.Owner)
                 .ThenInclude(o => o.Offerings)
                 .ToList();
-            if (services.Any(s => s.Name.Length > 50))
+            var servicesWithLongNameServices = services.Where(s => s.Name.Length > 50).ToList();
+            if (servicesWithLongNameServices.Count != 0)
             {
-                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                servicesWithLongNameServices.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                foreach (var service in services.Where(s => s.Name.Length > 50))
+                {
+                    service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
+                }
+
             }
             return services.Select(mapper.Map<ServiceMiniDTO>).ToList();
         }
@@ -171,7 +196,19 @@ namespace Services
         public void UpdateService(ServiceUpdateDTO serviceUpdateDTO)
         {
             var service = dbContext.Services.FirstOrDefault(s => s.Id == serviceUpdateDTO.Id);
-            service = mapper.Map<SkillBoxService>(serviceUpdateDTO);
+            var updatedService = mapper.Map<SkillBoxService>(serviceUpdateDTO);
+            service.Name = updatedService.Name;
+            service.Description = updatedService.Description;
+            service.PhoneNumber = updatedService.PhoneNumber;
+            service.WebsiteName = updatedService.WebsiteName;
+            service.Price = updatedService.Price;
+            service.UnitPrice = updatedService.UnitPrice;
+            service.Discount = updatedService.Discount;
+            service.Category = updatedService.Category;
+            service.City = updatedService.City;
+            service.ServiceStatus = updatedService.ServiceStatus;
+            service.MainSkill = updatedService.MainSkill;
+            service.Schedule = updatedService.Schedule;
             dbContext.SaveChanges();
         }
         public bool DeleteService(int id)

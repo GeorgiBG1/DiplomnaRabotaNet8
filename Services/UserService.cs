@@ -71,9 +71,15 @@ namespace Services
                 .OrderByDescending(s => s.Id)
                 .Include(s => s.Category)
                 .Take(count).ToList();
-            if (services.Any(s => s.Name.Length > 50))
+            var servicesWithLongNameServices = services.Where(s => s.Name.Length > 50).ToList();
+            if (servicesWithLongNameServices.Count != 0)
             {
-                services.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                servicesWithLongNameServices.ForEach(s => s.Name = $"{s.Name![..47]}...");
+                foreach (var service in services.Where(s => s.Name.Length > 50))
+                {
+                    service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
+                }
+
             }
             var model = services.Select(mapper.Map<ServiceCardDTO>).ToList();
             return model;

@@ -44,9 +44,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 .ForMember(s => s.City, opt => opt.MapFrom(d => d.City))
                 .ForMember(s => s.ServiceStatus, opt => opt.MapFrom(d => d.Status))
                 .ForMember(s => s.MainSkill, opt => opt.MapFrom(d => d.Skills[d.SkillId].Name))
-                .ForMember(s => s.Schedule, opt => opt.MapFrom(d => d.DaysAsString()))
-                .ForMember(s => s.MainImage, opt => opt.MapFrom(d => d.MainImage))
-                .ForMember(s => s.Images, opt => opt.MapFrom(d => d.Images));
+                .ForMember(s => s.Schedule, opt => opt.MapFrom(d => d.DaysAsString()));
             #endregion
 
             //OUT
@@ -194,8 +192,7 @@ namespace SkillBox.App.AutoMapperConfiguration
                 }))
                 .ForMember(d => d.MainSkill, opt => opt.MapFrom(s => s.MainSkill))
                 .ForMember(d => d.Skills, opt => opt.MapFrom(s => s.Owner.Skills))
-                .ForMember(d => d.MainImage, opt => opt.MapFrom(d => d.MainImage))
-                .ForMember(d => d.Images, opt => opt.MapFrom(d => d.Images));
+                .ForMember(d => d.Images, opt => opt.MapFrom(d => $"{d.MainImage}|{d.Images}"));
             #endregion
 
             #region Categories
