@@ -181,7 +181,7 @@ namespace Services
                 {
                     service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
                 }
-
+                
             }
             return services.Select(mapper.Map<ServiceMiniDTO>).ToList();
         }

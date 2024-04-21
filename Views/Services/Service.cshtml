@@ -212,16 +212,17 @@
                                     <i class="far fa-star review-color ms-2"></i>
                                     <i class="far fa-star review-color ms-2"></i>
                                 </div>
-                                <form class="comments_form mt30 mb30-md">
+                                <form asp-action="GetUserComment" asp-controller="Services" method="post" class="comments_form mt30 mb30-md">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-4">
                                                 <label class="fw500 fz16 ff-heading dark-color mb-2">Коментар</label>
-                                                <textarea class="pt15" rows="6" placeholder="Напишете какво мислите за тази услуга..."></textarea>
+                                                <input name="serviceId" value="@Model.Service.Id" hidden/>
+                                                <textarea name="comment" class="pt15" rows="6" placeholder="Напишете какво мислите за тази услуга..."></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <a href="" class="ud-btn btn-thm">Изпрати<i class="fal fa-arrow-right-long"></i></a>
+                                            <button type="submit" class="btn ud-btn btn-thm">Изпрати<i class="fal fa-arrow-right-long"></i></button>
                                         </div>
                                     </div>
                                 </form>

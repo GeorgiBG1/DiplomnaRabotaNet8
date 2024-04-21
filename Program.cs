@@ -1,10 +1,10 @@
-using Data;
-using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SkillBox.App.Hubs;
+using Data.Models;
 using Contracts;
 using Services;
+using Data;
+using Hubs;
 namespace DiplomnaRabotaNet8
 {
     public class Program
@@ -92,6 +92,7 @@ namespace DiplomnaRabotaNet8
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
             app.MapHub<ChatHub>("/chatHub");
+            app.MapHub<UserHub>("/userHub");
 
             app.Run();
         }

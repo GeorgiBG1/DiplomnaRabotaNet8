@@ -17,7 +17,7 @@ connection.on("ReceiveCurrentMessages", function (messages) {
 
         divMesContainer.classList.add("notif_list", "d-flex", "align-items-start", "bdrb1", "pb25", "mb10");
         divMesContent.classList.add("details", "ml15");
-        pMesUserProfilePhoto.classList.add("img-2");
+        pMesUserProfilePhoto.classList.add("img-2", "rounded-circle");
         pMesUserFullName.classList.add("dark-color", "fw500", "mb-2");
         pMesDes.classList.add("text", "mb-2");
         pMesCreatedOn.classList.add("mb-0", "text-thm");

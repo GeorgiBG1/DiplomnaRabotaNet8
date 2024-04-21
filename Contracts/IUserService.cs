@@ -19,5 +19,9 @@ namespace Contracts
         public int GetSkillersCount();
         public int GetSkillsCount();
         public string GetUserProfilePhoto(string username);
+        public Task<int> UpdateUserProps(SkillBoxUser user);
+        public Task<string> SetProfilePhotoToUser(SkillBoxUser user, string imgURL);
+        public void AddSkill(SkillBoxUser user, string skillName, int skillPoints);
+        public void AddUserComment(int serviceId, SkillBoxUser user, string content);
     }
 }

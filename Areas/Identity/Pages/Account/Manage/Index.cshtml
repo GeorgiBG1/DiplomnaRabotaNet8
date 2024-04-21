@@ -5,95 +5,105 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
-    </div>
-</div>
-
 <div class="dashboard__content hover-bgc-color">
-    <div class="row pb40">
+    <div class="row">
         <div class="col-lg-9">
             <div class="dashboard_title_area">
                 <h2>Моят профил</h2>
-                <p class="text">За да станете Skiller въведете останалата информация за вас.</p>
+                @if (!User.IsInRole("Skiller"))
+                {
+                    <p class="text">За да станете Skiller въведете останалата информация за вас.</p>
+                }
+                <partial name="_StatusMessage" for="StatusMessage" />
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xl-12">
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Детайли за профила</h5>
-                </div>
-                <div class="col-xl-7">
-                    <div class="profile-box d-sm-flex align-items-center mb30">
-                        <div class="profile-img mb20-sm">
-                            <img class="w-100 rounded-circle wa-xs" src="images/team/fl-1.png" alt="">
-                        </div>
-                        <div class="profile-content ml20 ml0-xs">
-                            <div class="d-flex align-items-center my-3">
-                                <a href="" class="tag-delt text-thm2"><span class="flaticon-delete text-thm2"></span></a>
-                                <a href="" class="upload-btn ml10">Upload Images</a>
+            <form id="profile-form" method="post">
+                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="bdrb1 pb15 mb25">
+                        <h5 class="list-title d-inline">Детайли за профила</h5>
+                        @if (User.IsInRole("Skiller"))
+                        {
+                            <h5 class="list-title d-inline" style="margin-left: 70%;">Вие сте Skiller</h5>
+                        }
+                    </div>
+                    <div class="col-xl-7">
+                        <div class="profile-box d-sm-flex align-items-center mb30">
+                            <div class="profile-content ml20 ml0-xs">
+                                <div class="d-flex">
+                                    <img id="user-profile-photo" class="rounded-circle img-fluid mr10" src="@Model.ProfilePhoto" width="72" height="72" alt="ms3.png">
+                                    <div class="d-flex align-items-center my-3">
+                                        @if (Model.ProfilePhoto != Global_Constants.GlobalConstant.UserDefaultProfilePhoto)
+                                        {
+                                            <button type="button" class="btn tag-delt text-thm2" id="setDefaultPhotoBtn"><span class="flaticon-delete text-thm2"></span></button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn tag-delt text-thm2" id="setDefaultPhotoBtn" style="display: none;"><span class="flaticon-delete text-thm2"></span></button>
+                                        }
+                                        <!--Upload Profile photo-->
+                                        <input type="file" id="fileInput" style="display: none;" />
+                                        <button type="button" class="btn upload-btn ml10" onclick="openFileExplorer()">Качи снимка</button>
+                                        <p id="failUpload" class="d-flex ml10"></p>
+                                        <!---->
+                                    </div>
+                                </div>
+                                <p class="text mb-0">Размерът на изображението трябва да бъде до 1MB, препоръчително съотношение: 330x300 и подходящи формати: .jpg, .jpeg и .png</p>
                             </div>
-                            <p class="text mb-0">Max file size is 1MB, Minimum dimension: 330x300 And Suitable files are .jpg & .png</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-7">
-                    <form class="form-style1">
+                    <div class="col-lg-7">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Username</label>
-                                    <input type="text" class="form-control" placeholder="i will">
+                                    <label asp-for="Input.FirstName" class="heading-color ff-heading fw500 mb10">Име</label>
+                                    <input asp-for="Input.FirstName" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Email Address</label>
-                                    <input type="email" class="form-control" placeholder="i will">
+                                    <label asp-for="Input.LastName" class="heading-color ff-heading fw500 mb10">Фамилия</label>
+                                    <input asp-for="Input.LastName" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="i will">
+                                    <label asp-for="Username" class="heading-color ff-heading fw500 mb10">Потребителско име</label>
+                                    <input asp-for="Username" type="text" disabled class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb20">
-                                    <label class="heading-color ff-heading fw500 mb10">Tagline</label>
-                                    <input type="text" class="form-control" placeholder="i will">
+                                    <label asp-for="Input.Email" class="heading-color ff-heading fw500 mb10">Имейл адрес</label>
+                                    <input asp-for="Input.Email" type="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb20">
+                                    <label asp-for="Input.PhoneNumber" class="heading-color ff-heading fw500 mb10">Телефонен номер</label>
+                                    <input asp-for="Input.PhoneNumber" type="tel" class="form-control">
+                                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb20">
+                                    <label asp-for="Input.WebsiteName" class="heading-color ff-heading fw500 mb10">Уебсайт</label>
+                                    <input asp-for="Input.WebsiteName" type="text" class="form-control" placeholder="име на сайт">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb20">
                                     <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Hourly Rate</label>
+                                        <label asp-for="Input.Gender" class="heading-color ff-heading fw500 mb10">Пол</label>
                                         <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>$50</option>
-                                                <option>$60</option>
-                                                <option>$70</option>
-                                                <option>$80</option>
-                                                <option>$90</option>
-                                                <option>$100</option>
+                                            <select asp-for="Input.Gender" class="selectpicker">
+                                                <option disabled>Избери</option>
+                                                <option value="1">Мъж</option>
+                                                <option value="2">Жена</option>
+                                                <option value="3">Друго</option>
                                             </select>
                                         </div>
                                     </div>
@@ -102,228 +112,134 @@
                             <div class="col-sm-6">
                                 <div class="mb20">
                                     <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Gender</label>
+                                        <label asp-for="Input.City" class="form-label fw500 fz16 dark-color">Град</label>
                                         <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
-                                            </select>
+                                            <div class="dropdown bootstrap-select dropup" style="width: 100%;">
+                                                <select asp-for="Input.City" class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                    <option disabled>Избери</option>
+                                                    @foreach (var city in Model.Cities)
+                                                    {
+                                                        <option value="@city.Id" data-tokens="@city.BGName">@city.BGName</option>
+                                                    }
+                                                </select>
+                                                <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
+                                                    <div class="bs-searchbox">
+                                                        <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                                    </div>
+                                                    <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
+                                                        <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                            <li class="selected active">
+                                                                <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
+                                                                    <span class="text">@Model.Cities[0].BGName</span>
+                                                                </a>
+                                                            </li>
+                                                            @for (int i = 0; i < Model.Cities.Count(); i++)
+                                                            {
+                                                                <li>
+                                                                    <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
+                                                                        <span class="text">@Model.Cities[i].BGName</span>
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-12">
                                 <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Specialization</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Type</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Type One</option>
-                                                <option>Type Two</option>
-                                                <option>Type Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Country</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Turkey</option>
-                                                <option>United Kingdom</option>
-                                                <option>United State</option>
-                                                <option>Ukraine</option>
-                                                <option>Uruguay</option>
-                                                <option>UK</option>
-                                                <option>Uzbekistan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">City</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option data-tokens="California">California</option>
-                                                <option data-tokens="Chicago">Chicago</option>
-                                                <option data-tokens="LosAngeles">Los Angeles</option>
-                                                <option data-tokens="Manhattan">Manhattan</option>
-                                                <option data-tokens="NewJersey">New Jersey</option>
-                                                <option data-tokens="NewYork">New York</option>
-                                                <option data-tokens="SanDiego">San Diego</option>
-                                                <option data-tokens="SanFrancisco">San Francisco</option>
-                                                <option data-tokens="Texas">Texas</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Languages</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker" multiple>
-                                                <option>English</option>
-                                                <option>Spanish</option>
-                                                <option>Greek</option>
-                                                <option>Tarkish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb20">
-                                    <div class="form-style1">
-                                        <label class="heading-color ff-heading fw500 mb10">Languages Level</label>
-                                        <div class="bootselect-multiselect">
-                                            <select class="selectpicker">
-                                                <option>Select</option>
-                                                <option>Fluent</option>
-                                                <option>Mid Level</option>
-                                                <option>Conversational</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <label asp-for="Input.Career" class="heading-color ff-heading fw500 mb10">Професия</label>
+                                    <input asp-for="Input.Career" type="text" class="form-control" placeholder="текуща професия">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb10">
-                                    <label class="heading-color ff-heading fw500 mb10">Introduce Yourself</label>
-                                    <textarea cols="30" rows="6" placeholder="Description"></textarea>
+                                    <label asp-for="Input.Bio" class="heading-color ff-heading fw500 mb10">Автобиография</label>
+                                    <textarea asp-for="Input.Bio" cols="30" rows="6" placeholder="0-500 думи"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="text-start">
-                                    <a class="ud-btn btn-thm" href="page-contact.html">Save<i class="fal fa-arrow-right-long"></i></a>
+                                    <button type="submit" class="ud-btn btn-thm">Запази<i class="fal fa-arrow-right-long"></i></button>
+                                    @if (!User.IsInRole("Skiller"))
+                                    {
+                                        <button type="button" class="ud-btn btn-thm" id="become-skiller-btn">Станете Skiller<i class="fal fa-arrow-right-long"></i></button>
+                                    }
+                                    <p id="message-become-skiller" class="d-flex ml10"></p>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb25">
-                    <h5 class="list-title">Умения</h5>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <form class="form-style1">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Skills 1</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>Designer</option>
-                                                    <option>UI/UX</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Point</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>90</option>
-                                                    <option>80</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Skills 2</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>Developer</option>
-                                                    <option>Programmer</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Point</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>60</option>
-                                                    <option>70</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Skills 3</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>Video Editor</option>
-                                                    <option>Audio & Music</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="mb20">
-                                        <div class="form-style1">
-                                            <label class="heading-color ff-heading fw500 mb10">Point</label>
-                                            <div class="bootselect-multiselect">
-                                                <select class="selectpicker">
-                                                    <option>75</option>
-                                                    <option>80</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Save<i class="fal fa-arrow-right-long"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
-            </div>
+                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                    <div class="bdrb1 pb15 mb25">
+                        <h5 class="list-title">Умения</h5>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="mb0">Запишете вашите умения и дайте точки от 10 до 100.</p>
+                            </div>
+                            <div id="skillsContainer" class="row">
+                                @if (Model.Input.Skills.Count != 0)
+                                {
+                                    for (int i = 1; i <= Model.Input.Skills.Count; i++)
+                                    {
+                                        <div class="col-sm-6">
+                                            <div class="mb20">
+                                                <label class="heading-color ff-heading fw500 mb10">Умение @i</label>
+                                                @{
+                                                    var skillNumber = $"skill{i}";
+                                                }
+                                                <input asp-for="@Model.Input.Skills[i-1].Name" name="@skillNumber" type="text" class="form-control" placeholder="умения - текст">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="mb20">
+                                                <div class="form-style1">
+                                                    <label class="heading-color ff-heading fw500 mb10">Точки</label>
+                                                    @{
+                                                        var points = $"skillPoints{i}";
+                                                    }
+                                                    <div class="bootselect-multiselect">
+                                                        <select name="@points" class="selectpicker">
+                                                            @{
+                                                                var skillValue = "";
+                                                            }
+                                                            @for (int j = 11 - 1; j >= 1; j--)
+                                                            {
+                                                                skillValue = $"{j}0";
+                                                                if (j == Model.Input.Skills[i - 1].Level.Id)
+                                                                {
+                                                                    <option value="@skillValue" selected>@skillValue</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@skillValue">@skillValue</option>
+                                                                }
+
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="row">
+                                <div class="text-start d-flex justify-content-between">
+                                    <a class="btn ud-btn btn-thm" onclick="AddNewSkill()"> + </a>
+                                    <button type="submit" class="btn ud-btn btn-thm">Запази<i class="fal fa-arrow-right-long"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
                 <div class="bdrb1 pb15 mb25">
                     <h5 class="list-title">Настройки</h5>
@@ -331,10 +247,11 @@
                 <div class="col-lg-7">
                     <div class="row">
                         <form id="change-password-form" class="form-style1" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <h6>Смяна на паролата</h6>
-                                    <p class="text">Warning: If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
+                                    <p class="text">Внимание: Ако смените паролата си, но не сте добавили друга опция за смяна на паролата и я забравите, рискувате да загубите достъп до акаунта си завинаги!</p>
                                 </div>
                             </div>
                             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
@@ -342,23 +259,24 @@
                                 <div class="col-sm-6">
                                     <div class="mb20">
                                         <label asp-for="Input.OldPassword" class="heading-color ff-heading fw500 mb10">Стара парола</label>
-                                        <input asp-for="Input.OldPassword" type="text" class="form-control" placeholder="********">
+                                        <input asp-for="Input.OldPassword" type="password" class="form-control" placeholder="********" autocomplete="current-password">
                                         <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
-                            <!--TODO da se dovurshi-->
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">New Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
+                                        <label asp-for="Input.NewPassword" class="heading-color ff-heading fw500 mb10">Нова парола</label>
+                                        <input asp-for="Input.NewPassword" type="password" class="form-control" placeholder="********" autocomplete="new-password">
+                                        <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">Confirm New Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
+                                        <label asp-for="Input.ConfirmPassword" class="heading-color ff-heading fw500 mb10">Потвърждаване на новата парола</label>
+                                        <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="********" autocomplete="new-password">
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -377,19 +295,20 @@
                         <div class="bdrb1 pb15 mb25">
                             <h5 class="list-title">Настройки</h5>
                         </div>
-                        <form class="form-style1">
+                        <form id="close-account-form" class="form-style1" method="post">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <h6>Замразяване на достъпа до акаунта</h6>
-                                    <p class="text">Warning: If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
+                                    <p class="text">Внимание: Ако затворите акаунта си, повече няма да може да използвате този имейл адрес.</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="mb20">
-                                        <label class="heading-color ff-heading fw500 mb10">Enter Password</label>
-                                        <input type="text" class="form-control" placeholder="********">
+                                        <label asp-for="Input.DangerPassword" class="heading-color ff-heading fw500 mb10">Въведи парола</label>
+                                        <input asp-for="Input.DangerPassword" type="text" class="form-control" placeholder="********">
+                                        <span asp-validation-for="Input.DangerPassword" class="text-danger"></span>
                                     </div>
                                     <div class="text-start">
-                                        <a class="ud-btn btn-thm" href="page-contact.html">Замразяване<i class="fal fa-arrow-right-long"></i></a>
+                                        <button type="submit" class="ud-btn btn-thm">Затваряне<i class="fal fa-arrow-right-long"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -400,7 +319,20 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
+    <script>
+        var index = 0;
+        function AddNewSkill() {
+            debugger;
+            $("#skillsContainer").append("<div class='col-sm-6'><div class='mb20'><label class='heading-color ff-heading fw500 mb10'>Ново умение</label><input type='text' class='form-control' placeholder='умения - текст'/></div></div>");
+
+            $("#skillsContainer").append("<div class='col-sm-6'><div class='mb20'><div class='form-style1'><label class='heading-color ff-heading fw500 mb10'>Точки</label> <div class='form-select bootselect-multiselect p-0' style='height: 50px;'><select style='height: 50px; width: 255px;'> <option value='100'>100</option> <option value='90'>90</option> <option value='80'>80</option> <option value='70'>70</option> <option value='60'>60</option> <option value='50'>50</option> <option value='40'>40</option> <option value='30'>30</option> <option value='20'>20</option> <option value='10'>10</option> </select></div> </div></div></div>");
+
+            index++;
+        }
+    </script>
+
+    <script src="~/ajax/uploadprofilephoto.js"></script>
+    <script src="~/ajax/becomeskiller.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

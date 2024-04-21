@@ -3,6 +3,7 @@ using Contracts;
 using Data;
 using Data.Models;
 using DTOs.OUTPUT;
+using Global_Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,19 +13,30 @@ namespace Services
     {
         private readonly SkillBoxDbContext dbContext;
         private readonly UserManager<SkillBoxUser> userManager;
+        private readonly IOfferingService offeringService;
+        private readonly INotificationService notificationService;
         private readonly IMapper mapper;
 
         public UserService(SkillBoxDbContext dbContext,
             UserManager<SkillBoxUser> userManager,
+            IOfferingService offeringService,
+            INotificationService notificationService,
             IMapper mapper)
         {
             this.dbContext = dbContext;
             this.userManager = userManager;
+            this.offeringService = offeringService;
+            this.notificationService = notificationService;
             this.mapper = mapper;
         }
         public SkillBoxUser GetUserByUsername(string username)
         {
-            return dbContext.Users.FirstOrDefault(u => u.UserName == username)!;
+            return dbContext.Users
+                .Include(u => u.Gender)
+                .Include(u => u.City)
+                .Include(u => u.Skills)
+                .ThenInclude(s => s.Level)
+                .FirstOrDefault(u => u.UserName == username)!;
         }
         public UserDTO GetSkillerDTO(string username)
         {
@@ -155,6 +167,72 @@ namespace Services
                    .ProfilePhoto;
             }
             return userProfilePhoto;
+        }
+        public async Task<int> UpdateUserProps(SkillBoxUser user)
+        {
+            var userFromDb = dbContext.Users.SingleOrDefault(u => u.Id == user.Id);
+            userFromDb.FirstName = user.FirstName;
+            userFromDb.LastName = user.LastName;
+            userFromDb.UserName = user.UserName;
+            userFromDb.Email = user.Email;
+            userFromDb.PhoneNumber = user.PhoneNumber;
+            userFromDb.WebsiteName = user.WebsiteName;
+            userFromDb.Bio = user.Bio;
+            userFromDb.City = user.City;
+            userFromDb.Gender = user.Gender;
+            dbContext.Users.Update(userFromDb);
+            notificationService.CreateNotification(GlobalConstant.UpdateUserPropsNotificationType, user!);
+            return await dbContext.SaveChangesAsync();
+        }
+        public async Task<string> SetProfilePhotoToUser(SkillBoxUser user, string imgURL)
+        {
+            if (imgURL == null)
+            {
+                imgURL = GlobalConstant.UserDefaultProfilePhoto;
+            }
+            var userFromDb = dbContext.Users.SingleOrDefault(u => u.Id == user.Id);
+            userFromDb.ProfilePhoto = imgURL;
+            dbContext.Users.Update(userFromDb);
+            notificationService.CreateNotification(GlobalConstant.UpdateUserPropsNotificationType, user!);
+            await dbContext.SaveChangesAsync();
+            return userFromDb.ProfilePhoto;
+        }
+        public void AddSkill(SkillBoxUser user, string skillName, int skillPoints)
+        {
+            var userFromDb = dbContext.Users
+                .SingleOrDefault(u => u.Id == user.Id);
+            var skillLevel = GetSkillLevelBySkillPoints(skillPoints);
+            if (skillLevel != null)
+            {
+                userFromDb.Skills.Add(
+                    new Skill
+                    {
+                        Name = skillName,
+                        Level = skillLevel
+                    });
+                dbContext.Users.Update(userFromDb);
+                notificationService.CreateNotification(GlobalConstant.UpdateUserPropsNotificationType, user!);
+                dbContext.SaveChanges();
+            }
+        }
+        public void AddUserComment(int serviceId, SkillBoxUser user, string content)
+        {
+            var rnd = new Random();
+            var service = offeringService.GetServiceById(serviceId);
+            var review = new Review
+            {
+                Service = service,
+                User = user,
+                Comment = content,
+                RatingStars = rnd.Next(1, 5)
+            };
+            dbContext.Reviews.Add(review);
+            dbContext.SaveChanges();
+        }
+        private SkillLevel GetSkillLevelBySkillPoints(int skillPoints)
+        {
+            var skillLevel = dbContext.SkillLevels.FirstOrDefault(sl => sl.BGName == $"{skillPoints}%");
+            return skillLevel!;
         }
     }
 }

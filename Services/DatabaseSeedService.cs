@@ -2161,7 +2161,6 @@ namespace Services
                 await dbContext.UserMessages.AddAsync(userMessage58);
                 #endregion
 
-                //TODO Add Reviews
                 await dbContext.SaveChangesAsync();
             }
         }

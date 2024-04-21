@@ -1,11 +1,9 @@
 ﻿using Contracts;
 using Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using Services;
 
-namespace SkillBox.App.Hubs
+namespace Hubs
 {
     public class ChatHub : Hub
     {

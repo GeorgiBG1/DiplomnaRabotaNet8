@@ -147,7 +147,7 @@ namespace DiplomnaRabotaNet8.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.PhoneNumber;
                 user.City = _dbContext.Cities.FirstOrDefault(c => c.Id == Input.City);
                 user.Gender = _dbContext.Genders.FirstOrDefault(c => c.Id == Input.Gender);
-                user.EmailConfirmed = true; //TODO scaffolding
+                user.EmailConfirmed = true;
                 //CreateUser();
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

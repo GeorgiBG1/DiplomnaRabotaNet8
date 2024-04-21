@@ -75,6 +75,19 @@ namespace Controllers
             };
             return View(model);
         }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetUserComment(int serviceId, string comment)
+        {
+            var user = userService.GetUserByUsername(User.Identity?.Name!);
+
+            if (user != null && comment != null)
+            {
+                userService.AddUserComment(serviceId, user, comment);
+            }
+            return RedirectToAction("Service", new { id = serviceId });
+        }
         [Authorize(Roles = "Skiller")]
         public IActionResult Details()
         {
@@ -185,6 +198,7 @@ namespace Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
                 var category = categoryService.GetCategoryById(bindingModel.CategoryId);
                 var city = userService.GetCityById(bindingModel.CityId);
                 var status = offeringService.GetServiceStatusById(bindingModel.StatusId+1);
@@ -193,6 +207,7 @@ namespace Controllers
                 bindingModel.Status = status;
                 bindingModel.Skills = CacheData.Skills;
                 offeringService.UpdateService(bindingModel);
+                notificationService.CreateNotification(GlobalConstant.UpdateServiceNotificationType, user!);
                 CacheData.Categories = null!;
                 CacheData.Cities = null!;
                 CacheData.Skills = null!;
