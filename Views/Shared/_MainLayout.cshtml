@@ -39,7 +39,7 @@
                     <div class="row align-items-center justify-content-between">
                         <div class="col-auto pe-0">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a class="header-logo bdrr1 pr30 pr5-xl" asp-action="Index" asp-controller="Home"><img src="~/images/header-logo-dark.svg" alt="Header Logo"></a>
+                                <a class="header-logo bdrr1 pr30 pr5-xl" asp-action="Index" asp-controller="Home"><img src="~/images/header-logo-dark.jpg" width="133" height="40" alt="Header Logo"></a>
                                 <div class="home1_style at-home2">
                                     <div id="mega-menu">
                                         <div class="text-center"><a asp-action="Index" asp-controller="Categories" class="btn-mega fw500"><span class="pl30 pl10-xl pr5 fz15 vam flaticon-menu"></span> Категории</a></div>
@@ -97,7 +97,7 @@
                                 <a class="login-info bdrl1 px-3 px-lg-3" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
                                 @if (!User.IsInRole("Skiller"))
                                 {
-                                    <a class="login-info mx15-lg mx30" asp-action="BecomeSkiller" asp-controller="Home"><span class="d-none d-xl-inline-block">Стани</span> Skiller</a>
+                                    <a class="login-info mx15-lg mx10" asp-action="BecomeSkiller" asp-controller="Home"><span class="d-none d-xl-inline-block">Стани</span> Skiller</a>
                                 }
                                 @if (User.Identity!.IsAuthenticated)
                                 {
@@ -182,7 +182,7 @@
                                 }
                                 else
                                 {
-                                    <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+                                    <a class="login-info mr15-xl mx10" asp-area="Identity" asp-page="/Account/Login">Вход</a>
                                     <a class="ud-btn btn-thm add-joining bdrs50 px-3" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
                                 }
                             </div>

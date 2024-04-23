@@ -15,8 +15,10 @@
                     </div>
                     <p class="preview">@Model.ServiceName</p>
                 </div>
-                <div>
+                <div class="text-center">
                     Beta - Нестабилно
+                    <br />
+                    <a asp-action="Chat" asp-route-id="@Model.Id" class="dropdown-item btn btn-light btn-square border bdrs16">Препоръчително <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
                 <div>
                     <div class="dropdown">

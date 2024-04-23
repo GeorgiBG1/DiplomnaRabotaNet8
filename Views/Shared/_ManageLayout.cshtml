@@ -40,12 +40,15 @@
                         <div class="col-6 col-lg-auto">
                             <div class="text-center text-lg-start d-flex align-items-center">
                                 <div class="dashboard_header_logo position-relative me-2 me-xl-5">
-                                    <a class="logo" asp-action="Index" asp-controller="Home"><img src="~/images/header-logo-dark.svg" alt="Header Logo"></a>
+                                    <a class="logo" asp-action="Index" asp-controller="Home"><img src="~/images/header-logo-dark.jpg" width="133" height="40" alt="Header Logo"></a>
                                 </div>
-                                <div class="fz20 ml90">
-                                    <a class="btn p-0 dashboard_sidebar_toggle_icon vam"><img src="~/images/dashboard-navicon.svg" alt="Dashboard-navicon"></a>
-                                </div>
-                                <a class="login-info d-block d-xl-none ml40 vam" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
+                                @if (User.Identity!.IsAuthenticated)
+                                {
+                                    <div class="fz20 ml90">
+                                        <a class="btn p-0 dashboard_sidebar_toggle_icon vam"><img src="~/images/dashboard-navicon.svg" alt="Dashboard-navicon"></a>
+                                    </div>
+                                    <a class="login-info d-block d-xl-none ml40 vam" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe"></span></a>
+                                }
                                 <div class="ml40 d-none d-xl-block">
                                     <div class="search_area dashboard-style">
                                         <input type="text" class="form-control border-0" placeholder="Каква услуга търсиш днес?">
@@ -160,7 +163,7 @@
                                 }
                                 else
                                 {
-                                    <a class="login-info mr15-xl mr30" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+                                    <a class="login-info mr15-xl mx10" asp-area="Identity" asp-page="/Account/Login">Вход</a>
                                     <a class="ud-btn btn-thm add-joining bdrs50 px-3" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
                                 }
                             </div>
@@ -229,100 +232,146 @@
         </div>
 
         <div class="dashboard_content_wrapper">
-            <div class="dashboard dashboard_wrapper pr30 pr0-xl">
-
-                <div class="dashboard__sidebar d-none d-lg-block" style="">
-                    <div class="dashboard_sidebar_list">
-                        <p class="fz15 fw400 ff-heading pl30">Общи</p>
-                        <div class="sidebar_list_item">
-                            <a asp-action="Index" asp-controller="Dashboard" class="items-center -is-active"><i class="flaticon-home mr15"></i>Табло</a>
-                        </div>
-                        @if (User.IsInRole("Skiller"))
-                        {
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <div class="dashboard dashboard_wrapper pr30 pr0-xl">
+                    <div class="dashboard__sidebar d-none d-lg-block" style="">
+                        <div class="dashboard_sidebar_list">
+                            <p class="fz15 fw400 ff-heading pl30">Общи</p>
                             <div class="sidebar_list_item">
-                                <a asp-action="MyServices" asp-controller="Services" class="items-center"><i class="flaticon-document mr15"></i>Моите услуги</a>
+                                <a asp-action="Index" asp-controller="Dashboard" class="items-center -is-active"><i class="flaticon-home mr15"></i>Табло</a>
                             </div>
-                        }
-                        <div class="sidebar_list_item">
-                            <a asp-action="Saved" asp-controller="Dashboard" class="items-center"><i class="flaticon-like mr15"></i>Запазени</a>
-                        </div>
-                        <div class="sidebar_list_item ">
-                            <a asp-action="Index" asp-controller="Chats" class="items-center"><i class="flaticon-chat mr15"></i>Съобщения</a>
-                        </div>
-                        <div class="sidebar_list_item ">
-                            <a asp-action="Reviews" asp-controller="Dashboard" class="items-center"><i class="flaticon-review-1 mr15"></i>Ревюта</a>
-                        </div>
-                        @if (User.IsInRole("Skiller"))
-                        {
-                            <p class="fz15 fw400 ff-heading pl30 mt30">Създаване и редактиране</p>
-                        <div class="sidebar_list_item ">
-                            <a asp-action="Create" asp-controller="Services" class="items-center"><i class="flaticon-content mr15"></i>Създаване на услуга</a>
-                        </div>
-                        <div class="sidebar_list_item ">
-                            <a asp-action="Details" asp-controller="Services" class="items-center"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
-                        </div>
-                        }                     
-
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                            @if (User.IsInRole("Skiller"))
+                            {
+                                <div class="sidebar_list_item">
+                                    <a asp-action="MyServices" asp-controller="Services" class="items-center"><i class="flaticon-document mr15"></i>Моите услуги</a>
+                                </div>
+                            }
                             <div class="sidebar_list_item">
-                                <a asp-action="Services" asp-controller="Admin" class="items-center"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
+                                <a asp-action="Saved" asp-controller="Dashboard" class="items-center"><i class="flaticon-like mr15"></i>Запазени</a>
                             </div>
                             <div class="sidebar_list_item ">
-                                <a asp-action="Skillers" asp-controller="Admin" class="items-center"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
+                                <a asp-action="Index" asp-controller="Chats" class="items-center"><i class="flaticon-chat mr15"></i>Съобщения</a>
                             </div>
-                        }
+                            <div class="sidebar_list_item ">
+                                <a asp-action="Reviews" asp-controller="Dashboard" class="items-center"><i class="flaticon-review-1 mr15"></i>Ревюта</a>
+                            </div>
+                            @if (User.IsInRole("Skiller"))
+                            {
+                                <p class="fz15 fw400 ff-heading pl30 mt30">Създаване и редактиране</p>
+                                <div class="sidebar_list_item ">
+                                    <a asp-action="Create" asp-controller="Services" class="items-center"><i class="flaticon-content mr15"></i>Създаване на услуга</a>
+                                </div>
+                                <div class="sidebar_list_item ">
+                                    <a asp-action="Details" asp-controller="Services" class="items-center"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
+                                </div>
+                            }
 
-                        <p class="fz15 fw400 ff-heading pl30 mt30">Акаунт</p>
-                        <div class="sidebar_list_item ">
-                            <a class="items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr15"></i>Моят профил</a>
-                        </div>
-                        <div class="sidebar_list_item ">
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="dropdown-item items-center px-4 py-3"><i class="flaticon-logout mr15"></i>Изход</button>
-                            </form>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                                <div class="sidebar_list_item">
+                                    <a asp-action="Services" asp-controller="Admin" class="items-center"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
+                                </div>
+                                <div class="sidebar_list_item ">
+                                    <a asp-action="Skillers" asp-controller="Admin" class="items-center"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
+                                </div>
+                            }
+
+                            <p class="fz15 fw400 ff-heading pl30 mt30">Акаунт</p>
+                            <div class="sidebar_list_item ">
+                                <a class="items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr15"></i>Моят профил</a>
+                            </div>
+                            <div class="sidebar_list_item ">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="dropdown-item items-center px-4 py-3"><i class="flaticon-logout mr15"></i>Изход</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="dashboard__main pl0-md">
-                    @RenderBody()
-                    <!--Footer-->
-                    <footer class="dashboard_footer pt30 pb30">
-                        <div class="container">
-                            <div class="row align-items-center justify-content-center justify-content-md-between">
-                                <div class="col-auto">
-                                    <div class="copyright-widget">
-                                        <p class="mb-md-0">© SkillBox 2024. Всички права запазени.</p>
+
+
+                    <div class="dashboard__main pl0-md">
+                        @RenderBody()
+                        <!--Footer-->
+                        <footer class="dashboard_footer pt30 pb30">
+                            <div class="container">
+                                <div class="row align-items-center justify-content-center justify-content-md-between">
+                                    <div class="col-auto">
+                                        <div class="copyright-widget">
+                                            <p class="mb-md-0">© SkillBox 2024. Всички права запазени.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="footer_bottom_right_btns at-home8 text-center text-lg-end">
-                                        <ul class="p-0 m-0">
-                                            <li class="list-inline-item bg-white">
-                                                <select class="selectpicker show-tick">
-                                                    <option>Лев</option>
-                                                    <option>Евро</option>
-                                                </select>
-                                            </li>
-                                            <li class="list-inline-item bg-white">
-                                                <select class="selectpicker show-tick">
-                                                    <option>Български</option>
-                                                    <option>Английски</option>
-                                                    <option>Френски</option>
-                                                    <option>Италиански</option>
-                                                    <option>Испански</option>
-                                                    <option>Турски</option>
-                                                </select>
-                                            </li>
-                                        </ul>
+                                    <div class="col-auto">
+                                        <div class="footer_bottom_right_btns at-home8 text-center text-lg-end">
+                                            <ul class="p-0 m-0">
+                                                <li class="list-inline-item bg-white">
+                                                    <select class="selectpicker show-tick">
+                                                        <option>Лев</option>
+                                                        <option>Евро</option>
+                                                    </select>
+                                                </li>
+                                                <li class="list-inline-item bg-white">
+                                                    <select class="selectpicker show-tick">
+                                                        <option>Български</option>
+                                                        <option>Английски</option>
+                                                        <option>Френски</option>
+                                                        <option>Италиански</option>
+                                                        <option>Испански</option>
+                                                        <option>Турски</option>
+                                                    </select>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </footer>
+                        </footer>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="dashboard dashboard_wrapper pr0-xl">
+                    <div class="dashboard__main pl0-md" style="padding-left: 0px !important;">
+                        @RenderBody()
+                        <!--Footer-->
+                        <footer class="dashboard_footer pt30 pb30">
+                            <div class="container">
+                                <div class="row align-items-center justify-content-center justify-content-md-between">
+                                    <div class="col-auto">
+                                        <div class="copyright-widget">
+                                            <p class="mb-md-0">© SkillBox 2024. Всички права запазени.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="footer_bottom_right_btns at-home8 text-center text-lg-end">
+                                            <ul class="p-0 m-0">
+                                                <li class="list-inline-item bg-white">
+                                                    <select class="selectpicker show-tick">
+                                                        <option>Лев</option>
+                                                        <option>Евро</option>
+                                                    </select>
+                                                </li>
+                                                <li class="list-inline-item bg-white">
+                                                    <select class="selectpicker show-tick">
+                                                        <option>Български</option>
+                                                        <option>Английски</option>
+                                                        <option>Френски</option>
+                                                        <option>Италиански</option>
+                                                        <option>Испански</option>
+                                                        <option>Турски</option>
+                                                    </select>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            }
         </div>
     </div>
     <script src="~/js/all/jquery-3.6.4.min.js"></script>
