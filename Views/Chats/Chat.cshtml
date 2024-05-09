@@ -6,7 +6,10 @@
     <input id="chatId" value="@Model.Id" hidden />
     <div class="user_heading px-0 mx30">
         <div class="wrap">
-            <img class="img-fluid mr10" src="@Model.ChatUsers.First().User.ProfilePhoto" width="50" height="50" alt="ms3.png">
+            @if (Model.ChatUsers.First().User != null)
+            {
+                <img class="img-fluid mr10" src="@Model.ChatUsers.First().User.ProfilePhoto" width="50" height="50" alt="ms3.png">
+            }
             <div class="meta d-sm-flex justify-content-sm-between align-items-center">
                 <div class="authors">
                     <div class="d-flex">

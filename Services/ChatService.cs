@@ -33,6 +33,7 @@ namespace Services
             var chat = dbContext.Chats
                 .Include(c => c.Service)
                 .Include(c => c.ChatUsers)
+                .ThenInclude(m => m.User)
                 .Include(c => c.Messages)
                 .ThenInclude(m => m.Owner)
                 .FirstOrDefault(c => c.Id == id);

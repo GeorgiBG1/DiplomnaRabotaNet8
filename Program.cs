@@ -37,7 +37,7 @@ namespace DiplomnaRabotaNet8
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<SkillBoxUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
                 //Password settings
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
