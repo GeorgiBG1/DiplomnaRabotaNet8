@@ -5,6 +5,7 @@ using DTOs.OUTPUT;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
+using System.Globalization;
 
 namespace SkillBox.App.AutoMapperConfiguration
 {
@@ -232,8 +233,26 @@ namespace SkillBox.App.AutoMapperConfiguration
             CreateMap<SkillBoxUser, UserInfoDTO>()
                 .ForMember(d => d.Username, opt => opt.MapFrom(u => u.UserName))
                 .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
+                .ForMember(d => d.ProfilePhoto, opt => opt.MapFrom(u => u.ProfilePhoto))
                 .ForMember(d => d.Location, opt => opt.MapFrom(u => u.City.BGName))
+                .ForMember(d => d.Career, opt => opt.MapFrom(u => u.Career))
                 .ForMember(d => d.ServicesCount, opt => opt.MapFrom(u => u.Services.Count()))
+                .ForMember(d => d.ReviewAvgCoef, opt => opt.MapFrom((u, d) =>
+                {
+                    var reviewAvgCoef = 0d;
+                    if (u.Services.Count != 0)
+                    {
+                        var reviews = u.Services.SelectMany(s => s.Reviews!).ToList();
+                        var stars = reviews.Select(r => r.RatingStars).ToList();
+                        var starsSum = stars.Sum();
+                        reviewAvgCoef = (double)starsSum! / stars.Count();
+                    }
+                    if (reviewAvgCoef.Equals(double.NaN))
+                    {
+                        reviewAvgCoef = 0d;
+                    }
+                    return reviewAvgCoef.ToString("0.00", CultureInfo.InvariantCulture);
+                }))
                 .ForMember(d => d.ReviewsCount, opt => opt.MapFrom((u => u.Services.SelectMany(s => s.Reviews!).Count())));
 
             CreateMap<SkillBoxUser, UserCardDTO>()

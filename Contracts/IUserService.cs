@@ -6,6 +6,7 @@ namespace Contracts
     public interface IUserService
     {
         public SkillBoxUser GetUserByUsername(string username);
+        public UserInfoDTO GetUserAsUserDTOByUsername(string username);
         public UserDTO GetSkillerDTO(string username);
         public ICollection<UserCardDTO> GetSkillerCardDTOs(int count = 1, int skipCount = 0);
         public ICollection<UserCardDTO> GetAllSkillerAsUserCardDTOs();

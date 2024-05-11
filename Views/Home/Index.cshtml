@@ -12,67 +12,73 @@
                         </h1>
                         <p class="text-white animate-up-2">Наемете Skiller, който да дойде на избрано от вас място и <br class="d-none d-lg-block"> да свърши нещо вместо вас!</p>
                         <div class="advance-search-tab bgc-white p10 bdrs4-sm bdrs60 banner-btn position-relative zi1 animate-up-3 mt30">
-                            <div class="row">
-                                <div class="col-md-5 col-lg-6 col-xl-6">
-                                    <div class="advance-search-field mb10-sm">
-                                        <form class="form-search position-relative">
-                                            <div class="box-search">
-                                                <span class="icon far fa-magnifying-glass"></span>
-                                                <input class="form-control" type="text" name="search" placeholder="Каква услуга търсиш?">
-                                                <div class="search-suggestions">
-                                                    <h6 class="fz14 ml30 mt25 mb-3">Популярни търсения</h6>
-                                                    <div class="box-suggestions">
-                                                        <ul class="px-0 m-0 pb-4">
-                                                            <li>
-                                                                <div class="info-product">
-                                                                    <div class="item_title">mobile app development</div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="info-product">
-                                                                    <div class="item_title">mobile app builder</div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="info-product">
-                                                                    <div class="item_title">mobile legends</div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="info-product">
-                                                                    <div class="item_title">mobile app ui ux design</div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="info-product">
-                                                                    <div class="item_title">mobile game app development</div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="info-product">
-                                                                    <div class="item_title">mobile app design</div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
+                            <form method="post" asp-action="SearchForService" asp-controller="Services" class="form-search position-relative">
+                                <div class="row">
+                                    <div class="col-md-5 col-lg-6 col-xl-6">
+                                        <div class="advance-search-field mb10-sm">
+                                            <div class="form-search position-relative">
+                                                <div class="box-search">
+                                                    <span class="icon far fa-magnifying-glass"></span>
+                                                    <input name="searchWords" type="text" class="form-control" placeholder="Каква услуга търсиш?">
+                                                    <div class="search-suggestions">
+                                                        <h6 class="fz14 ml30 mt25 mb-3">Популярни търсения</h6>
+                                                        <div class="box-suggestions">
+                                                            <ul class="px-0 m-0 pb-4">
+                                                                <li>
+                                                                    <div class="info-product">
+                                                                        <div class="item_title">mobile app development</div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="info-product">
+                                                                        <div class="item_title">mobile app builder</div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="info-product">
+                                                                        <div class="item_title">mobile legends</div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="info-product">
+                                                                        <div class="item_title">mobile app ui ux design</div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="info-product">
+                                                                        <div class="item_title">mobile game app development</div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="info-product">
+                                                                        <div class="item_title">mobile app design</div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-3">
+                                        <div class="bselect-style1 bdrl1 bdrn-sm">
+                                            <select name="categoryId" class="selectpicker" data-width="100%" >
+                                                <option disabled>Избери категория</option>
+                                                @foreach (var category in Model.CategoryList)
+                                                {
+                                                    <option value="@category.Value">@category.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-3">
+                                        <div class="text-center text-xl-start">
+                                            <button class="ud-btn btn-thm w-100 bdrs60" type="submit">Търси</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-lg-4 col-xl-3">
-                                    <div class="bselect-style1 bdrl1 bdrn-sm">
-                                        <select class="selectpicker" data-width="100%" asp-items="@Model.CategoryList">
-                                            <option disabled>Избери категория</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-3">
-                                    <div class="text-center text-xl-start">
-                                        <button class="ud-btn btn-thm w-100 bdrs60" type="button">Търси</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>      
                         </div>
                         <div class="row mt20 animate-up-4">
                             <div class="col-xl-9">

@@ -4,13 +4,72 @@
 }
 
 <div class="dashboard__content hover-bgc-color">
+    <!--Search User-->
     <div class="row pb40">
-        <div class="col-lg-9">
-            <div class="dashboard_title_area">
-                <h2>Управление на всички skiller-и</h2>
+        <div class="col-xl-12">
+            <div class="box-search">
+                <input class="form-control" type="text" name="search" id="searchInput" placeholder="Търсене на потребител по неговото потребителско име...">
             </div>
         </div>
     </div>
+
+    <div class="row" id="searchContainer" style="display: none;">
+        <div class="col-xl-12">
+            @if (Model != null)
+            {
+                <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                    <h2>Резултати от търсенето на потребител:</h2>
+                    <div class="packages_table table-responsive">
+                        <table class="table-style3 table at-savesearch">
+                            <thead class="t-head">
+                                <tr>
+                                    <th scope="col"><b>Име</b></th>
+                                    <th scope="col"><b>Профилна снимка</b></th>
+                                    <th scope="col" class="text-center"><b>Управление</b></th>
+                                </tr>
+                            </thead>
+                            <tbody class="t-body">
+                                <tr>
+                                    <td class="ps-0" scope="row">
+                                        <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
+                                            <div class="d-lg-flex align-items-lg-center">
+                                                <div class="details ml15 ml0-md mb15-md">
+                                                    <h5 class="title mb-2" id="userName">Име</h5>
+                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> <span id="userCity">Град</span></p>
+                                                    <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
+                                                        <i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">професия</span>
+                                                    </p>
+                                                    <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userServicesCount"></span> услуги</p>
+                                                    <p>
+                                                        <i class="fas fa-star fz10 review-color pe-1"></i>
+                                                        <span class="dark-color" id="userReviewAvgCoef">
+                                                        </span> (<span id="userReviewsCount"></span> ревюта)
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="vam"><img id="uProfilePhoto" style="display: none;" class="mr-3" width="60" height="60" alt="User profile photo"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <a asp-action="Skiller" asp-controller="Skillers" class="icon" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e"></iconify-icon></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-center" style="height: 300px;">
+                    <h2 class="d-inline mt50">Няма skiller-и</h2>
+                </div>
+            }
+        </div>
+    </div>
+    <!---->
     <div class="row">
         <div class="col-xl-12">
             @if (Model != null)
@@ -82,5 +141,58 @@
             }
         </div>
     </div>
-    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
 </div>
+@section Scripts
+{
+    <script>
+        debugger;
+
+        $(document).ready(function () {
+            $("#searchInput").on("input", function () {
+                var searchInput = $(this).val();
+                debugger;
+                $.ajax({
+                    url: "/Admin/GetUserInfoByUsername",
+                    type: "POST",
+                    data: { username: searchInput },
+                    success: function (response) {
+                        if (response.exists) {
+                            $("#userUsername").attr("href", "/Skillers/Skiller/" + response.user.username);
+                            $("#userName").text(response.user.name);
+                            $("#userCity").text(response.user.location);
+                            $("#userCareer").text(response.user.career);
+                            $("#userServicesCount").text(response.user.servicesCount);
+                            $("#userReviewsCount").text(response.user.reviewsCount);
+                            $("#userReviewAvgCoef").text(response.user.reviewAvgCoef);
+                            if (response.user.profilePhoto) {
+                                $("#uProfilePhoto").attr("src", response.user.profilePhoto).show();
+                            } else {
+                                $("#uProfilePhoto").hide();
+                            }
+
+                            $("#searchContainer").show();
+                            //$("#noResults").text("");
+                        } else {
+                            $("#userUsername").attr("href", "");
+                            $("#userName").text("Име");
+                            $("#userCity").text("Град");
+                            $("#userCareer").text("професия");
+                            $("#userServicesCount").text("0");
+                            $("#userReviewsCount").text("0");
+                            $("#userReviewAvgCoef").text("0");
+                            $("#uProfilePhoto").attr("src", "").hide();
+
+                            $("#searchContainer").hide();
+                            //$("#noResults").text("Няма намерен потребител с този имейл!");
+                        }
+                    },
+                    error: function () {
+                        console.error("Error checking user email");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
+}

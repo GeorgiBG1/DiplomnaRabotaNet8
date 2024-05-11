@@ -256,5 +256,13 @@ namespace Controllers
             }
             return Json(new { exists = false });
         }
+        //Search
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SearchForService(string searchWords, int categoryId = 0)
+        {
+            //TODO redirectToAction
+            return RedirectToAction("NoResults", "Home");
+        }
     }
 }

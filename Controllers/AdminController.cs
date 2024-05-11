@@ -62,6 +62,24 @@ namespace Controllers
             var model = userService.GetAllSkillerAsUserCardDTOs();
             return View(model);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult GetUserInfoByUsername(string username)
+        {
+            var user = userService.GetUserAsUserDTOByUsername(username);
+
+            if (user != null)
+            {
+                user.Career ??= "професия (-)";
+                var userData = user;
+
+                return Json(new { exists = true, user = userData });
+            }
+            else
+            {
+                return Json(new { exists = false });
+            }
+        }
         public IActionResult DeleteService(int id)
         {
             var isDeleted = offeringService.DeleteService(id);

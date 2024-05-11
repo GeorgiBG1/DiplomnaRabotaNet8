@@ -6,6 +6,7 @@ using DTOs.OUTPUT;
 using Global_Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Services
 {
@@ -37,6 +38,19 @@ namespace Services
                 .Include(u => u.Skills)
                 .ThenInclude(s => s.Level)
                 .FirstOrDefault(u => u.UserName == username)!;
+        }
+        public UserInfoDTO GetUserAsUserDTOByUsername(string username)
+        {
+            var user = dbContext.Users
+            .Include(u => u.Gender)
+            .Include(u => u.Services)
+            .ThenInclude(s => s.Reviews)
+            .Include(u => u.City)
+            .Include(u => u.Skills)
+            .ThenInclude(s => s.Level)
+            .FirstOrDefault(u => u.UserName == username)!;
+            var model = mapper.Map<UserInfoDTO>(user);
+            return model;
         }
         public UserDTO GetSkillerDTO(string username)
         {
