@@ -23,5 +23,7 @@ namespace Contracts
         public int GetCompletedServicesCount();
         public int GetReviewsCount();
         public int GetPositiveReiewsCount();
+        public int GetServiceIdBySearchWords(string searchWords, int categoryId = 0);
+        public IList<ServiceCardDTO> GetServicesBySearchWords(string searchWords);
     }
 }

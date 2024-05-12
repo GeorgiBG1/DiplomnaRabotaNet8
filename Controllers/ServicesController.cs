@@ -261,7 +261,14 @@ namespace Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SearchForService(string searchWords, int categoryId = 0)
         {
-            //TODO redirectToAction
+            if (searchWords != null)
+            {
+                var serviceId = offeringService.GetServiceIdBySearchWords(searchWords, categoryId);
+                if (serviceId != 0)
+                {
+                    return RedirectToAction("Service", new { id = serviceId });
+                }
+            }
             return RedirectToAction("NoResults", "Home");
         }
     }

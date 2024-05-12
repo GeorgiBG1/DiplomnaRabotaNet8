@@ -254,6 +254,33 @@ namespace Services
         {
             return dbContext.Reviews.Where(r => r.RatingStars > 2).Count();
         }
-        
+        //Search
+        public int GetServiceIdBySearchWords(string searchWords, int categoryId = 0)
+        {
+            var serviceId = 0;
+            var foundService = dbContext.Services
+                .Where(a => a.Name.Contains(searchWords)).FirstOrDefault()!;
+            if (categoryId != 0)
+            {
+                foundService = dbContext.Services
+                   .Where(s => s.CategoryId == categoryId)
+                   .Where(a => a.Name.Contains(searchWords)).FirstOrDefault()!;
+            }
+            
+            if (foundService != null)
+            {
+                serviceId = foundService.Id;
+            }
+            return serviceId;
+        }
+        public IList<ServiceCardDTO> GetServicesBySearchWords(string searchWords)
+        {
+            var foundServices = dbContext.Services
+                .Include(s => s.Category)
+                .Include(s => s.Owner)
+                .Include(s => s.Reviews)
+                .Where(a => a.Name.Contains(searchWords)).ToList();
+            return foundServices.Select(fs => mapper.Map<ServiceCardDTO>(fs)).ToList();
+        }
     }
 }
