@@ -67,7 +67,6 @@ namespace Controllers
         public IActionResult GetUserInfoByUsername(string username)
         {
             var user = userService.GetUserAsUserDTOByUsername(username);
-
             if (user != null)
             {
                 user.Career ??= "професия (-)";
@@ -75,10 +74,7 @@ namespace Controllers
 
                 return Json(new { exists = true, user = userData });
             }
-            else
-            {
-                return Json(new { exists = false });
-            }
+            return Json(new { exists = false });
         }
         public IActionResult DeleteService(int id)
         {

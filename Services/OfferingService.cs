@@ -273,13 +273,25 @@ namespace Services
             }
             return serviceId;
         }
-        public IList<ServiceCardDTO> GetServicesBySearchWords(string searchWords)
+        public ServiceCardDTO GetServiceBySearchWords(string searchWords)
+        {
+            var foundService = dbContext.Services
+                .Include(s => s.Category)
+                .Include(s => s.Owner)
+                .Include(s => s.Reviews)
+                .Where(a => a.Name.Contains(searchWords))
+                .FirstOrDefault();
+            var model = mapper.Map<ServiceCardDTO>(foundService);
+            return model;
+        }
+        public IList<ServiceCardDTO> GetServicesBySearchWords(string searchWords, int countLimit)
         {
             var foundServices = dbContext.Services
                 .Include(s => s.Category)
                 .Include(s => s.Owner)
                 .Include(s => s.Reviews)
-                .Where(a => a.Name.Contains(searchWords)).ToList();
+                .Where(a => a.Name.Contains(searchWords))
+                .Take(countLimit).ToList();
             return foundServices.Select(fs => mapper.Map<ServiceCardDTO>(fs)).ToList();
         }
     }

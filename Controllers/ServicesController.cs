@@ -201,7 +201,7 @@ namespace Controllers
                 var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
                 var category = categoryService.GetCategoryById(bindingModel.CategoryId);
                 var city = userService.GetCityById(bindingModel.CityId);
-                var status = offeringService.GetServiceStatusById(bindingModel.StatusId+1);
+                var status = offeringService.GetServiceStatusById(bindingModel.StatusId + 1);
                 bindingModel.Category = category;
                 bindingModel.City = city;
                 bindingModel.Status = status;
@@ -270,6 +270,51 @@ namespace Controllers
                 }
             }
             return RedirectToAction("NoResults", "Home");
+        }
+        //Dynamic search
+        [HttpPost]
+        public IActionResult GetServicesBySearchInput(string userInput)
+        {
+            if (userInput != null)
+            {
+                var services = offeringService.GetServicesBySearchWords(userInput, 3);
+                if (services.Count != 0)
+                {
+                    var servicesWithLongNameServices = services.Where(s => s.Name.Length > 30).ToList();
+                    if (servicesWithLongNameServices.Count != 0)
+                    {
+                        servicesWithLongNameServices.ForEach(s => s.Name = $"{s.Name![..27]}...");
+                        foreach (var service in services.Where(s => s.Name.Length > 30))
+                        {
+                            service.Name = servicesWithLongNameServices.FirstOrDefault(s => s.Id == service.Id)!.Name;
+                        }
+                    }
+
+                    var servicesList = services.ToList();
+                    var servicesResult = new List<object>();
+                    for (int i = 0; i < servicesList.Count; i++)
+                    {
+                        if (servicesList[i].ReviewAvgCoef.Equals(double.NaN))
+                        {
+                            servicesList[i].ReviewAvgCoef = 0;
+                        }
+                        var service = new
+                        {
+                            Id = servicesList[i].Id,
+                            Name = servicesList[i].Name,
+                            Category = servicesList[i].CategoryName,
+                            MainImage = servicesList[i].MainImage,
+                            Price = servicesList[i].Price.ToString(),
+                            SkillerName = servicesList[i].AuthorName,
+                            ReviewAvgCoef = servicesList[i].ReviewAvgCoef.ToString("F2"),
+                            ReviewsCount = servicesList[i].ReviewsCount.ToString()
+                        };
+                        servicesResult.Add(service);                       
+                    }
+                    return Json(new { exists = true, services = servicesResult });
+                }
+            }
+            return Json(new { exists = false });
         }
     }
 }

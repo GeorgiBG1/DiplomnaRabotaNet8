@@ -116,87 +116,12 @@
                         <div class="modal-body pb-0">
                             <form method="post" asp-action="SearchForService" asp-controller="Services">
                                 <div class="popup-search-field search_area">
-                                    <input name="searchWords" type="text" class="form-control border-0" placeholder="Каква услуга търсиш днес?">
+                                    <input id="searchInput" name="searchWords" type="text" class="form-control border-0" placeholder="Каква услуга търсиш днес?">
                                     <label><span class="far fa-magnifying-glass"></span></label>
                                     <button class="ud-btn btn-thm bdrs60" type="submit">Търси</button>
                                 </div>
-                            </form>                          
-                            <div class="ps-widget bgc-white bdrs8 p30 mt-2 overflow-hidden position-relative">
-                                <div class="packages_table table-responsive">
-                                    <div class="mb-2 p-2 d-flex justify-content-between bdrs6" style="background-color:#ebfaf9; height:108px;">
-                                        <img src="https://upload-os-bbs.hoyolab.com/upload/2023/07/05/175387813/f00f64c50c0242c000c6d9471b179a05_2101064123637585792.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80" class="bdrs6" width="92" height="92" />
-                                        <div class="p-2 flex-fill">
-                                            <h5 class="title mb-0" id="userName">Име</h5>
-                                            <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">категория</span>
-                                            </p>
-                                            <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span class="fz17 fw500 dark-color" id="userCareer">цена</span>
-                                            </p>
-                                            <p class="mb-0 fz14 list-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">skiler</span>
-                                            </p>
-                                        </div>
-                                        <div class="ps-4 py-0">
-                                            <a asp-action="Skiller" asp-controller="Skillers" class="ud-btn btn-thm w-100 bdrs60" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
-                                            <a style="display: none;" asp-action="Skiller" asp-controller="Skillers" class="icon" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e;"></iconify-icon></a>
-                                            <div class="mb-0 d-flex justify-content-end">
-                                                <i class="fas fa-star fz10 review-color pe-1"></i>
-                                                <span class="dark-color" id="userReviewAvgCoef">
-                                                </span> (<span id="userReviewsCount"></span> ревюта)
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 p-2 d-flex justify-content-between bdrs6" style="background-color:#ebfaf9; height:108px;">
-                                        <img src="https://upload-os-bbs.hoyolab.com/upload/2023/07/05/175387813/f00f64c50c0242c000c6d9471b179a05_2101064123637585792.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80" class="bdrs6" width="92" height="92" />
-                                        <div class="p-2 flex-fill">
-                                            <h5 class="title mb-0" id="userName">Име</h5>
-                                            <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">категория</span>
-                                            </p>
-                                            <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span class="fz17 fw500 dark-color" id="userCareer">цена</span>
-                                            </p>
-                                            <p class="mb-0 fz14 list-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">skiler</span>
-                                            </p>
-                                        </div>
-                                        <div class="ps-4 py-0">
-                                            <a asp-action="Skiller" asp-controller="Skillers" class="ud-btn btn-thm w-100 bdrs60" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
-                                            <a style="display: none;" asp-action="Skiller" asp-controller="Skillers" class="icon" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e;"></iconify-icon></a>
-                                            <div class="mb-0 d-flex justify-content-end">
-                                                <i class="fas fa-star fz10 review-color pe-1"></i>
-                                                <span class="dark-color" id="userReviewAvgCoef">
-                                                </span> (<span id="userReviewsCount"></span> ревюта)
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-2 d-flex justify-content-between bdrs6" style="background-color:#ebfaf9; height:108px;">
-                                        <img src="https://upload-os-bbs.hoyolab.com/upload/2023/07/05/175387813/f00f64c50c0242c000c6d9471b179a05_2101064123637585792.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80" class="bdrs6" width="92" height="92" />
-                                        <div class="p-2 flex-fill">
-                                            <h5 class="title mb-0" id="userName">Име</h5>
-                                            <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">категория</span>
-                                            </p>
-                                            <p class="mb-0 fz14 list-inline-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span class="fz17 fw500 dark-color" id="userCareer">цена</span>
-                                            </p>
-                                            <p class="mb-0 fz14 list-item mb5-sm pe-1">
-                                                <i class="fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="userCareer">skiler</span>
-                                            </p>
-                                        </div>
-                                        <div class="ps-4 py-0">
-                                            <a asp-action="Skiller" asp-controller="Skillers" class="ud-btn btn-thm w-100 bdrs60" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
-                                            <a style="display: none;" asp-action="Skiller" asp-controller="Skillers" class="icon" id="userUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори"><iconify-icon icon="ph:eye" width="1.4em" height="1.4em" style="color: #908e8e;"></iconify-icon></a>
-                                            <div class="mb-0 d-flex justify-content-end">
-                                                <i class="fas fa-star fz10 review-color pe-1"></i>
-                                                <span class="dark-color" id="userReviewAvgCoef">
-                                                </span> (<span id="userReviewsCount"></span> ревюта)
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </div>
+                            </form>
+                            <partial name="Search" />
                         </div>
                     </div>
                 </div>
@@ -382,6 +307,7 @@
             </div>
         </footer>
     </div>
+
     <script src="~/js/all/jquery-3.6.4.min.js"></script>
     <script src="~/js/all/jquery-migrate-3.0.0.min.js"></script>
     <script src="~/js/all/popper.min.js"></script>
@@ -402,5 +328,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("SearchScripts", required: false)
 </body>
 </html>

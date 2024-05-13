@@ -29,3 +29,58 @@
         </div>
     </section>
 </div>
+@section SearchScripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $("#searchInput").on("input", function () {
+                var searchInput = $(this).val();
+                $.ajax({
+                    url: "/Services/GetServicesBySearchInput",
+                    type: "POST",
+                    data: { userInput: searchInput },
+                    success: function (response) {
+                        debugger;
+
+                        if (!response.exists) {
+                            $("#searchServicesContainer").hide();
+                            $("#searchServicesMainContainer").hide();
+                            return;
+                        }
+                        $("#searchServicesContainer").empty();
+                        for (let i = 0; i < response.services.length; i++) {
+                            let service = response.services[i];
+                            let serviceContainer = `
+                        <div id="service${i + 1}Container" style="background-color:#ebfaf9; height:108px; display: none;" class="mb-2 p-2 d-flex justify-content-between bdrs6">
+                            <img id="service${i + 1}img" src="${service.mainImage}" class="bdrs6" width="92" height="92" />
+                            <div class="p-2 flex-fill">
+                                <h5 class="title mb-0" id="service${i + 1}Name">${service.name}</h5>
+                                <p class="mb-0 fz14 list-inline-item mb5-sm">
+                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="service${i + 1}SkillerName">${service.skillerName}</span>
+                                </p>
+                                <p class="mb-0 fz14 list-inline-item mb5-sm">
+                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span class="fz17 fw500 dark-color" id="service${i + 1}Price">${service.price}</span>
+                                </p> 
+                                <p class="mb-0 fz14 list-item mb5-sm">
+                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="service${i + 1}Category">${service.category}</span>
+                                </p>
+                            </div>
+                            <div class="py-0">
+                                <a href="/Services/Service/${service.id}" class="ud-btn btn-thm w-100 bdrs60" id="service${i + 1}SkillerUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
+                                <div class="mb-0 d-flex justify-content-end">
+                                    <i class="fas fa-star fz10 review-color pe-1"></i>
+                                    <span class="dark-color" id="service${i + 1}ReviewAvgCoef">${service.reviewAvgCoef}</span>&nbsp;(<span id="service${i + 1}ReviewsCount">${service.reviewsCount}</span>&nbsp;ревюта)
+                                </div>
+                            </div>
+                        </div>`;
+                        $("#searchServicesContainer").append(serviceContainer);
+                        }
+                        $("#searchServicesMainContainer").show();
+                        $("#searchServicesContainer").show();
+                    }
+                });
+            });
+        });
+    </script>
+}

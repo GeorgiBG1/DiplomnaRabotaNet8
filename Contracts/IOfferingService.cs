@@ -24,6 +24,7 @@ namespace Contracts
         public int GetReviewsCount();
         public int GetPositiveReiewsCount();
         public int GetServiceIdBySearchWords(string searchWords, int categoryId = 0);
-        public IList<ServiceCardDTO> GetServicesBySearchWords(string searchWords);
+        public ServiceCardDTO GetServiceBySearchWords(string searchWords);
+        public IList<ServiceCardDTO> GetServicesBySearchWords(string searchWords, int countLimit);
     }
 }

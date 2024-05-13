@@ -201,12 +201,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-xmark"></i></button>
                         </div>
                         <!--Add html tag form with method submit-->
-                        <div class="modal-body">
-                            <div class="popup-search-field search_area">
-                                <input type="text" class="form-control border-0" placeholder="Каква услуга търсиш днес?">
-                                <label><span class="far fa-magnifying-glass"></span></label>
-                                <button class="ud-btn btn-thm bdrs60" type="submit">Търси</button>
-                            </div>
+                        <div class="modal-body pb-0">
+                            <form method="post" asp-action="SearchForService" asp-controller="Services">
+                                <div class="popup-search-field search_area">
+                                    <input id="searchInput" name="searchWords" type="text" class="form-control border-0" placeholder="Каква услуга търсиш днес?">
+                                    <label><span class="far fa-magnifying-glass"></span></label>
+                                    <button class="ud-btn btn-thm bdrs60" type="submit">Търси</button>
+                                </div>
+                            </form>
+                            <partial name="Search" />
                         </div>
                     </div>
                 </div>
@@ -413,5 +416,6 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("SearchScripts", required: false)
     </body>
     </html>
