@@ -232,7 +232,9 @@
                 </ul>
             </nav>
         </div>
-
+        @{
+            string currentPath = ViewContext.HttpContext.Request.Path;
+        }
         <div class="dashboard_content_wrapper">
             @if (User.Identity!.IsAuthenticated)
             {
@@ -241,48 +243,48 @@
                         <div class="dashboard_sidebar_list">
                             <p class="fz15 fw400 ff-heading pl30">Общи</p>
                             <div class="sidebar_list_item">
-                                <a asp-action="Index" asp-controller="Dashboard" class="items-center -is-active"><i class="flaticon-home mr15"></i>Табло</a>
+                                <a asp-action="Index" asp-controller="Dashboard" class="items-center @((Url.Action("Index", "Dashboard") == currentPath) ? "-is-active" : "")"><i class="flaticon-home mr15"></i>Табло</a>
                             </div>
                             @if (User.IsInRole("Skiller"))
                             {
                                 <div class="sidebar_list_item">
-                                    <a asp-action="MyServices" asp-controller="Services" class="items-center"><i class="flaticon-document mr15"></i>Моите услуги</a>
+                                    <a asp-action="MyServices" asp-controller="Services" class="items-center @((Url.Action("MyServices", "Services") == currentPath) ? "-is-active" : "")"><i class="flaticon-document mr15"></i>Моите услуги</a>
                                 </div>
                             }
                             <div class="sidebar_list_item">
-                                <a asp-action="Saved" asp-controller="Dashboard" class="items-center"><i class="flaticon-like mr15"></i>Запазени</a>
+                                <a asp-action="Saved" asp-controller="Dashboard" class="items-center @((Url.Action("Saved", "Dashboard") == currentPath) ? "-is-active" : "")"><i class="flaticon-like mr15"></i>Запазени</a>
                             </div>
                             <div class="sidebar_list_item ">
-                                <a asp-action="Index" asp-controller="Chats" class="items-center"><i class="flaticon-chat mr15"></i>Съобщения</a>
+                                <a asp-action="Index" asp-controller="Chats" class="items-center @((Url.Action("Index", "Chats") == currentPath) || (Url.Action("Chat", "Chats") == currentPath) ? "-is-active" : "")"><i class="flaticon-chat mr15"></i>Съобщения</a>
                             </div>
                             <div class="sidebar_list_item ">
-                                <a asp-action="Reviews" asp-controller="Dashboard" class="items-center"><i class="flaticon-review-1 mr15"></i>Ревюта</a>
+                                <a asp-action="Reviews" asp-controller="Dashboard" class="items-center @((Url.Action("Reviews", "Dashboard") == currentPath) ? "-is-active" : "")"><i class="flaticon-review-1 mr15"></i>Ревюта</a>
                             </div>
                             @if (User.IsInRole("Skiller"))
                             {
                                 <p class="fz15 fw400 ff-heading pl30 mt30">Създаване и редактиране</p>
                                 <div class="sidebar_list_item ">
-                                    <a asp-action="Create" asp-controller="Services" class="items-center"><i class="flaticon-content mr15"></i>Създаване на услуга</a>
+                                    <a asp-action="Create" asp-controller="Services" class="items-center @((Url.Action("Create", "Services") == currentPath) ? "-is-active" : "")"><i class="flaticon-content mr15"></i>Създаване на услуга</a>
                                 </div>
                                 <div class="sidebar_list_item ">
-                                    <a asp-action="Details" asp-controller="Services" class="items-center"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
+                                    <a asp-action="Details" asp-controller="Services" class="items-center @((Url.Action("Details", "Services") == currentPath) || (Url.Action("Edit", "Services") == currentPath) ? "-is-active" : "")"><i class="flaticon-presentation mr15"></i>Редактиране на услуги</a>
                                 </div>
                             }
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <p class="fz15 fw400 ff-heading mt30 pl30"><a asp-action="Index" asp-controller="Admin"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
+                                <p class="fz15 fw400 ff-heading mt30 pl30 "><a asp-action="Index" asp-controller="Admin" class="@((Url.Action("Index", "Admin") == currentPath) ? "text-thm3" : "")"><i class="fal fa-arrow-right-long"></i> <b>Администраторско табло</b></a></p>
                                 <div class="sidebar_list_item">
-                                    <a asp-action="Services" asp-controller="Admin" class="items-center"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
+                                    <a asp-action="Services" asp-controller="Admin" class="items-center @((Url.Action("Services", "Admin") == currentPath) ? "-is-active" : "")"><i class="flaticon-presentation mr15"></i>Преглед на услуги</a>
                                 </div>
                                 <div class="sidebar_list_item ">
-                                    <a asp-action="Skillers" asp-controller="Admin" class="items-center"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
+                                    <a asp-action="Skillers" asp-controller="Admin" class="items-center @((Url.Action("Skillers", "Admin") == currentPath) ? "-is-active" : "")"><i class="flaticon-briefcase mr15"></i>Преглед на Skiller-и</a>
                                 </div>
                             }
 
                             <p class="fz15 fw400 ff-heading pl30 mt30">Акаунт</p>
                             <div class="sidebar_list_item ">
-                                <a class="items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr15"></i>Моят профил</a>
+                                <a class="items-center @((Url.Page("/Account/Manage/Index") == currentPath) ? "-is-active" : "")" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr15"></i>Моят профил</a>
                             </div>
                             <div class="sidebar_list_item ">
                                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -392,6 +394,7 @@
     <!-- Custom script for all pages -->
     <script src="~/js/all/script.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("SearchScripts", required: false)
 
     <!--Messages-->
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
