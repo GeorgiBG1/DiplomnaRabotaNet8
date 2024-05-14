@@ -8,7 +8,7 @@
     <div class="row pb40">
         <div class="col-xl-12">
             <div class="box-search">
-                <input class="form-control" type="text" name="search" id="searchInput" placeholder="Търсене на потребител по неговото потребителско име...">
+                <input class="form-control" type="text" name="search" id="searchEmailInput" placeholder="Търсене на потребител по неговото потребителско име...">
             </div>
         </div>
     </div>
@@ -145,16 +145,13 @@
 @section Scripts
 {
     <script>
-        debugger;
-
         $(document).ready(function () {
-            $("#searchInput").on("input", function () {
-                var searchInput = $(this).val();
-                debugger;
+            $("#searchEmailInput").on("input", function () {
+                var searchEmailInput = $(this).val();
                 $.ajax({
                     url: "/Admin/GetUserInfoByUsername",
                     type: "POST",
-                    data: { username: searchInput },
+                    data: { username: searchEmailInput },
                     success: function (response) {
                         if (response.exists) {
                             $("#userUsername").attr("href", "/Skillers/Skiller/" + response.user.username);
