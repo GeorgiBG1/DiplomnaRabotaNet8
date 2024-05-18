@@ -2,7 +2,9 @@
 {
     public class DashboardViewModel
     {
-        public int ChatsCount { get; set; }
-        public int ChatGroupsCount { get; set; }
+        public int MyServicesCount { get; set; }
+        public int MyReviewsCount { get; set; }
+        public int MyFavServicesCount { get; set; }
+        public int MyFavSkillersCount { get; set; }
     }
 }

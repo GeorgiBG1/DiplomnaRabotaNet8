@@ -13,18 +13,21 @@ namespace Controllers
         private readonly IConfiguration configuration;
         private readonly ICategoryService categoryService;
         private readonly IOfferingService offeringService;
+        private readonly IAdminService adminService;
         private readonly IUserService userService;
 
         public HomeController(DatabaseSeedService dbSeedService,
             IConfiguration configuration,
             ICategoryService categoryService,
             IOfferingService offeringService,
+            IAdminService adminService,
             IUserService userService)
         {
             this.dbSeedService = dbSeedService;
             this.configuration = configuration;
             this.categoryService = categoryService;
             this.offeringService = offeringService;
+            this.adminService = adminService;
             this.userService = userService;
         }
 
@@ -74,7 +77,27 @@ namespace Controllers
 
         public IActionResult BecomeSkiller() => View();
         public IActionResult Privacy() => View();
-        public IActionResult Help() => View();
+        public IActionResult NoResults()
+        {
+            //Menu - Nav
+            var categoriesWithKids = categoryService.GetAllCategoryDTOs();
+            ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
+            return View();
+        }
+        public IActionResult Contacts()
+        {
+            //Menu - Nav
+            var categoriesWithKids = categoryService.GetAllCategoryDTOs();
+            ViewData[nameof(categoriesWithKids)] = categoriesWithKids;
+            var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
+            ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
+            //
+            var adminList = adminService.GetAllAdminContacts();
+            return View(adminList);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -83,6 +106,5 @@ namespace Controllers
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult NoResults() => View();
     }
 }

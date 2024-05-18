@@ -61,15 +61,17 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="user_setting_content">
-                                    <!--Account-->
+                                    <!--Account Manage-->
                                     <a class="dropdown-item active" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr10"></i>Профил</a>
-                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                        <button type="submit" class="dropdown-item"><i class="flaticon-logout mr10"></i>Излизане от акаунта</button>
-                                    </form>
                                     <!---->
                                     <a asp-action="Index" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-home mr10"></i>Табло</a>
                                     <a asp-action="Saved" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-like mr10"></i>Запазени</a>
                                     <a asp-action="Index" asp-controller="Chats" class="dropdown-item"><i class="flaticon-chat mr10"></i>Съобщения</a>
+                                    <!--Account Logout-->
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="dropdown-item"><i class="flaticon-logout mr10"></i>Излизане от акаунта</button>
+                                    </form>
+                                    <!---->
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <!--Admin-->
@@ -96,7 +98,10 @@ else
         <a class="ud-btn btn-white add-joining bdrs50 text-thm2  px-3" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
     </div>
 }
-<!--Messages-->
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/message.js"></script>
-<!---->
+@if (User.Identity!.IsAuthenticated)
+{
+    <!--Messages-->
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/message.js"></script>
+    <!---->
+}

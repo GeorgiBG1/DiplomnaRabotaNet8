@@ -6,6 +6,7 @@ using Global_Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 
 namespace Controllers
 {
@@ -14,6 +15,7 @@ namespace Controllers
     {
         private readonly IMapper mapper;
         private readonly IUserService userService;
+        private readonly IDashboardService dashboardService;
         private readonly ICloudinaryService cloudinaryService;
         private readonly UserManager<SkillBoxUser> userManager;
         private readonly SignInManager<SkillBoxUser> signInManager;
@@ -22,6 +24,7 @@ namespace Controllers
         public DashboardController(
             IMapper mapper,
             IUserService userService,
+            IDashboardService dashboardService,
             ICloudinaryService cloudinaryService,
             UserManager<SkillBoxUser> userManager,
             SignInManager<SkillBoxUser> signInManager,
@@ -29,6 +32,7 @@ namespace Controllers
         {
             this.mapper = mapper;
             this.userService = userService;
+            this.dashboardService = dashboardService;
             this.cloudinaryService = cloudinaryService;
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -40,7 +44,14 @@ namespace Controllers
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
-            return View();
+            var model = new DashboardViewModel
+            {
+                MyServicesCount = dashboardService.GetMyServicesCount(User.Identity?.Name!),
+                MyFavServicesCount = dashboardService.GetMyFavServicesCount(User.Identity?.Name!),
+                MyFavSkillersCount = dashboardService.GetMyFavSkillersCount(User.Identity?.Name!),
+                MyReviewsCount = dashboardService.GetMyReviewsCount(User.Identity?.Name!),
+            };
+            return View(model);
         }
         public IActionResult Saved()
         {

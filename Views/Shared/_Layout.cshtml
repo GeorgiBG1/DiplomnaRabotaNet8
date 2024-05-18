@@ -84,11 +84,10 @@
                                                 <li><a asp-action="Index" asp-controller="Categories">Категории</a></li>
                                                 <li><a asp-action="Index" asp-controller="Services">Услуги</a></li>
                                                 <li><a asp-action="Index" asp-controller="Skillers">Skiller-и</a></li>
-                                                <li><a href="">@* page-contact.html *@За нас</a></li>
-                                                <li><a href="">@* page-contact.html *@Контакти</a></li>
+                                                <li><a asp-action="Contacts" asp-controller="Home">За нас</a></li>
+                                                <li><a asp-action="Contacts" asp-controller="Home">Контакти</a></li>
                                                 <li><a asp-action="Privacy" asp-controller="Home">Политика за поверителност</a></li>
-                                                <li><a href="">@* page-terms.html *@Условия</a></li>
-                                                <li><a asp-action="Help" asp-controller="Home">Помощ</a></li>
+                                                <li><a asp-action="Privacy" asp-controller="Home">Условия</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -239,7 +238,8 @@
                         <div class="link-style1 mb-4 mb-sm-5">
                             <h5 class="text-white mb15">Поддръжка</h5>
                             <ul class="ps-0">
-                                <li><a asp-action="Help">Помощ и подкрепа</a></li>
+                                <li><a asp-action="Contacts" asp-controller="Home">Контакти</a></li>
+                                <li><a href="">Помощ и подкрепа</a></li>
                                 <li><a href="">Отговорности и безопасност</a></li>
                             </ul>
                         </div>

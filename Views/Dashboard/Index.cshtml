@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DashboardViewModel
+@{
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 <!--Content for main body-->
@@ -11,44 +12,76 @@
         </div>
     </div>
     <div class="row">
+        <!--MyServices-->
         <div class="col-sm-6 col-xxl-3">
-            <div class="d-flex align-items-center justify-content-between statistics_funfact">
+            <div class="d-flex align-items-center justify-content-between statistics_funfact mb-0">
                 <div class="details">
-                    <div class="fz15">Services Offered</div>
-                    <div class="title">25</div>
-                    <div class="text fz14"><span class="text-thm">10</span> New Offered</div>
+                    <div class="fz18">Моите услуги</div>
+                    <div class="title" style="font-size: 50px; z-index: 10; position: absolute;">@Model.MyServicesCount</div>
                 </div>
                 <div class="icon text-center"><i class="flaticon-contract"></i></div>
             </div>
+            <div class="d-flex justify-content-end statistics_funfact pt-0 pb-0 pe-0" style="padding-bottom: 5px !important; padding-right: 15px !important;">
+                @if (User.IsInRole("Skiller"))
+                {
+                    <div class="text fz14" style="width: 120px;">
+                        <a asp-controller="Services" asp-action="MyServices" class="ud-btn btn-thm w-100 bdrs60" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="me-auto pt30">
+                        <p class="fz13 fst-italic text-black-50 mb-0">За да публикувате услуги, станете Skiller!</p>
+                    </div>
+                    <div class="text fz14" style="width: 180px;">
+                        <a asp-controller="Home" asp-action="BecomeSkiller" class="ud-btn btn-thm w-100 bdrs60" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Стани Skiller</a>
+                    </div>
+                }
+            </div>
         </div>
+        <!--MyReviews-->
         <div class="col-sm-6 col-xxl-3">
-            <div class="d-flex align-items-center justify-content-between statistics_funfact">
+            <div class="d-flex align-items-center justify-content-between statistics_funfact mb-0">
                 <div class="details">
-                    <div class="fz15">Completed Services</div>
-                    <div class="title">1292</div>
-                    <div class="text fz14"><span class="text-thm">80+</span> New Completed</div>
+                    <div class="fz18">Моите ревюта</div>
+                    <div class="title" style="font-size: 50px; z-index: 10; position: absolute;">@Model.MyReviewsCount</div>
+                </div>
+                <div class="icon text-center"><i class="flaticon-review-1"></i></div>
+            </div>
+            <div class="d-flex justify-content-end statistics_funfact pt-0 pb-0 pe-0" style="padding-bottom: 5px !important; padding-right: 15px !important;">
+                <div class="text fz14" style="width: 120px;">
+                    <a asp-controller="Dashboard" asp-action="Reviews" class="ud-btn btn-thm w-100 bdrs60" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
+                </div>
+            </div>
+        </div>
+        <!--SavedServices-->
+        <div class="col-sm-6 col-xxl-3">
+            <div class="d-flex align-items-center justify-content-between statistics_funfact mb-0">
+                <div class="details">
+                    <div class="fz18">Любими услуги</div>
+                    <div class="title" style="font-size: 50px; z-index: 10; position: absolute;">@Model.MyFavServicesCount</div>
                 </div>
                 <div class="icon text-center"><i class="flaticon-success"></i></div>
             </div>
+            <div class="d-flex justify-content-end statistics_funfact pt-0 pb-0 pe-0" style="padding-bottom: 5px !important; padding-right: 15px !important;">
+                <div class="text fz14" style="width: 120px;">
+                    <a asp-controller="Dashboard" asp-action="Saved" class="ud-btn btn-thm w-100 bdrs60" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
+                </div>
+            </div>
         </div>
+        <!--SavedSkillers-->
         <div class="col-sm-6 col-xxl-3">
-            <div class="d-flex align-items-center justify-content-between statistics_funfact">
+            <div class="d-flex align-items-center justify-content-between statistics_funfact mb-0">
                 <div class="details">
-                    <div class="fz15">in Queue Services</div>
-                    <div class="title">182</div>
-                    <div class="text fz14"><span class="text-thm">35+</span> New Queue</div>
+                    <div class="fz18">Любими skiller-и</div>
+                    <div class="title" style="font-size: 50px; z-index: 10; position: absolute;">@Model.MyFavSkillersCount</div>
                 </div>
                 <div class="icon text-center"><i class="flaticon-review"></i></div>
             </div>
-        </div>
-        <div class="col-sm-6 col-xxl-3">
-            <div class="d-flex align-items-center justify-content-between statistics_funfact">
-                <div class="details">
-                    <div class="fz15">Total Review</div>
-                    <div class="title">22,786</div>
-                    <div class="text fz14"><span class="text-thm">290+</span> New Review</div>
+            <div class="d-flex justify-content-end statistics_funfact pt-0 pb-0 pe-0" style="padding-bottom: 5px !important; padding-right: 15px !important;">
+                <div class="text fz14" style="width: 120px;">
+                    <a asp-controller="Dashboard" asp-action="Saved" class="ud-btn btn-thm w-100 bdrs60" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
                 </div>
-                <div class="icon text-center"><i class="flaticon-review-1"></i></div>
             </div>
         </div>
     </div>

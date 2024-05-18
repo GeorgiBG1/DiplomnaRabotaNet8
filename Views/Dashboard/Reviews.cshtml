@@ -4,7 +4,7 @@
 }
 
 <div class="dashboard__content hover-bgc-color">
-    <div class="row pb40">
+    <div class="row">
         <div class="col-lg-12">
             <div class="dashboard_title_area">
                 <h2>Моите ревюта</h2>
@@ -13,23 +13,23 @@
     </div>
     <div class="row">
         <div class="col-xl-12">
-            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative" style="min-height: 565px;">
+            <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative" style="min-height: 410px;">
                 <div class="bdrb1 pb20">
                     @if (Model.Count != 0)
                     {
                         foreach (var review in Model)
                         {
-                            <div class="mbp_first position-relative d-sm-flex align-items-center justify-content-start mb30-sm p-2 border border-1 border-bottom-0 rounded-top">
-                                <img src="@review.User.ProfilePhoto" class="mr-3" width="60" height="60" alt="User profile photo">
+                            <div class="mbp_first position-relative d-sm-flex align-items-center justify-content-start mb30-sm p-2 border border-1 border-bottom-0 rounded-top" style="background-color: #ebfaf9;">
+                                <img src="@review.User.ProfilePhoto" class="mr-3 rounded-circle" width="60" height="60" alt="User profile photo">
                                 <div class="ml20 ml0-xs mt20-xs">
-                                    <h6 class="mt-0 mb-1">@review.User.Name</h6>
+                                    <h5 class="mt-0 mb-1">@review.User.Name</h5>
                                     <div class="d-flex align-items-center">
-                                        <div><i class="fas fa-star vam fz10 review-color me-2"></i><span class="fz15 fw500">@review.StarsCount</span></div>
-                                        <div class="ms-3"><span class="fz14 text">Публикувано на @review.CreatedOn</span></div>
+                                        <div class="me-2"><span class="fz14 text fst-italic">Публикувано: @review.CreatedOn</span></div>
+                                        <div class="d-flex align-items-center"><i class="fas fa-star vam fz18 review-color"></i><span class="fz18 fw500">&nbsp;(@review.StarsCount)</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <p class="text p-2 pt20 mb20 border border-1 border-top-0 rounded-bottom">@review.Content</p>
+                            <p class="text fz18 p-2 pt20 mb20 border border-1 border-top-0 rounded-bottom" style="background-color: #ebfaf9;">@review.Content</p>
                         }
                     }
                     else

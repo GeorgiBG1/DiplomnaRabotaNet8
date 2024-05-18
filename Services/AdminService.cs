@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Contracts;
 using Data;
+using Data.Models;
 using DTOs.OUTPUT;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services
@@ -9,12 +11,15 @@ namespace Services
     public class AdminService : IAdminService
     {
         private readonly SkillBoxDbContext dbContext;
+        private readonly UserManager<SkillBoxUser> userManager;
         private readonly IMapper mapper;
 
         public AdminService(SkillBoxDbContext dbContext,
+            UserManager<SkillBoxUser> userManager,
             IMapper mapper)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
             this.mapper = mapper;
         }
         public IEnumerable<CategoryCardDTO> GetAllCategoriesWithDetails()
@@ -49,6 +54,22 @@ namespace Services
                 .OrderByDescending(u => u.Services.SelectMany(s => s.Reviews!).Count())
                 .Take(10).ToList();
             return skillers.Select(mapper.Map<UserInfoDTO>).ToList();
+        }
+        public ICollection<AdminMiniDTO> GetAllAdminContacts()
+        {
+            var admins = userManager.GetUsersInRoleAsync("Admin").GetAwaiter().GetResult();
+            var adminList = new List<AdminMiniDTO>();
+            foreach (var admin in admins)
+            {
+                adminList.Add(
+                    new AdminMiniDTO
+                    {
+                        Name = $"{admin.FirstName} {admin.LastName}" ,
+                        Email = admin.Email!,
+                        Role = "администратор"
+                    });
+            }
+            return adminList;
         }
     }
 }

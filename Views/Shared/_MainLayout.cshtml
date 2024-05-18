@@ -86,11 +86,10 @@
                                             <li><a asp-action="Index" asp-controller="Categories">Категории</a></li>
                                             <li><a asp-action="Index" asp-controller="Services">Услуги</a></li>
                                             <li><a asp-action="Index" asp-controller="Skillers">Skiller-и</a></li>
-                                            <li><a href="">@* page-contact.html *@За нас</a></li>
-                                            <li><a href="">@* page-contact.html *@Контакти</a></li>
+                                            <li><a asp-action="Contacts" asp-controller="Home">За нас</a></li>
+                                            <li><a asp-action="Contacts" asp-controller="Home">Контакти</a></li>
                                             <li><a asp-action="Privacy" asp-controller="Home">Политика за поверителност</a></li>
-                                            <li><a href="">@* page-terms.html *@Условия</a></li>
-                                            <li><a asp-action="Help" asp-controller="Home">Помощ</a></li>
+                                            <li><a asp-action="Privacy" asp-controller="Home">Условия</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -154,15 +153,17 @@
                                                             </a>
                                                             <div class="dropdown-menu">
                                                                 <div class="user_setting_content">
-                                                                    <!--Account-->
+                                                                    <!--Account Manage-->
                                                                     <a class="dropdown-item active" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="flaticon-photo mr10"></i>Профил</a>
-                                                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                                                        <button type="submit" class="dropdown-item"><i class="flaticon-logout mr10"></i>Излизане от акаунта</button>
-                                                                    </form>
                                                                     <!---->
                                                                     <a asp-action="Index" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-home mr10"></i>Табло</a>
                                                                     <a asp-action="Saved" asp-controller="Dashboard" class="dropdown-item"><i class="flaticon-like mr10"></i>Запазени</a>
                                                                     <a asp-action="Index" asp-controller="Chats" class="dropdown-item"><i class="flaticon-chat mr10"></i>Съобщения</a>
+                                                                    <!--Account Logout-->
+                                                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                                        <button type="submit" class="dropdown-item"><i class="flaticon-logout mr10"></i>Излизане от акаунта</button>
+                                                                    </form>
+                                                                    <!---->
                                                                     @if (User.IsInRole("Admin"))
                                                                     {
                                                                         <!--Admin-->
@@ -309,7 +310,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="link-style1 mb-4 mb-sm-5">
-                            <h5 class="text-white mb15">Categories</h5>
+                            <h5 class="text-white mb15">Категории</h5>
                             <ul class="ps-0">
                                 @if (categories != null)
                                 {
@@ -325,7 +326,8 @@
                         <div class="link-style1 mb-4 mb-sm-5">
                             <h5 class="text-white mb15">Поддръжка</h5>
                             <ul class="ps-0">
-                                <li><a asp-action="Help">Помощ и подкрепа</a></li>
+                                <li><a asp-action="Contacts" asp-controller="Home">Контакти</a></li>
+                                <li><a href="">Помощ и подкрепа</a></li>
                                 <li><a href="">Отговорности и безопасност</a></li>
                             </ul>
                         </div>
@@ -408,10 +410,13 @@
     <!-- Custom script for all pages -->
     <script src="~/js/all/script.js"></script>
 
-    <!--Messages-->
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/message.js"></script>
-    <!---->
+    @if (User.Identity!.IsAuthenticated)
+    {
+        <!--Messages-->
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/message.js"></script>
+        <!---->
+    }
     @*  <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script> *@
