@@ -46,51 +46,50 @@
                             <div class="card mb20 mt-0 p-3 bdrs16">
                                 <div class="card-header active" id="heading0">
                                     <h4>
-                                        <button class="btn btn-link ps-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">Skills</button>
+                                        <button class="btn btn-link ps-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">Качества</button>
                                     </h4>
                                 </div>
                                 <div id="collapse0" class="collapse show" aria-labelledby="heading0" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="checkbox-style1 mb15">
                                             <label class="custom_checkbox">
-                                                UX Designer
+                                                С автобиография
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(8,136)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                С уебсайт
+                                                <input type="checkbox" checked="checked">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(917)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                С фирма
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(1,945)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                Web Developers
-                                                <input type="checkbox" checked="checked">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(8,136)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Illustrators
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(917)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Node.js
+                                                С доб. умения
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(240)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                Project Managers
+                                                С професия
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(2,460)</span>
                                             </label>
                                         </div>
-                                        <a class="text-thm" href="">+20 more</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
                                 <div class="card-header active" id="heading1">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Price</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Цена</button>
                                     </h4>
                                 </div>
                                 <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
@@ -100,8 +99,9 @@
                                             <div class="range-wrapper">
                                                 <div class="slider-range mb10 mt15"></div>
                                                 <div class="text-center">
-                                                    <input type="text" class="amount" placeholder="$20"><span class="fa-sharp fa-solid fa-minus mx-2 dark-color"></span>
-                                                    <input type="text" class="amount2" placeholder="$70987">
+                                                    <input type="text" class="amount" style="width: 94px;" placeholder="0лв">
+                                                    <span class="fa-sharp fa-solid fa-minus mx-2 dark-color"></span>
+                                                    <input type="text" class="amount2" style="width: 94px;" placeholder="80000лв">
                                                 </div>
                                             </div>
                                         </div>
@@ -109,88 +109,115 @@
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
-                                <div class="card-header active" id="heading2">
+                                <div class="card-header active" id="heading3">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">Location</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">Местоположение</button>
                                     </h4>
                                 </div>
-                                <div id="collapse2" class="collapse show" aria-labelledby="heading2" data-parent="#accordionExample">
+                                <div id="collapse3" class="collapse show" aria-labelledby="heading3" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="search_area mb15">
-                                            <input type="text" class="form-control" placeholder="What are you looking for?">
-                                            <label><span class="flaticon-loupe"></span></label>
+                                            @{
+                                                if (Model.Cities == null)
+                                                {
+                                                    <p class="title">Няма налични населени места!</p>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-style1">
+                                                        <label class="form-label fw500 fz16 dark-color pe-2">Град</label>
+                                                        <div class="bootselect-multiselect">
+                                                            <div class="dropdown bootstrap-select dropup" style="width: 100%;">
+                                                                <select class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                                    <option disabled>Избери</option>
+                                                                    @foreach (var city in Model.Cities)
+                                                                    {
+                                                                        <option value="@city.Id" data-tokens="@city.BGName">@city.BGName</option>
+                                                                    }
+                                                                </select>
+                                                                <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
+                                                                    <div class="bs-searchbox">
+                                                                        <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                                                    </div>
+                                                                    <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
+                                                                        <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                                            <li class="selected active">
+                                                                                <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
+                                                                                    <span class="text">@Model.Cities[0].BGName</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            @for (int i = 0; i < Model.Cities.Count(); i++)
+                                                                            {
+                                                                                <li>
+                                                                                    <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
+                                                                                        <span class="text">@Model.Cities[i].BGName</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
                                         </div>
-                                        <div class="checkbox-style1 mb15">
-                                            <label class="custom_checkbox">
-                                                United States
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(1,945)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                United Kingdom
-                                                <input type="checkbox" checked="checked">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(8,136)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Canada
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(917)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Germany
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(240)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Turkey
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">((2,460)</span>
-                                            </label>
-                                        </div>
-                                        <a class="text-thm" href="">+20 more</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
-                                <div class="card-header active" id="heading4">
+                                <div class="card-header active" id="heading5">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">Level</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">Рейтинг</button>
                                     </h4>
                                 </div>
-                                <div id="collapse4" class="collapse show" aria-labelledby="heading4" data-parent="#accordionExample">
+                                <div id="collapse5" class="collapse show" aria-labelledby="heading5" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="checkbox-style1">
                                             <label class="custom_checkbox">
-                                                Top Rated Seller
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;5 звезди</span>
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(1,945)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                Level Two
-                                                <input type="checkbox" checked="checked">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;4 звезди</span>
+                                                <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(8,136)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                Level One
-                                                <input type="checkbox">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;3 звезди</span>
+                                                <input type="checkbox" checked="checked">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(917)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                New Seller
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;2 звезди</span>
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(240)</span>
                                             </label>
+                                            <label class="custom_checkbox">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;1 звезди</span>
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(105)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;0 звезди</span>
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(849)</span>
+                                            </label>
                                         </div>
-                                        <a class="text-thm" href="">+20 more</a>
                                     </div>
                                 </div>
                             </div>
@@ -217,9 +244,9 @@
                                 <div class="pcs_dropdown dark-color pr10 text-center text-md-end">
                                     <span>Сортиране по</span>
                                     <select class="selectpicker show-tick">
-                                        <option>Best Selling</option>
-                                        <option>Recommended</option>
-                                        <option>New Arrivals</option>
+                                        <option>Най-търсени</option>
+                                        <option>Най-наемани</option>
+                                        <option>Най-нови</option>
                                     </select>
                                 </div>
                             </div>

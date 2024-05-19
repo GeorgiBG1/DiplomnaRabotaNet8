@@ -49,11 +49,13 @@ namespace Controllers
             {
                 return View("Error");
             }
+            var cities = categoryService.GetAllCities();
             int servicesCount = offeringService.GetServicesCount(id);
             var categories = categoryService.GetCategoryMiniDTOs(7);
             var categoryServices = offeringService.GetServiceCardDTOs(6, 0, id);
             var model = new SingleCategoryViewModel
             {
+                Cities = cities.ToList(),
                 CategoryList = categories,
                 Category = category,
                 ServicesCount = servicesCount,

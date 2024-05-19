@@ -108,5 +108,9 @@ namespace Services
             var model = categories.Select(mapper.Map<SelectListItem>).ToList();
             return model;
         }
+        public ICollection<City> GetAllCities()
+        {
+            return dbContext.Cities.ToList();
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace Contracts
         public ICollection<CategoryCardDTO> GetAllCategoryCardDTOs();
         public ICollection<CategoryDTO> GetAllCategoryDTOs();
         public ICollection<SelectListItem> GetAllCategoriesAsSelectListItem();
+        public ICollection<City> GetAllCities();
     }
 }

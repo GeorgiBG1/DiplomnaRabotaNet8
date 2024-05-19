@@ -47,28 +47,27 @@
                             <div class="card mb20 pb10 mt-0 p-3 bdrs16">
                                 <div class="card-header active" id="heading0">
                                     <h4>
-                                        <button class="btn btn-link ps-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">Delivery Time</button>
+                                        <button class="btn btn-link ps-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">График</button>
                                     </h4>
                                 </div>
                                 <div id="collapse0" class="collapse show" aria-labelledby="heading0" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="radio-element">
-                                            <div class="form-check d-flex align-items-center mb10">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1a">
-                                                <label class="form-check-label" for="flexRadioDefault1a">Express 24H</label><span class="right-tags">(1,945)</span>
-                                            </div>
-                                            <div class="form-check d-flex align-items-center mb10">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2a" checked="checked">
-                                                <label class="form-check-label" for="flexRadioDefault2a">Up to 3 days</label><span class="right-tags">(8,136)</span>
-                                            </div>
-                                            <div class="form-check d-flex align-items-center mb10">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3a">
-                                                <label class="form-check-label" for="flexRadioDefault3a">Up to 7 days</label><span class="right-tags">(917)</span>
-                                            </div>
-                                            <div class="form-check d-flex align-items-center">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4a">
-                                                <label class="form-check-label" for="flexRadioDefault4a">Anytime</label><span class="right-tags">(240)</span>
-                                            </div>
+                                            @{
+                                                List<string> dayOptions = new List<string>
+                                            {
+                                            "Понеделник", "Вторник", "Сряда",
+                                            "Четвъртък", "Петък", "Събота",
+                                            "Неделя", "Без график"
+                                            };
+                                                for (int i = 0; i < dayOptions.Count; i++)
+                                                {
+                                                    <div class="form-check d-flex align-items-center py-2 mb-0">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault@(i+1)a" @(dayOptions[i] == "Без график" ? "checked" : "")>
+                                                        <label class="form-check-label" for="flexRadioDefault@(i+1)a">@dayOptions[i]</label>
+                                                    </div>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +75,7 @@
                             <div class="card mb20 p-3 bdrs16">
                                 <div class="card-header active" id="heading1">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Budget</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Цена</button>
                                     </h4>
                                 </div>
                                 <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
@@ -86,8 +85,9 @@
                                             <div class="range-wrapper">
                                                 <div class="slider-range mb10 mt15"></div>
                                                 <div class="text-center">
-                                                    <input type="text" class="amount" placeholder="$20"><span class="fa-sharp fa-solid fa-minus mx-2 dark-color"></span>
-                                                    <input type="text" class="amount2" placeholder="$70987">
+                                                    <input type="text" class="amount" style="width: 94px;" placeholder="0лв">
+                                                    <span class="fa-sharp fa-solid fa-minus mx-2 dark-color"></span>
+                                                    <input type="text" class="amount2" style="width: 94px;" placeholder="80000лв">
                                                 </div>
                                             </div>
                                         </div>
@@ -97,83 +97,111 @@
                             <div class="card mb20 p-3 bdrs16">
                                 <div class="card-header active" id="heading3">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">Location</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">Местоположение</button>
                                     </h4>
                                 </div>
                                 <div id="collapse3" class="collapse show" aria-labelledby="heading3" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="search_area mb15">
-                                            <input type="text" class="form-control" placeholder="What are you looking for?">
-                                            <label><span class="flaticon-loupe"></span></label>
+                                            @{
+                                                if (Model.Cities == null)
+                                                {
+                                                    <p class="title">Няма налични населени места!</p>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-style1">
+                                                        <label class="form-label fw500 fz16 dark-color pe-2">Град</label>
+                                                        <div class="bootselect-multiselect">
+                                                            <div class="dropdown bootstrap-select dropup" style="width: 100%;">
+                                                                <select class="selectpicker" data-live-search="true" data-width="100%" tabindex="null">
+                                                                    <option disabled>Избери</option>
+                                                                    @foreach (var city in Model.Cities)
+                                                                    {
+                                                                        <option value="@city.Id" data-tokens="@city.BGName">@city.BGName</option>
+                                                                    }
+                                                                </select>
+                                                                <div class="dropdown-menu" style="max-height: 330px; overflow: hidden; min-height: 189px;">
+                                                                    <div class="bs-searchbox">
+                                                                        <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list" aria-activedescendant="bs-select-1-0">
+                                                                    </div>
+                                                                    <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" style="max-height: 249px; overflow-y: auto; min-height: 108px;">
+                                                                        <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                                            <li class="selected active">
+                                                                                <a role="option" class="dropdown-item active selected" id="bs-select-1-0" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true">
+                                                                                    <span class="text">@Model.Cities[0].BGName</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            @for (int i = 0; i < Model.Cities.Count(); i++)
+                                                                            {
+                                                                                <li>
+                                                                                    <a role="option" class="dropdown-item" id="bs-select-1-@i" tabindex="0" aria-setsize="6" aria-posinset="@i">
+                                                                                        <span class="text">@Model.Cities[i].BGName</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
                                         </div>
-                                        <div class="checkbox-style1 mb15">
-                                            <label class="custom_checkbox">
-                                                United States
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(1,945)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                United Kingdom
-                                                <input type="checkbox" checked="checked">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(8,136)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Canada
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(917)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Germany
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">(240)</span>
-                                            </label>
-                                            <label class="custom_checkbox">
-                                                Turkey
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <span class="right-tags">((2,460)</span>
-                                            </label>
-                                        </div>
-                                        <a class="text-thm" href="">+20 more</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card mb20 p-3 bdrs16">
                                 <div class="card-header active" id="heading5">
                                     <h4>
-                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">Level</button>
+                                        <button class="btn btn-link ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">Рейтинг</button>
                                     </h4>
                                 </div>
                                 <div id="collapse5" class="collapse show" aria-labelledby="heading5" data-parent="#accordionExample">
                                     <div class="card-body card-body px-0 pt-0">
                                         <div class="checkbox-style1">
                                             <label class="custom_checkbox">
-                                                Top Rated Seller
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;5 звезди</span>
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(1,945)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                Level Two
-                                                <input type="checkbox" checked="checked">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;4 звезди</span>
+                                                <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(8,136)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                Level One
-                                                <input type="checkbox">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;3 звезди</span>
+                                                <input type="checkbox" checked="checked">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(917)</span>
                                             </label>
                                             <label class="custom_checkbox">
-                                                New Seller
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;2 звезди</span>
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
                                                 <span class="right-tags">(240)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;1 звезди</span>
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(105)</span>
+                                            </label>
+                                            <label class="custom_checkbox">
+                                                <i class="fas fa-star vam fz18 review-color"></i>
+                                                <span class="fz15 fw500">&nbsp;0 звезди</span>
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                                <span class="right-tags">(849)</span>
                                             </label>
                                         </div>
                                     </div>
@@ -210,9 +238,9 @@
                                 <div class="pcs_dropdown dark-color pr10 text-center text-md-end">
                                     <span>Сортирай по</span>
                                     <select class="selectpicker show-tick">
-                                        <option>Best Selling</option>
-                                        <option>Recommended</option>
-                                        <option>New Arrivals</option>
+                                        <option>Най-търсени</option>
+                                        <option>Най-наемани</option>
+                                        <option>Най-нови</option>
                                     </select>
                                 </div>
                             </div>
@@ -298,29 +326,29 @@
                         for (let i = 0; i < response.services.length; i++) {
                             let service = response.services[i];
                             let serviceContainer = `
-                        <div id="service${i + 1}Container" style="background-color:#ebfaf9; height:108px; display: none;" class="mb-2 p-2 d-flex justify-content-between bdrs6">
-                            <img id="service${i + 1}img" src="${service.mainImage}" class="bdrs6" width="92" height="92" />
-                            <div class="p-2 flex-fill">
-                                <h5 class="title mb-0" id="service${i + 1}Name">${service.name}</h5>
-                                <p class="mb-0 fz14 list-inline-item mb5-sm">
-                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="service${i + 1}SkillerName">${service.skillerName}</span>
-                                </p>
-                                <p class="mb-0 fz14 list-inline-item mb5-sm">
-                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span class="fz17 fw500 dark-color" id="service${i + 1}Price">${service.price}</span>
-                                </p> 
-                                <p class="mb-0 fz14 list-item mb5-sm">
-                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="service${i + 1}Category">${service.category}</span>
-                                </p>
-                            </div>
-                            <div class="py-0">
-                                <a href="/Services/Service/${service.id}" class="ud-btn btn-thm w-100 bdrs60" id="service${i + 1}SkillerUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
-                                <div class="mb-0 d-flex justify-content-end">
-                                    <i class="fas fa-star fz10 review-color pe-1"></i>
-                                    <span class="dark-color" id="service${i + 1}ReviewAvgCoef">${service.reviewAvgCoef}</span>&nbsp;(<span id="service${i + 1}ReviewsCount">${service.reviewsCount}</span>&nbsp;ревюта)
-                                </div>
-                            </div>
-                        </div>`;
-                        $("#searchServicesContainer").append(serviceContainer);
+                                                        <div id="service${i + 1}Container" style="background-color:#ebfaf9; height:108px; display: none;" class="mb-2 p-2 d-flex justify-content-between bdrs6">
+                                                            <img id="service${i + 1}img" src="${service.mainImage}" class="bdrs6" width="92" height="92" />
+                                                            <div class="p-2 flex-fill">
+                                                                <h5 class="title mb-0" id="service${i + 1}Name">${service.name}</h5>
+                                                                <p class="mb-0 fz14 list-inline-item mb5-sm">
+                                                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="service${i + 1}SkillerName">${service.skillerName}</span>
+                                                                </p>
+                                                                <p class="mb-0 fz14 list-inline-item mb5-sm">
+                                                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span class="fz17 fw500 dark-color" id="service${i + 1}Price">${service.price}</span>
+                                                                </p>
+                                                                <p class="mb-0 fz14 list-item mb5-sm">
+                                                                    <i class="fz16 vam text-thm2 bdrl1 pl15 pl0-xs bdrn-xs"></i> <span id="service${i + 1}Category">${service.category}</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="py-0">
+                                                                <a href="/Services/Service/${service.id}" class="ud-btn btn-thm w-100 bdrs60" id="service${i + 1}SkillerUsername" data-bs-toggle="tooltip" data-bs-placement="top" title="Отвори">Виж</a>
+                                                                <div class="mb-0 d-flex justify-content-end">
+                                                                    <i class="fas fa-star fz10 review-color pe-1"></i>
+                                                                    <span class="dark-color" id="service${i + 1}ReviewAvgCoef">${service.reviewAvgCoef}</span>&nbsp;(<span id="service${i + 1}ReviewsCount">${service.reviewsCount}</span>&nbsp;ревюта)
+                                                                </div>
+                                                            </div>
+                                                        </div>`;
+                            $("#searchServicesContainer").append(serviceContainer);
                         }
                         $("#searchServicesMainContainer").show();
                         $("#searchServicesContainer").show();

@@ -27,11 +27,13 @@ namespace Controllers
             var userProfilePhoto = userService.GetUserProfilePhoto(User.Identity?.Name!);
             ViewData[nameof(userProfilePhoto)] = userProfilePhoto;
             //
+            var cities = categoryService.GetAllCities();
             var categoryList = categoryService.GetCategoryMiniDTOs(7);
             var skillersCount = userService.GetSkillersCount();
             var skillers = userService.GetSkillerCardDTOs(5);
             var model = new AllSkillerViewModel
             {
+                Cities = cities.ToList(),
                 CategoryList = categoryList,
                 SkillersCount = skillersCount,
                 Skillers = skillers
