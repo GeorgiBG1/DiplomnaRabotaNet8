@@ -65,12 +65,14 @@ namespace Controllers
             {
                 return View("Error");
             }
+            
             var categories = categoryService.GetCategoryMiniDTOs(7);
             var popularServices = offeringService.GetTopServicesAsServiceCardDTOs(4, id);
             var model = new SingleServiceViewModel
             {
                 CategoryList = categories,
                 Service = service,
+                RatingStats = service.RatingStats,
                 ServiceCardDTOs = popularServices
             };
             return View(model);
@@ -78,13 +80,19 @@ namespace Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GetUserComment(int serviceId, string comment)
+        public IActionResult GetUserComment(int serviceId, int rating, string comment)
         {
+            if (rating < 1 || rating > 5)
+            {
+                TempData["RatingError"] = "Невалидна стойност на оценката. Моля, дайте оценка между 1 и 5 звезди.";
+                return RedirectToAction("Service", new { id = serviceId });
+            }
+
             var user = userService.GetUserByUsername(User.Identity?.Name!);
 
             if (user != null && comment != null)
             {
-                userService.AddUserComment(serviceId, user, comment);
+                userService.AddUserComment(serviceId, user, comment, rating);
             }
             return RedirectToAction("Service", new { id = serviceId });
         }

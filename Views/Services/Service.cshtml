@@ -140,41 +140,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="wrapper ml60 ml0-sm">
-                                                    <div class="review-list d-flex align-items-center mb10">
-                                                        <div class="list-number">5 Star</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar" style="width: 90%;" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    @foreach (var rating in new[] { 5, 4, 3, 2, 1 })
+                                                    {
+                                                        var ratingCount = Model.RatingStats[rating];
+                                                        var percentage = Model.Service.TotalReviews > 0 ? (ratingCount * 100.0 / Model.Service.TotalReviews) : 0;
+
+                                                        <div class="review-list d-flex align-items-center mb10">
+                                                            <div class="list-number">@rating Star</div>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" style="width: @percentage%;" role="progressbar" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <div class="value text-end">@ratingCount</div>
                                                         </div>
-                                                        <div class="value text-end">58</div>
-                                                    </div>
-                                                    <div class="review-list d-flex align-items-center mb10">
-                                                        <div class="list-number">4 Star</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <div class="value text-end">20</div>
-                                                    </div>
-                                                    <div class="review-list d-flex align-items-center mb10">
-                                                        <div class="list-number">3 Star</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <div class="value text-end">15</div>
-                                                    </div>
-                                                    <div class="review-list d-flex align-items-center mb10">
-                                                        <div class="list-number">2 Star</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar" style="width: 30%;" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <div class="value text-end">2</div>
-                                                    </div>
-                                                    <div class="review-list d-flex align-items-center mb10">
-                                                        <div class="list-number">1 Star</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar" style="width: 20%;" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <div class="value text-end">1</div>
-                                                    </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -186,6 +164,9 @@
                                                     <div class="ml20">
                                                         <h6 class="mt-0 mb-0">@comment.User.Name</h6>
                                                         <div><span class="fz14">@comment.CreatedOn</span></div>
+                                                        <div class="comment-rating" style="line-height: 14px;">
+                                                            @HtmlHelpers.RenderStars(comment.StarsCount)
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <p class="text mt20 mb20 bg-light rounded-2 p-2 border border-2">@comment.Content</p>
@@ -202,31 +183,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bsp_reveiw_wrt">
+                            @if (Model.Service.OwnerUsername != User.Identity?.Name)
+                            {
+                                <div class="bsp_reveiw_wrt">
                                 <h6 class="fz17">Добави ревю</h6>
                                 <h6>Вашата оценка за тази услуга</h6>
-                                <div class="d-flex">
-                                    <i class="fas fa-star review-color"></i>
-                                    <i class="far fa-star review-color ms-2"></i>
-                                    <i class="far fa-star review-color ms-2"></i>
-                                    <i class="far fa-star review-color ms-2"></i>
-                                    <i class="far fa-star review-color ms-2"></i>
+                                <div class="d-flex" id="rating-stars">
+                                    <i class="far fa-star review-color" data-value="1"></i>
+                                    <i class="far fa-star review-color ms-2" data-value="2"></i>
+                                    <i class="far fa-star review-color ms-2" data-value="3"></i>
+                                    <i class="far fa-star review-color ms-2" data-value="4"></i>
+                                    <i class="far fa-star review-color ms-2" data-value="5"></i>
                                 </div>
                                 <form asp-action="GetUserComment" asp-controller="Services" method="post" class="comments_form mt30 mb30-md">
+                                    @if (TempData["RatingError"] != null)
+                                    {
+                                        <label class="text-danger">@TempData["RatingError"]</label>
+                                    }
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-4">
                                                 <label class="fw500 fz16 ff-heading dark-color mb-2">Коментар</label>
-                                                <input name="serviceId" value="@Model.Service.Id" hidden/>
+                                                <input name="serviceId" value="@Model.Service.Id" hidden />
+                                                <input name="rating" id="rating" hidden />
                                                 <textarea name="comment" class="pt15" rows="6" placeholder="Напишете какво мислите за тази услуга..."></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn ud-btn btn-thm">Изпрати<i class="fal fa-arrow-right-long"></i></button>
+                                            <button id="submitCommentBtn" type="submit" class="btn ud-btn btn-thm">Изпрати<i class="fal fa-arrow-right-long"></i></button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
+                            }                      
                         </div>
                     </div>
                 </div>
@@ -360,6 +349,33 @@
     </section>
     <a class="scrollToHome at-home2" href=""><i class="fas fa-angle-up"></i></a>
 </div>
+<script>
+    const stars = document.querySelectorAll('#rating-stars i');
+    const ratingInput = document.getElementById('rating');
+    const submitButton = document.getElementById('submitCommentBtn');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            let value = star.getAttribute('data-value');
+            ratingInput.value = value;
+            stars.forEach(s => {
+                s.classList.remove('fas');
+                s.classList.add('far');
+            });
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.remove('far');
+                stars[i].classList.add('fas');
+            }
+        });
+    });
+
+    submitButton.addEventListener('click', (event) => {
+        if (!ratingInput.value || ratingInput.value < 1 || ratingInput.value > 5) {
+            event.preventDefault();
+            alert('Моля, дайте оценка между 1 и 5 звезди.');
+        }
+    });
+</script>
 @section SearchScripts
 {
     <script>

@@ -17,6 +17,8 @@
         public string Location { get; set; }
         public string MainSkill { get; set; }
         public int ReviewsCount { get; set; }
+        public int TotalReviews { get; set; }
+        public Dictionary<int, int> RatingStats { get; set; }
         public double ReviewAvgCoef { get; set; }
         public ICollection<ReviewDTO> Reviews { get; set; }
         public ICollection<string> Images { get; set; }

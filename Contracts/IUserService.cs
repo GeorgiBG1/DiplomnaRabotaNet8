@@ -13,6 +13,7 @@ namespace Contracts
         public ICollection<ServiceCardDTO> GetSkillerServicesAsServiceCardDTOs(string username, int count = 1);
         public ICollection<UserCardDTO> GetTopSkillersAsUserCardDTOs(int count = 1);
         public ICollection<Skill> GetAllMySkills(string username);
+        public ICollection<SkillLevel> GetAllSkillLevels();
         public ICollection<Review> GetAllMyReviews(string username);
         public bool BlockUser(string username);
         public City GetCityById(int id);
@@ -23,6 +24,6 @@ namespace Contracts
         public Task<int> UpdateUserProps(SkillBoxUser user);
         public Task<string> SetProfilePhotoToUser(SkillBoxUser user, string imgURL);
         public void AddSkill(SkillBoxUser user, string skillName, int skillPoints);
-        public void AddUserComment(int serviceId, SkillBoxUser user, string content);
+        public void AddUserComment(int serviceId, SkillBoxUser user, string content, int rating);
     }
 }

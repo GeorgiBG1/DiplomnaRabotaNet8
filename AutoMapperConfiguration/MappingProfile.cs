@@ -164,9 +164,23 @@ namespace SkillBox.App.AutoMapperConfiguration
                         },
                         Content = r.Comment,
                         CreatedOn = r.CreatedOn.ToString("dd MMMM yyyy"),
+                        StarsCount = r.RatingStars ?? 0
                     }));
                     return reviewDTOs;
                 }))
+                .ForMember(d => d.RatingStats, opt => opt.MapFrom((s, d) =>
+                {
+                    var ratingStats = new Dictionary<int, int>
+                    {
+                        { 5, s.Reviews!.Count(r => r.RatingStars == 5) },
+                        { 4, s.Reviews!.Count(r => r.RatingStars == 4) },
+                        { 3, s.Reviews!.Count(r => r.RatingStars == 3) },
+                        { 2, s.Reviews!.Count(r => r.RatingStars == 2) },
+                        { 1, s.Reviews!.Count(r => r.RatingStars == 1) },
+                    };
+                    return ratingStats;
+                }))
+                .ForMember(d => d.TotalReviews, opt => opt.MapFrom(s => s.Reviews!.Count))
                 .ForMember(d => d.OwnerUsername, opt => opt.MapFrom(s => s.Owner.UserName))
                 .ForMember(d => d.OwnerName, opt => opt.MapFrom(s => s.OwnerName))
                 .ForMember(d => d.OwnerCareer, opt => opt.MapFrom(s => s.Owner.Career))

@@ -232,7 +232,7 @@
                             </div>
                             <div class="row">
                                 <div class="text-start d-flex justify-content-between">
-                                    <a class="btn ud-btn btn-thm" onclick="AddNewSkill()"> + </a>
+                                    <a id="btnNewSkill" class="btn ud-btn btn-thm" onclick="AddNewSkill()"> + </a>
                                     <button type="submit" class="btn ud-btn btn-thm">Запази<i class="fal fa-arrow-right-long"></i></button>
                                 </div>
                             </div>
@@ -324,9 +324,12 @@
         var index = 0;
         function AddNewSkill() {
             debugger;
-            $("#skillsContainer").append("<div class='col-sm-6'><div class='mb20'><label class='heading-color ff-heading fw500 mb10'>Ново умение</label><input type='text' class='form-control' placeholder='умения - текст'/></div></div>");
+            if (index === 0) {
+                $("#skillsContainer").append("<div class='col-sm-6'><div class='mb20'><label class='heading-color ff-heading fw500 mb10'>Ново умение</label><input type='text' name='Input.NewSkillName' class='form-control' placeholder='умения - текст'/></div></div>");
 
-            $("#skillsContainer").append("<div class='col-sm-6'><div class='mb20'><div class='form-style1'><label class='heading-color ff-heading fw500 mb10'>Точки</label> <div class='form-select bootselect-multiselect p-0' style='height: 50px;'><select style='height: 50px; width: 255px;'> <option value='100'>100</option> <option value='90'>90</option> <option value='80'>80</option> <option value='70'>70</option> <option value='60'>60</option> <option value='50'>50</option> <option value='40'>40</option> <option value='30'>30</option> <option value='20'>20</option> <option value='10'>10</option> </select></div> </div></div></div>");
+                $("#skillsContainer").append("<div class='col-sm-6'><div class='mb20'><div class='form-style1'><label class='heading-color ff-heading fw500 mb10'>Точки</label> <div class='form-select bootselect-multiselect p-0' style='height: 50px;'><select name='Input.NewSkillPoints' style='height: 50px; width: 255px;'> <option value='100'>100</option> <option value='90'>90</option> <option value='80'>80</option> <option value='70'>70</option> <option value='60'>60</option> <option value='50'>50</option> <option value='40'>40</option> <option value='30'>30</option> <option value='20'>20</option> <option value='10'>10</option> </select></div> </div></div></div>");
+                document.getElementById("btnNewSkill").style.display = "none";
+            }
 
             index++;
         }

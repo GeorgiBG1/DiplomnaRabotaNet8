@@ -96,7 +96,8 @@ namespace SkillBox.App.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Автобиография")]
             public string Bio { get; set; }
-
+            public string NewSkillName { get; set; }
+            public int NewSkillPoints { get; set; }
             public IList<Skill> Skills { get; set; }
 
             [Display(Name = "Стара парола")]
@@ -155,7 +156,7 @@ namespace SkillBox.App.Areas.Identity.Pages.Account.Manage
             if (Input.FirstName != null)
             {
                 user.FirstName = Input.FirstName;
-            }            
+            }
             if (Input.LastName != null)
             {
                 user.LastName = Input.LastName;
@@ -180,7 +181,21 @@ namespace SkillBox.App.Areas.Identity.Pages.Account.Manage
             {
                 user.Career = Input.Career;
             }
-                        
+            if (Input.NewSkillName != null
+                && Input.NewSkillPoints != 0)
+            {
+                var allSkillLevels = _userService.GetAllSkillLevels();
+                var level = allSkillLevels.FirstOrDefault(sl => sl.BGName.TrimEnd('%') == Input.NewSkillPoints.ToString());
+                if (level != null)
+                {
+                    user.Skills.Add(new Skill
+                    {
+                        Name = Input.NewSkillName,
+                        Level = level
+                    });
+                }
+            }
+
             user.City = _dbContext.Cities.FirstOrDefault(c => c.Id == Input.City);
             user.Gender = _dbContext.Genders.FirstOrDefault(c => c.Id == Input.Gender);
 

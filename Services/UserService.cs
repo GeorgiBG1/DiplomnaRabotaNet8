@@ -127,6 +127,10 @@ namespace Services
         {
             return dbContext.Skills.Where(s => s.User.UserName == username).ToList();
         }
+        public ICollection<SkillLevel> GetAllSkillLevels()
+        {
+            return dbContext.SkillLevels.ToList();
+        }
         public ICollection<Review> GetAllMyReviews(string username)
         {
             var reviews = dbContext.Reviews
@@ -194,6 +198,7 @@ namespace Services
             userFromDb.Bio = user.Bio;
             userFromDb.City = user.City;
             userFromDb.Gender = user.Gender;
+            userFromDb.Skills = user.Skills;
             dbContext.Users.Update(userFromDb);
             notificationService.CreateNotification(GlobalConstant.UpdateUserPropsNotificationType, user!);
             return await dbContext.SaveChangesAsync();
@@ -229,19 +234,21 @@ namespace Services
                 dbContext.SaveChanges();
             }
         }
-        public void AddUserComment(int serviceId, SkillBoxUser user, string content)
+        public void AddUserComment(int serviceId, SkillBoxUser user, string content, int rating)
         {
-            var rnd = new Random();
             var service = offeringService.GetServiceById(serviceId);
-            var review = new Review
+            if (service.Owner.UserName != user.UserName)
             {
-                Service = service,
-                User = user,
-                Comment = content,
-                RatingStars = rnd.Next(1, 5)
-            };
-            dbContext.Reviews.Add(review);
-            dbContext.SaveChanges();
+                var review = new Review
+                {
+                    Service = service,
+                    User = user,
+                    Comment = content,
+                    RatingStars = rating
+                };
+                dbContext.Reviews.Add(review);
+                dbContext.SaveChanges();
+            }
         }
         private SkillLevel GetSkillLevelBySkillPoints(int skillPoints)
         {
